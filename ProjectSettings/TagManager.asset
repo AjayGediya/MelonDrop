@@ -4,17 +4,19 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Watermelon
-  - Red_Grape
-  - PineApple
-  - Peer
-  - Orange
-  - Lime
-  - Grape
-  - Apple
   - GameOver1
   - GameOver2
   - GameOver3
+  - Strawberry
+  - Blueberry
+  - Apricot
+  - Apple
+  - Cloudberry
+  - Grapefruit
+  - Guava
+  - Lucuma
+  - Passionfruit
+  - Watermelon
   layers:
   - Default
   - TransparentFX

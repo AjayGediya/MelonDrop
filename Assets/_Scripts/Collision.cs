@@ -7,13 +7,25 @@ using DG.Tweening;
 
 public class Collision : MonoBehaviour
 {
-    public GameObject grape, redGrape, lime, peer, pineApple, orange, watermelonp;
+    //public GameObject apricot, redGrape, lime, peer, pineApple, orange, watermelonp;
 
-    public ParticleSystem green, red, kthai, yellow, pink;
+    public GameObject Blueberry, Apricot, Apple, Cloudberry, Grapefruit, Guava, Lucuma, Passionfruit, Watermelon;
+
+    public ParticleSystem Blue, Green, GreenDark, NewyBlue, Orange, Red, Yellow;
+
+    public Transform ParticalParent;
 
     public TextMeshPro textNumber;
 
+    public Transform TextParent;
+
     TextMeshPro newtext;
+
+    private void Start()
+    {
+        ParticalParent = GameObject.Find("ParticalObject").GetComponent<Transform>();
+        TextParent = GameObject.Find("TextObjects").GetComponent<Transform>();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -25,9 +37,146 @@ public class Collision : MonoBehaviour
         ChekFruits(collision);
     }
 
+    public void ChekFruits(Collision2D newcollisiton)
+    {
+        if (newcollisiton.gameObject.tag == "Strawberry" && gameObject.tag == "Strawberry")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Strawberry + Apricot");
+                ParticalesEffect(Orange);
+                GameManager.instance.isFruit = true;
+                FruitChanges(Apricot);
+                DestroyObject(newcollisiton);
+                GameManager.instance.ScoreValue += 1;
+                TextCreate(2);
+            }
+        }
+        else if (newcollisiton.gameObject.tag == "Apricot" && gameObject.tag == "Apricot")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Apricot + Blueberry");
+                ParticalesEffect(Blue);
+                GameManager.instance.isFruit = true;
+                FruitChanges(Blueberry);
+                DestroyObject(newcollisiton);
+                GameManager.instance.ScoreValue += 2;
+                TextCreate(4);
+            }
+        }
+        else if (newcollisiton.gameObject.tag == "Blueberry" && gameObject.tag == "Blueberry")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Blueberry + Guava");
+                ParticalesEffect(Green);
+                GameManager.instance.isFruit = true;
+                FruitChanges(Guava);
+                DestroyObject(newcollisiton);
+                GameManager.instance.ScoreValue += 5;
+                TextCreate(4);
+            }
+        }
+        else if (newcollisiton.gameObject.tag == "Guava" && gameObject.tag == "Guava")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Guava + Apple");
+                ParticalesEffect(Red);
+                GameManager.instance.isFruit = true;
+                FruitChanges(Apple);
+                DestroyObject(newcollisiton);
+                GameManager.instance.ScoreValue += 10;
+                TextCreate(64);
+            }
+        }
+        else if (newcollisiton.gameObject.tag == "Apple" && gameObject.tag == "Apple")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Apple + Grapefruit");
+                ParticalesEffect(Orange);
+                GameManager.instance.isFruit = true;
+                FruitChanges(Grapefruit);
+                DestroyObject(newcollisiton);
+                GameManager.instance.ScoreValue += 15;
+                TextCreate(8);
+            }
+        }
+        else if (newcollisiton.gameObject.tag == "Grapefruit" && gameObject.tag == "Grapefruit")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Grapefruit + Passionfruit");
+                ParticalesEffect(NewyBlue);
+                GameManager.instance.isFruit = true;
+                FruitChanges(Passionfruit);
+                DestroyObject(newcollisiton);
+                GameManager.instance.ScoreValue += 20;
+                TextCreate(32);
+            }
+        }
+        else if (newcollisiton.gameObject.tag == "Passionfruit" && gameObject.tag == "Passionfruit")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Passionfruit + Lucuma");
+                ParticalesEffect(GreenDark);
+                GameManager.instance.isFruit = true;
+                FruitChanges(Lucuma);
+                DestroyObject(newcollisiton);
+                GameManager.instance.ScoreValue += 25;
+                TextCreate(128);
+            }
+        }
+
+        else if (newcollisiton.gameObject.tag == "Lucuma" && gameObject.tag == "Lucuma")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Lucuma + Cloudberry");
+                ParticalesEffect(Yellow);
+                GameManager.instance.isFruit = true;
+                FruitChanges(Cloudberry);
+                DestroyObject(newcollisiton);
+                GameManager.instance.ScoreValue += 35;
+                TextCreate(128);
+            }
+        }
+        else if (newcollisiton.gameObject.tag == "Cloudberry" && gameObject.tag == "Cloudberry")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Cloudberry + Watermelon");
+                ParticalesEffect(Green);
+                GameManager.instance.isFruit = true;
+                FruitChanges(Watermelon);
+                DestroyObject(newcollisiton);
+                GameManager.instance.ScoreValue += 40;
+                TextCreate(16);
+            }
+        }
+        else if (newcollisiton.gameObject.tag == "Watermelon" && gameObject.tag == "Watermelon")
+        {
+            if (!GameManager.instance.isFruit)
+            {
+                Debug.Log("Watermelon");
+                ParticalesEffect(Green);
+                GameManager.instance.isFruit = true;
+                GameManager.instance.ScoreValue += 50;
+                TextCreate(256);
+            }
+        }
+
+        GameManager.instance.ScoreText.text = "Score" + ":" + GameManager.instance.ScoreValue.ToString();
+        //PlayerPrefs.SetInt("Score", GameManager.instance.ScoreValue);
+    }
+
     public void TextCreate(int value)
     {
         newtext = Instantiate(textNumber);
+        newtext.transform.SetParent(TextParent);
         newtext.text = "+" + value.ToString();
         newtext.transform.position = gameObject.transform.position;
         StartCoroutine(TextColorChange());
@@ -37,118 +186,12 @@ public class Collision : MonoBehaviour
     {
         newtext.DOFade(0, 1f);
         yield return new WaitForSeconds(1);
-
-    }
-
-    public void ChekFruits(Collision2D newcollisiton)
-    {
-        if (newcollisiton.gameObject.tag == "Apple" && gameObject.tag == "Apple")
-        {
-            if (!GameManager.instance.isFruit)
-            {
-                Debug.Log("Apple + Grape");
-                ParticalesEffect(green);
-                GameManager.instance.isFruit = true;
-                FruitChanges(grape);
-                DestroyObject(newcollisiton);
-                GameManager.instance.ScoreValue += 2;
-                TextCreate(2);
-            }
-        }
-        else if (newcollisiton.gameObject.tag == "Grape" && gameObject.tag == "Grape")
-        {
-            if (!GameManager.instance.isFruit)
-            {
-                Debug.Log("Grape + Red");
-                ParticalesEffect(pink);
-                GameManager.instance.isFruit = true;
-                FruitChanges(redGrape);
-                DestroyObject(newcollisiton);
-                GameManager.instance.ScoreValue += 4;
-                TextCreate(4);
-            }
-        }
-        else if (newcollisiton.gameObject.tag == "Red_Grape" && gameObject.tag == "Red_Grape")
-        {
-            if (!GameManager.instance.isFruit)
-            {
-                Debug.Log("Red + Lime");
-                ParticalesEffect(green);
-                GameManager.instance.isFruit = true;
-                FruitChanges(lime);
-                DestroyObject(newcollisiton);
-                GameManager.instance.ScoreValue += 8;
-                TextCreate(8);
-            }
-        }
-        else if (newcollisiton.gameObject.tag == "Lime" && gameObject.tag == "Lime")
-        {
-            if (!GameManager.instance.isFruit)
-            {
-                Debug.Log("Lime + peer");
-                ParticalesEffect(green);
-                GameManager.instance.isFruit = true;
-                FruitChanges(peer);
-                DestroyObject(newcollisiton);
-                GameManager.instance.ScoreValue += 16;
-                TextCreate(16);
-            }
-        }
-        else if (newcollisiton.gameObject.tag == "Peer" && gameObject.tag == "Peer")
-        {
-            if (!GameManager.instance.isFruit)
-            {
-                ParticalesEffect(kthai);
-                GameManager.instance.isFruit = true;
-                FruitChanges(pineApple);
-                DestroyObject(newcollisiton);
-                GameManager.instance.ScoreValue += 32;
-                TextCreate(32);
-            }
-        }
-        else if (newcollisiton.gameObject.tag == "PineApple" && gameObject.tag == "PineApple")
-        {
-            if (!GameManager.instance.isFruit)
-            {
-                ParticalesEffect(yellow);
-                GameManager.instance.isFruit = true;
-                FruitChanges(orange);
-                DestroyObject(newcollisiton);
-                GameManager.instance.ScoreValue += 64;
-                TextCreate(64);
-            }
-        }
-        else if (newcollisiton.gameObject.tag == "Orange" && gameObject.tag == "Orange")
-        {
-            if (!GameManager.instance.isFruit)
-            {
-                ParticalesEffect(red);
-                GameManager.instance.isFruit = true;
-                FruitChanges(watermelonp);
-                DestroyObject(newcollisiton);
-                GameManager.instance.ScoreValue += 128;
-                TextCreate(128);
-            }
-        }
-        else if (newcollisiton.gameObject.tag == "Watermelon" && gameObject.tag == "Watermelon")
-        {
-            if (!GameManager.instance.isFruit)
-            {
-                Debug.Log("Watermelon");
-                ParticalesEffect(red);
-                GameManager.instance.isFruit = true;
-                GameManager.instance.ScoreValue += 256;
-                TextCreate(256);
-            }
-        }
-
-        GameManager.instance.ScoreText.text = "Score" + ":" + GameManager.instance.ScoreValue.ToString();
-        //PlayerPrefs.SetInt("Score", GameManager.instance.ScoreValue);
     }
 
     public void ParticalesEffect(ParticleSystem newparticle)
     {
         ParticleSystem particleSystem = Instantiate(newparticle);
+        particleSystem.transform.SetParent(ParticalParent);
         particleSystem.transform.position = gameObject.transform.position;
     }
 
@@ -157,10 +200,8 @@ public class Collision : MonoBehaviour
         StartCoroutine(GameManager.instance.IsFruit());
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         gameObject.GetComponent<Collider2D>().enabled = false;
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
         newcollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         newcollision.gameObject.GetComponent<Collider2D>().enabled = false;
-        newcollision.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void FruitChanges(GameObject fruits)

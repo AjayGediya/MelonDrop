@@ -18,8 +18,6 @@ public class LoadingManager : MonoBehaviour
         if (isLoading == false)
         {
             LoadingSlider.value += Time.deltaTime;
-
-            //Debug.Log((int)(LoadingSlider.value * 20));
             //Debug.Log((LoadingSlider.value * 20).ToString("00"));
             LoadTxt.text = "Loading..." + ((int)(LoadingSlider.value * 20)) + "%";
 

@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject GameOverObject1, GameOverObject2, GameOverObject3;
 
-    public GameObject GamePanel, OverPanel;
+    public GameObject GamePanel, OverPanel, SettingPanel;
 
     public bool isGameOver = false;
 
@@ -98,7 +98,6 @@ public class GameManager : MonoBehaviour
     public void AfterNextImageCall()
     {
         GameObject fruit = Instantiate(Fruits[NextFruit]);
-        Debug.Log(fruit + "::" + "Fruit");
         image.Add(fruit);
         fruit.transform.SetParent(ParentObj.transform);
         fruit.transform.position = FruitsParent.transform.position;
@@ -135,5 +134,35 @@ public class GameManager : MonoBehaviour
         ScoreValue = 0;
         ScoreText.text = "0";
         SceneManager.LoadScene(1);
+    }
+
+    public void SettingBtnClick()
+    {
+        Debug.Log("Setting");
+        isGameOver = true;
+        SettingPanel.SetActive(true);
+    }
+
+    public void BackBtnClick()
+    {
+        Debug.Log("Back");
+        SettingPanel.SetActive(false);
+        isGameOver = false;
+    }
+
+    public void SoundBtnClick()
+    {
+        Debug.Log("Sound");
+    }
+
+    public void MusicBtnClick()
+    {
+        Debug.Log("Music");
+    }
+
+    public void VibrateBtnClick()
+    {
+        Debug.Log("Vibrate");
+        Vibration.Vibrate(0);
     }
 }
