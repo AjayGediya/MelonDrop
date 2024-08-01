@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-   
+
     public GameObject[] Fruits;
 
     public GameObject FruitsParent;
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-           HighScore = PlayerPrefs.GetInt("HighScore");
+            HighScore = PlayerPrefs.GetInt("HighScore");
         }
         HighScoreText.text = "HighScore" + ":" + HighScore.ToString();
     }
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         GenratedGrid();
         nextImage();
-        
+
     }
 
 
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     public void nextImage()
     {
-        NextFruit = UnityEngine.Random.Range(0,NextImages.Length);
+        NextFruit = UnityEngine.Random.Range(0, NextImages.Length);
         NextImage.sprite = NextImages[NextFruit];
     }
 

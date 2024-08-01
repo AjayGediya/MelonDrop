@@ -74,49 +74,40 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.2
+  m_Time: 0.15
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.70556474
+    widthMultiplier: 1
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        time: 0.010101318
+        value: 0.53125
+        inSlope: -0.9882822
+        outSlope: -0.9882822
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.7409228
-        value: 0.055669785
-        inSlope: -0.95451355
-        outSlope: -0.95451355
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.3673467
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.1546874
+        outSlope: -0.1546874
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.15306136
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 0.89411765}
-      key1: {r: 1, g: 1, b: 1, a: 0.015686275}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.69411767, g: 0.14509805, b: 0.14117648, a: 1}
+      key1: {r: 0.6431373, g: 0.09803922, b: 0.09411765, a: 0}
+      key2: {r: 0.74509805, g: 0.09803922, b: 0.09803922, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -124,7 +115,7 @@ TrailRenderer:
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0
@@ -132,7 +123,7 @@ TrailRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
@@ -312,6 +303,7 @@ MonoBehaviour:
   kthai: {fileID: 7876552982715910848, guid: b4b3f89adb3764f06a52e09044745276, type: 3}
   yellow: {fileID: 4206582818729899419, guid: 0dd043a48b8c642809befb1218c7254d, type: 3}
   pink: {fileID: 6673479942694638344, guid: d5bf239bd83a24152a854d2da61c4923, type: 3}
+  textNumber: {fileID: 3198658975816447325, guid: 546c1ac270cef424fb11924a7718967e, type: 3}
 --- !u!58 &6329258534270828601
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -303,6 +303,7 @@ MonoBehaviour:
   kthai: {fileID: 7876552982715910848, guid: b4b3f89adb3764f06a52e09044745276, type: 3}
   yellow: {fileID: 4206582818729899419, guid: 0dd043a48b8c642809befb1218c7254d, type: 3}
   pink: {fileID: 6673479942694638344, guid: d5bf239bd83a24152a854d2da61c4923, type: 3}
+  textNumber: {fileID: 3198658975816447325, guid: 546c1ac270cef424fb11924a7718967e, type: 3}
 --- !u!58 &3423673580104203231
 CircleCollider2D:
   m_ObjectHideFlags: 0
