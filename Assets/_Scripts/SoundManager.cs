@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
@@ -22,6 +23,15 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         SoundAudio = GetComponent<AudioSource>();
+
+        if (PlayerPrefs.HasKey("Sound") == false)
+        {
+            PlayerPrefs.SetInt("Sound", 1);
+        }
+        else
+        {
+            SoundAudio.volume = PlayerPrefs.GetInt("Sound");
+        }
     }
 
     public void SoundFruitMergePlay()

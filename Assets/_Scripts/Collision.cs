@@ -184,7 +184,7 @@ public class Collision : MonoBehaviour
 
     public IEnumerator TextColorChange()
     {
-        newtext.DOFade(0, 1f);
+        newtext.DOFade(0, 1);
         yield return new WaitForSeconds(1);
     }
 
@@ -199,9 +199,9 @@ public class Collision : MonoBehaviour
     {
         StartCoroutine(GameManager.instance.IsFruit());
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        gameObject.GetComponent<PolygonCollider2D>().enabled = false;
         newcollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        newcollision.gameObject.GetComponent<Collider2D>().enabled = false;
+        newcollision.gameObject.GetComponent<PolygonCollider2D>().enabled = false;
     }
 
     public void FruitChanges(GameObject fruits)

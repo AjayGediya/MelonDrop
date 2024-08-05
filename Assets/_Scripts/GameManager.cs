@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
         {
             HighScore = PlayerPrefs.GetInt("HighScore");
         }
+
+        ScoreText.text = "Score" + ":" + ScoreValue.ToString();
         HighScoreText.text = "HighScore" + ":" + HighScore.ToString();
     }
 
@@ -162,6 +164,22 @@ public class GameManager : MonoBehaviour
     public void SoundBtnClick()
     {
         Debug.Log("Sound");
+        if (SoundManager.Instance.isSound == false)
+        {
+            SoundManager.Instance.isSound = true;
+            PlayerPrefs.SetInt("Sound", 0);
+            SoundManager.Instance.SoundAudio.mute = true;
+            SoundManager.Instance.SoundAudio.volume = 0;
+            Debug.Log("Sound_Off");
+        }
+        else if (SoundManager.Instance.isSound == true)
+        {
+            SoundManager.Instance.isSound = false;
+            PlayerPrefs.SetInt("Sound", 1);
+            SoundManager.Instance.SoundAudio.mute = false;
+            SoundManager.Instance.SoundAudio.volume = 1;
+            Debug.Log("Sound_On");
+        }
     }
 
     public void MusicBtnClick()

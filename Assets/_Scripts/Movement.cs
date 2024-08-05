@@ -5,11 +5,9 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public Vector3 Move;
+    public Vector3 StartPos, EndPos;
 
-    public float xMin = -1.9f;
-
-    public float xMax = 1.9f;
+    public Vector3 ScreenSize;
 
     public GameObject Line;
 
@@ -21,6 +19,8 @@ public class Movement : MonoBehaviour
 
     public Rigidbody2D rb;
 
+   // Vector3 newpos;
+
     private void Awake()
     {
         instance = this;
@@ -31,35 +31,50 @@ public class Movement : MonoBehaviour
         Line = GameObject.Find("Line");
 
         rb = GetComponent<Rigidbody2D>();
+
+        ScreenSize = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
     }
 
     public void Update()
     {
         if (Input.GetMouseButtonDown(0) && isSelect == false && A.isGameOver == false)
         {
-            // Debug.Log("Click");
-            Move = transform.position - GetMouseWorldPos();
             Line.SetActive(true);
             A.GameOverObject1.SetActive(false);
             A.GameOverObject2.SetActive(false);
             A.GameOverObject3.SetActive(false);
+            StartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                
+          //  Debug.Log("Click" + "::" + Input.mousePosition);
+
+          //  newpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+           // Debug.Log("X" + newpos);
+            
         }
 
         if (Input.GetMouseButton(0) && isSelect == false && A.isGameOver == false)
         {
-            // Debug.Log("Drag");
             A.GameOverObject1.SetActive(false);
             A.GameOverObject2.SetActive(false);
             A.GameOverObject3.SetActive(false);
-            Vector3 mousePos = GetMouseWorldPos() + Move;
 
-            float clampedX = Mathf.Clamp(mousePos.x, xMin, xMax);
-            transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
-            Line.transform.position = new Vector3(clampedX, Line.transform.position.y, Line.transform.position.z);
+            EndPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            Vector3 diff = EndPos - StartPos;
+
+            diff.x = Mathf.Clamp(diff.x, -1.5f, 1.5f);
+
+            transform.position = new Vector3(diff.x, transform.position.y, transform.position.z);
+
+            Line.transform.position = new Vector3(diff.x, Line.transform.position.y, Line.transform.position.z);
         }
 
         if (Input.GetMouseButtonUp(0) && isSelect == false && A.isGameOver == false)
         {
+            //this.gameObject.transform.position = new Vector3(newpos.x, transform.position.y, transform.position.z);
+
+                //this.gameObject.transform.position = new Vector3(newpos.x, transform.position.y, transform.position.z);
+            
             // Debug.Log("Up");
             SoundManager.Instance.FruitSoundPlay();
             gameObject.transform.GetComponent<PolygonCollider2D>().enabled = true;
@@ -76,7 +91,7 @@ public class Movement : MonoBehaviour
 
     public IEnumerator ChangeOver()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         A.GameOverObject1.SetActive(true);
         A.GameOverObject2.SetActive(true);
         A.GameOverObject3.SetActive(true);
@@ -89,12 +104,5 @@ public class Movement : MonoBehaviour
         Line.transform.position = new Vector3(0, 0, 0);
         A.AfterNextImageCall();
         A.nextImage();
-    }
-
-    public Vector3 GetMouseWorldPos()
-    {
-        Vector3 mousePoint = Input.mousePosition;
-        mousePoint.z = Camera.main.WorldToScreenPoint(transform.position).z;
-        return Camera.main.ScreenToWorldPoint(mousePoint);
     }
 }
