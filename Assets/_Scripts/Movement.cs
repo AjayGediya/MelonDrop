@@ -61,11 +61,13 @@ public class Movement : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && isSelect == false && A.isGameOver == false)
         {
             // Debug.Log("Up");
+            SoundManager.Instance.FruitSoundPlay();
+            gameObject.transform.GetComponent<PolygonCollider2D>().enabled = true;
             isSelect = true;
             Line.SetActive(false);
             rb.bodyType = RigidbodyType2D.Dynamic;
             rb.freezeRotation = false;
-            rb.angularVelocity = 100;
+            rb.angularVelocity = UnityEngine.Random.Range(-360, 360);
             StartCoroutine(valueChange());
             StartCoroutine(ChangeOver());
         }

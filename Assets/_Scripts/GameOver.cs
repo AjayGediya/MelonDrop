@@ -30,6 +30,7 @@ public class GameOver : MonoBehaviour
         if (GameManager.instance.GameOverObject1.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject2.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject3.GetComponent<GameOver>().istouch == true)
         {
             Debug.Log("GameOver");
+            AdManager.Instance.ShowInterstitialAd();
             GameManager.instance.isGameOver = true;
             GameManager.instance.OverPanel.SetActive(true);
             GameManager.instance.ScoreValueOver.text = "Score" + ":" + GameManager.instance.ScoreValue.ToString();

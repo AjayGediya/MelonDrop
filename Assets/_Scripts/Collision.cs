@@ -11,7 +11,7 @@ public class Collision : MonoBehaviour
 
     public GameObject Blueberry, Apricot, Apple, Cloudberry, Grapefruit, Guava, Lucuma, Passionfruit, Watermelon;
 
-    public ParticleSystem Blue, Green, GreenDark, NewyBlue, Orange, Red, Yellow;
+    public ParticleSystem Blue, Green, Green1, GreenDark, NewyBlue, Orange, Orange1, Red, Yellow;
 
     public Transform ParticalParent;
 
@@ -49,7 +49,7 @@ public class Collision : MonoBehaviour
                 FruitChanges(Apricot);
                 DestroyObject(newcollisiton);
                 GameManager.instance.ScoreValue += 1;
-                TextCreate(2);
+                TextCreate(1);
             }
         }
         else if (newcollisiton.gameObject.tag == "Apricot" && gameObject.tag == "Apricot")
@@ -62,7 +62,7 @@ public class Collision : MonoBehaviour
                 FruitChanges(Blueberry);
                 DestroyObject(newcollisiton);
                 GameManager.instance.ScoreValue += 2;
-                TextCreate(4);
+                TextCreate(2);
             }
         }
         else if (newcollisiton.gameObject.tag == "Blueberry" && gameObject.tag == "Blueberry")
@@ -75,7 +75,7 @@ public class Collision : MonoBehaviour
                 FruitChanges(Guava);
                 DestroyObject(newcollisiton);
                 GameManager.instance.ScoreValue += 5;
-                TextCreate(4);
+                TextCreate(5);
             }
         }
         else if (newcollisiton.gameObject.tag == "Guava" && gameObject.tag == "Guava")
@@ -88,7 +88,7 @@ public class Collision : MonoBehaviour
                 FruitChanges(Apple);
                 DestroyObject(newcollisiton);
                 GameManager.instance.ScoreValue += 10;
-                TextCreate(64);
+                TextCreate(10);
             }
         }
         else if (newcollisiton.gameObject.tag == "Apple" && gameObject.tag == "Apple")
@@ -96,12 +96,12 @@ public class Collision : MonoBehaviour
             if (!GameManager.instance.isFruit)
             {
                 Debug.Log("Apple + Grapefruit");
-                ParticalesEffect(Orange);
+                ParticalesEffect(Orange1);
                 GameManager.instance.isFruit = true;
                 FruitChanges(Grapefruit);
                 DestroyObject(newcollisiton);
                 GameManager.instance.ScoreValue += 15;
-                TextCreate(8);
+                TextCreate(15);
             }
         }
         else if (newcollisiton.gameObject.tag == "Grapefruit" && gameObject.tag == "Grapefruit")
@@ -114,7 +114,7 @@ public class Collision : MonoBehaviour
                 FruitChanges(Passionfruit);
                 DestroyObject(newcollisiton);
                 GameManager.instance.ScoreValue += 20;
-                TextCreate(32);
+                TextCreate(20);
             }
         }
         else if (newcollisiton.gameObject.tag == "Passionfruit" && gameObject.tag == "Passionfruit")
@@ -127,7 +127,7 @@ public class Collision : MonoBehaviour
                 FruitChanges(Lucuma);
                 DestroyObject(newcollisiton);
                 GameManager.instance.ScoreValue += 25;
-                TextCreate(128);
+                TextCreate(25);
             }
         }
 
@@ -141,7 +141,7 @@ public class Collision : MonoBehaviour
                 FruitChanges(Cloudberry);
                 DestroyObject(newcollisiton);
                 GameManager.instance.ScoreValue += 35;
-                TextCreate(128);
+                TextCreate(35);
             }
         }
         else if (newcollisiton.gameObject.tag == "Cloudberry" && gameObject.tag == "Cloudberry")
@@ -149,12 +149,12 @@ public class Collision : MonoBehaviour
             if (!GameManager.instance.isFruit)
             {
                 Debug.Log("Cloudberry + Watermelon");
-                ParticalesEffect(Green);
+                ParticalesEffect(Green1);
                 GameManager.instance.isFruit = true;
                 FruitChanges(Watermelon);
                 DestroyObject(newcollisiton);
                 GameManager.instance.ScoreValue += 40;
-                TextCreate(16);
+                TextCreate(40);
             }
         }
         else if (newcollisiton.gameObject.tag == "Watermelon" && gameObject.tag == "Watermelon")
@@ -162,10 +162,10 @@ public class Collision : MonoBehaviour
             if (!GameManager.instance.isFruit)
             {
                 Debug.Log("Watermelon");
-                ParticalesEffect(Green);
+                ParticalesEffect(Green1);
                 GameManager.instance.isFruit = true;
                 GameManager.instance.ScoreValue += 50;
-                TextCreate(256);
+                TextCreate(50);
             }
         }
 
@@ -206,8 +206,14 @@ public class Collision : MonoBehaviour
 
     public void FruitChanges(GameObject fruits)
     {
-        Vibration.Vibrate(50);
+        if (GameManager.instance.isVibrate == false)
+        {
+            Debug.Log("vibrate_Fruit");
+            Vibration.Vibrate(50);
+        }
         GameObject a = Instantiate(fruits);
+        SoundManager.Instance.SoundFruitMergePlay();
+        a.transform.GetComponent<PolygonCollider2D>().enabled = true;
         GameManager.instance.image.Add(a);
         Movement.instance.isSelect = true;
         a.transform.position = gameObject.transform.position;

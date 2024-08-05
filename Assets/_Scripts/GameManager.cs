@@ -39,12 +39,15 @@ public class GameManager : MonoBehaviour
 
     public Image NextImage;
 
-    public static GameManager instance;
+    public bool isVibrate = false;
 
     int NextFruit;
 
+    public static GameManager instance;
+
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         instance = this;
 
         if (PlayerPrefs.HasKey("Score") == false)
@@ -147,6 +150,12 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Back");
         SettingPanel.SetActive(false);
+        StartCoroutine(TimeforBack());
+    }
+
+    public IEnumerator TimeforBack()
+    {
+        yield return new WaitForSeconds(0.1f);
         isGameOver = false;
     }
 
@@ -163,6 +172,22 @@ public class GameManager : MonoBehaviour
     public void VibrateBtnClick()
     {
         Debug.Log("Vibrate");
-        Vibration.Vibrate(0);
+
+        if (isVibrate == false)
+        {
+            Vibration.Vibrate(50);
+            Debug.Log("vibrate");
+            isVibrate = true;
+        }
+        else if(isVibrate == true)
+        {
+            isVibrate = false;
+            Debug.Log("No_vibrate");
+        }
+    }
+
+    public void RewardButtonClick()
+    {
+        AdManager.Instance.ShowRewardedAd();
     }
 }

@@ -122,7 +122,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1562824903510011274}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: d40e9ad130fe646b9a43bdbd80e49e18, type: 2}
   m_IncludeLayers:
@@ -245,9 +245,13 @@ MonoBehaviour:
   Watermelon: {fileID: 7981181805283800164, guid: 422e4203b16a146199ee33b993028441, type: 3}
   Blue: {fileID: 3655534939648197250, guid: 0816a85ea144248b4aa2e05efdae0f99, type: 3}
   Green: {fileID: 3655534939648197250, guid: 8f309135d5faa429d93c373420be02e8, type: 3}
+  Green1: {fileID: 3655534939648197250, guid: d7b70c00d9f844ca386a3f4feb1c460c, type: 3}
   GreenDark: {fileID: 3655534939648197250, guid: 50f30b0280fa540448ec887a97ad4211, type: 3}
   NewyBlue: {fileID: 3655534939648197250, guid: 8d1adab7f8c814b82b334429dded087b, type: 3}
   Orange: {fileID: 3655534939648197250, guid: 2d4c6f24638a74ee4a377d9605986e92, type: 3}
+  Orange1: {fileID: 3655534939648197250, guid: 13b5c30e18340497a8d9f070d98518fa, type: 3}
   Red: {fileID: 3655534939648197250, guid: e2868319da2014ca1838b5c3a782a43c, type: 3}
   Yellow: {fileID: 3655534939648197250, guid: 0457c853154f940579f6ea465a5f18e1, type: 3}
+  ParticalParent: {fileID: 0}
   textNumber: {fileID: 3198658975816447325, guid: 546c1ac270cef424fb11924a7718967e, type: 3}
+  TextParent: {fileID: 0}
