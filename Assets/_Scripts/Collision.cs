@@ -169,7 +169,7 @@ public class Collision : MonoBehaviour
             }
         }
 
-        GameManager.instance.ScoreText.text = "Score" + ":" + GameManager.instance.ScoreValue.ToString();
+        GameManager.instance.ScoreText.text = GameManager.instance.ScoreValue.ToString();
         //PlayerPrefs.SetInt("Score", GameManager.instance.ScoreValue);
     }
 
@@ -199,21 +199,22 @@ public class Collision : MonoBehaviour
     {
         StartCoroutine(GameManager.instance.IsFruit());
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+        gameObject.GetComponent<Collider2D>().enabled = false;
         newcollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        newcollision.gameObject.GetComponent<PolygonCollider2D>().enabled = false;
+        newcollision.gameObject.GetComponent<Collider2D>().enabled = false;
     }
 
     public void FruitChanges(GameObject fruits)
     {
-        if (GameManager.instance.isVibrate == false)
+
+        Debug.Log("vibrate_Fruit");
+        if (PlayerPrefs.GetInt("Vibrate", 0) == 0)
         {
-            Debug.Log("vibrate_Fruit");
             Vibration.Vibrate(50);
         }
         GameObject a = Instantiate(fruits);
         SoundManager.Instance.SoundFruitMergePlay();
-        a.transform.GetComponent<PolygonCollider2D>().enabled = true;
+        a.transform.GetComponent<Collider2D>().enabled = true;
         GameManager.instance.image.Add(a);
         Movement.instance.isSelect = true;
         a.transform.position = gameObject.transform.position;

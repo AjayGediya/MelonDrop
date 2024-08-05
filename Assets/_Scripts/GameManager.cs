@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.IO;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -39,9 +41,13 @@ public class GameManager : MonoBehaviour
 
     public Image NextImage;
 
-    public bool isVibrate = false;
+    public Toggle VibrateToggle;
 
     int NextFruit;
+
+    public Sprite On, Off;
+
+    public Button SoundButton, MusicButton;
 
     public static GameManager instance;
 
@@ -79,7 +85,41 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         GenratedGrid();
         nextImage();
+        if (SoundManager.Instance.SoundAudio.volume == 0)
+        {
+            SoundManager.Instance.isSound = true;
+            SoundManager.Instance.SoundAudio.mute = true;
+            SoundButton.GetComponent<Image>().sprite = Off;
+        }
+        else if (SoundManager.Instance.SoundAudio.volume == 1)
+        {
+            SoundManager.Instance.isSound = false;
+            SoundManager.Instance.SoundAudio.mute = false;
+            SoundButton.GetComponent<Image>().sprite = On;
+        }
 
+
+        if (MusicManager.instnace.MusicAudio.volume == 0)
+        {
+            MusicManager.instnace.isMusic = true;
+            MusicManager.instnace.MusicAudio.mute = true;
+            MusicButton.GetComponent<Image>().sprite = Off;
+        }
+        else if (MusicManager.instnace.MusicAudio.volume == 1)
+        {
+            MusicManager.instnace.isMusic = false;
+            MusicManager.instnace.MusicAudio.mute = false;
+            MusicButton.GetComponent<Image>().sprite = On;
+        }
+
+        if (PlayerPrefs.GetInt("Vibrate", 0) == 0)
+        {
+            VibrateToggle.isOn = true;
+        }
+        else if (PlayerPrefs.GetInt("Vibrate", 0) == 1)
+        {
+            VibrateToggle.isOn = false;
+        }
     }
 
 
@@ -170,6 +210,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Sound", 0);
             SoundManager.Instance.SoundAudio.mute = true;
             SoundManager.Instance.SoundAudio.volume = 0;
+            SoundButton.GetComponent<Image>().sprite = Off;
             Debug.Log("Sound_Off");
         }
         else if (SoundManager.Instance.isSound == true)
@@ -178,6 +219,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Sound", 1);
             SoundManager.Instance.SoundAudio.mute = false;
             SoundManager.Instance.SoundAudio.volume = 1;
+            SoundButton.GetComponent<Image>().sprite = On;
             Debug.Log("Sound_On");
         }
     }
@@ -185,22 +227,40 @@ public class GameManager : MonoBehaviour
     public void MusicBtnClick()
     {
         Debug.Log("Music");
+
+        if (MusicManager.instnace.isMusic == false)
+        {
+            MusicManager.instnace.isMusic = true;
+            PlayerPrefs.SetInt("Music", 0);
+            MusicManager.instnace.MusicAudio.mute = true;
+            MusicManager.instnace.MusicAudio.volume = 0;
+            MusicButton.GetComponent<Image>().sprite = Off;
+            Debug.Log("Music_Off");
+        }
+        else
+        {
+            MusicManager.instnace.isMusic = false;
+            PlayerPrefs.SetInt("Music", 1);
+            MusicManager.instnace.MusicAudio.mute = false;
+            MusicManager.instnace.MusicAudio.volume = 1;
+            MusicButton.GetComponent<Image>().sprite = On;
+            Debug.Log("Music_On");
+        }
     }
 
     public void VibrateBtnClick()
     {
-        Debug.Log("Vibrate");
 
-        if (isVibrate == false)
+        if (VibrateToggle.isOn == true)
         {
+            Debug.Log("isOn");
             Vibration.Vibrate(50);
-            Debug.Log("vibrate");
-            isVibrate = true;
+            PlayerPrefs.SetInt("Vibrate", 0);
         }
-        else if(isVibrate == true)
+        else if (VibrateToggle.isOn == false)
         {
-            isVibrate = false;
-            Debug.Log("No_vibrate");
+            Debug.Log("isOff");
+            PlayerPrefs.SetInt("Vibrate", 1);
         }
     }
 
@@ -208,4 +268,33 @@ public class GameManager : MonoBehaviour
     {
         AdManager.Instance.ShowRewardedAd();
     }
+
+    public void ShareButtonClick()
+    {
+        //StartCoroutine(TakeScreenshotAndShare());
+    }
+
+    //private IEnumerator TakeScreenshotAndShare()
+    //{
+    //    yield return new WaitForEndOfFrame();
+
+    //    Texture2D ss = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+    //    ss.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+    //    ss.Apply();
+
+    //    string filePath = Path.Combine(Application.temporaryCachePath, "shared img.png");
+    //    File.WriteAllBytes(filePath, ss.EncodeToPNG());
+
+    //    // To avoid memory leaks
+    //    Destroy(ss);
+
+    //    new NativeShare().AddFile(filePath)
+    //        .SetSubject("Subject goes here").SetText("Hello world!").SetUrl("https://github.com/yasirkula/UnityNativeShare")
+    //        .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
+    //        .Share();
+
+    //    // Share on WhatsApp only, if installed (Android only)
+    //    //if( NativeShare.TargetExists( "com.whatsapp" ) )
+    //    //	new NativeShare().AddFile( filePath ).AddTarget( "com.whatsapp" ).Share();
+    //}
 }

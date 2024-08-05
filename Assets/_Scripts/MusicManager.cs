@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public AudioSource MusicAudio;
+
+    public bool isMusic = false;
+
+    public static MusicManager instnace;
+
+    public void Awake()
     {
-        
+        instnace = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        MusicAudio = GetComponent<AudioSource>();
+
+        if (PlayerPrefs.HasKey("Music") == false)
+        {
+            PlayerPrefs.SetInt("Music", 1);
+        }
+        else
+        {
+            MusicAudio.volume = PlayerPrefs.GetInt("Music");
+        }
     }
 }

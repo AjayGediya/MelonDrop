@@ -44,12 +44,6 @@ public class Movement : MonoBehaviour
             A.GameOverObject2.SetActive(false);
             A.GameOverObject3.SetActive(false);
             StartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                
-          //  Debug.Log("Click" + "::" + Input.mousePosition);
-
-          //  newpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-           // Debug.Log("X" + newpos);
-            
         }
 
         if (Input.GetMouseButton(0) && isSelect == false && A.isGameOver == false)
@@ -62,7 +56,7 @@ public class Movement : MonoBehaviour
 
             Vector3 diff = EndPos - StartPos;
 
-            diff.x = Mathf.Clamp(diff.x, -1.5f, 1.5f);
+            diff.x = Mathf.Clamp(diff.x, -1.9f, 1.9f);
 
             transform.position = new Vector3(diff.x, transform.position.y, transform.position.z);
 
@@ -71,10 +65,6 @@ public class Movement : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && isSelect == false && A.isGameOver == false)
         {
-            //this.gameObject.transform.position = new Vector3(newpos.x, transform.position.y, transform.position.z);
-
-                //this.gameObject.transform.position = new Vector3(newpos.x, transform.position.y, transform.position.z);
-            
             // Debug.Log("Up");
             SoundManager.Instance.FruitSoundPlay();
             gameObject.transform.GetComponent<PolygonCollider2D>().enabled = true;
