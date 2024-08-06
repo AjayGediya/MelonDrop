@@ -49,6 +49,16 @@ public class GameManager : MonoBehaviour
 
     public Button SoundButton, MusicButton;
 
+    public List<GameObject> First2Object = new List<GameObject>();
+
+    public bool isButtonOption = false;
+
+    public bool isButtonChange = false;
+
+    public bool isButtonBoxVibrate = false;
+
+    public bool isButtonFirst2Destroy = false;
+
     public static GameManager instance;
 
     private void Awake()
@@ -74,8 +84,10 @@ public class GameManager : MonoBehaviour
             HighScore = PlayerPrefs.GetInt("HighScore");
         }
 
-        ScoreText.text = "Score" + ":" + ScoreValue.ToString();
-        HighScoreText.text = "HighScore" + ":" + HighScore.ToString();
+        ScoreText.text = ScoreValue.ToString();
+        Debug.Log("Score" + ScoreValue.ToString());
+        HighScoreText.text = HighScore.ToString();
+        Debug.Log("HighScore" + HighScore.ToString());
     }
 
     public void Start()
@@ -126,10 +138,10 @@ public class GameManager : MonoBehaviour
     public void GenratedGrid()
     {
         int Number = UnityEngine.Random.Range(0, Fruits.Length);
-        Debug.Log(Number);
+        // Debug.Log(Number);
         GameObject fruit = Instantiate(Fruits[Number]);
-        Debug.Log(fruit + "::" + "Fruit");
-        image.Add(fruit);
+        // Debug.Log(fruit + "::" + "Fruit");
+        // image.Add(fruit);
         fruit.transform.SetParent(ParentObj.transform);
         fruit.transform.position = FruitsParent.transform.position;
     }
@@ -143,7 +155,7 @@ public class GameManager : MonoBehaviour
     public void AfterNextImageCall()
     {
         GameObject fruit = Instantiate(Fruits[NextFruit]);
-        image.Add(fruit);
+        //  image.Add(fruit);
         fruit.transform.SetParent(ParentObj.transform);
         fruit.transform.position = FruitsParent.transform.position;
     }
@@ -152,9 +164,12 @@ public class GameManager : MonoBehaviour
     {
         foreach (var item in image)
         {
-            if (item.gameObject.GetComponent<SpriteRenderer>().enabled == false)
+            if (item != null)
             {
-                StartCoroutine(DeletImage(item));
+                if (item.gameObject.GetComponent<SpriteRenderer>().enabled == false)
+                {
+                    StartCoroutine(DeletImage(item));
+                }
             }
         }
     }
@@ -269,32 +284,108 @@ public class GameManager : MonoBehaviour
         AdManager.Instance.ShowRewardedAd();
     }
 
-    public void ShareButtonClick()
+    //public void ShareButtonClick()
+    //{
+    //    //StartCoroutine(TakeScreenshotAndShare());
+    //}
+
+    ////private IEnumerator TakeScreenshotAndShare()
+    ////{
+    ////    yield return new WaitForEndOfFrame();
+
+    ////    Texture2D ss = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+    ////    ss.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+    ////    ss.Apply();
+
+    ////    string filePath = Path.Combine(Application.temporaryCachePath, "shared img.png");
+    ////    File.WriteAllBytes(filePath, ss.EncodeToPNG());
+
+    ////    // To avoid memory leaks
+    ////    Destroy(ss);
+
+    ////    new NativeShare().AddFile(filePath)
+    ////        .SetSubject("Subject goes here").SetText("Hello world!").SetUrl("https://github.com/yasirkula/UnityNativeShare")
+    ////        .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
+    ////        .Share();
+
+    ////    // Share on WhatsApp only, if installed (Android only)
+    ////    //if( NativeShare.TargetExists( "com.whatsapp" ) )
+    ////    //	new NativeShare().AddFile( filePath ).AddTarget( "com.whatsapp" ).Share();
+    ////}
+
+    public void BomButtonClick()
     {
-        //StartCoroutine(TakeScreenshotAndShare());
+        Debug.Log("Bom");
+        isButtonOption = true;
+        foreach (var item in image)
+        {
+            item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
 
-    //private IEnumerator TakeScreenshotAndShare()
-    //{
-    //    yield return new WaitForEndOfFrame();
+    public void ChangeButtonClick()
+    {
+        isButtonChange = true;
+        Debug.Log("Changes");
+        foreach (var item in image)
+        {
+            item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
 
-    //    Texture2D ss = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-    //    ss.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-    //    ss.Apply();
+    public void BoxVibrateButtonClick()
+    {
+        isButtonBoxVibrate = true;
+        Debug.Log("BoxVibrate");
+    }
 
-    //    string filePath = Path.Combine(Application.temporaryCachePath, "shared img.png");
-    //    File.WriteAllBytes(filePath, ss.EncodeToPNG());
+    public void First2DestroyButtonCLick()
+    {
+        isButtonFirst2Destroy = true;
+        StartCoroutine(ResetFruits());
+    }
 
-    //    // To avoid memory leaks
-    //    Destroy(ss);
+    IEnumerator ResetFruits()
+    {
+        Debug.Log("First2Destroy");
 
-    //    new NativeShare().AddFile(filePath)
-    //        .SetSubject("Subject goes here").SetText("Hello world!").SetUrl("https://github.com/yasirkula/UnityNativeShare")
-    //        .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
-    //        .Share();
+        for (int i = 0; i < image.Count; i++)
+        {
 
-    //    // Share on WhatsApp only, if installed (Android only)
-    //    //if( NativeShare.TargetExists( "com.whatsapp" ) )
-    //    //	new NativeShare().AddFile( filePath ).AddTarget( "com.whatsapp" ).Share();
-    //}
+            if (image[i].gameObject.name == "Strawberry(Clone)")
+            {
+                Debug.Log(image[i]);
+                First2Object.Add(image[i]);
+            }
+
+            if (image[i].gameObject.name == "Apricot(Clone)")
+            {
+                Debug.Log(image[i]);
+                First2Object.Add(image[i]);
+            }
+        }
+
+        foreach (var itemObject in First2Object)
+        {
+            Destroy(itemObject);
+        }
+        Debug.Log(image.Count);
+
+
+        image.Clear();
+        First2Object.Clear();
+
+        yield return new WaitForSeconds(0.1f);
+
+        for (int i = 0; i < ParentObj.transform.childCount; i++)
+        {
+            Rigidbody2D rb = ParentObj.transform.GetChild(i).GetComponent<Rigidbody2D>();
+
+            if (rb.isKinematic == false)
+            {
+                image.Add(ParentObj.transform.GetChild(i).gameObject);
+            }
+        }
+        isButtonFirst2Destroy = false;
+    }
 }

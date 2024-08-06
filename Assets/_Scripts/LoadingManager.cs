@@ -18,14 +18,14 @@ public class LoadingManager : MonoBehaviour
         if (isLoading == false)
         {
             LoadingSlider.value += Time.deltaTime;
-            Debug.Log((LoadingSlider.value * 20).ToString("00"));
+            //Debug.Log((LoadingSlider.value * 20).ToString("00"));
             LoadTxt.text = "Loading..." + ((int)(LoadingSlider.value * 20)) + "%";
 
             if (LoadingSlider.value >= 5)
             {
                 isLoading = true;
                 SceneManager.LoadScene(1);
-                Debug.Log("LoadingDone");
+               // Debug.Log("LoadingDone");
             }
         }
     }

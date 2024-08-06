@@ -29,18 +29,19 @@ public class GameOver : MonoBehaviour
     {
         if (GameManager.instance.GameOverObject1.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject2.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject3.GetComponent<GameOver>().istouch == true)
         {
-            Debug.Log("GameOver");
+            // Debug.Log("GameOver");
             AdManager.Instance.ShowInterstitialAd();
             GameManager.instance.isGameOver = true;
             GameManager.instance.OverPanel.SetActive(true);
-            GameManager.instance.ScoreValueOver.text = "Score" + ":" + GameManager.instance.ScoreValue.ToString();
+            GameManager.instance.ScoreValueOver.text = GameManager.instance.ScoreValue.ToString();
+            Debug.Log("SCOREOVER" + GameManager.instance.ScoreValue.ToString());
+            Debug.Log("HIGHSCOREOVER" + GameManager.instance.HighScore.ToString());
 
-
-            if (GameManager.instance.ScoreValue >= GameManager.instance.HighScore)
+            if (GameManager.instance.ScoreValue > GameManager.instance.HighScore)
             {
-                PlayerPrefs.SetInt("HighScore", GameManager.instance.HighScore);
                 GameManager.instance.HighScore = GameManager.instance.ScoreValue;
-                GameManager.instance.HighScoreText.text = "HighScore" + ":" + GameManager.instance.HighScore.ToString();
+                GameManager.instance.HighScoreText.text = GameManager.instance.HighScore.ToString();
+                PlayerPrefs.SetInt("HighScore", GameManager.instance.HighScore);
             }
         }
     }
