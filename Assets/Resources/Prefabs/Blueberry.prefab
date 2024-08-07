@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3697831735463250505}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.69, y: -0.56, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -79,12 +79,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 8704416646a89440499974d9ad68b96f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b371743f6eec6423e8268679eb5e3b82, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.5, y: 1.5}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -115,7 +115,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!60 &4084419320547314287
 PolygonCollider2D:
@@ -153,58 +153,58 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.85714287, y: 0.85714287}
-    newSize: {x: 1.5, y: 1.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.23428571, y: -0.24}
-      - {x: 0.24, y: -0.22285715}
-      - {x: 0.24285714, y: -0.20857142}
-      - {x: 0.24285714, y: -0.16285715}
-      - {x: 0.23714286, y: -0.14}
-      - {x: 0.23428571, y: -0.12571429}
-      - {x: 0.22, y: -0.09142857}
-      - {x: 0.26, y: -0.068571426}
-      - {x: 0.27142856, y: -0.06}
-      - {x: 0.30571428, y: -0.025714286}
-      - {x: 0.31428573, y: -0.008571428}
-      - {x: 0.33714285, y: 0.028571429}
-      - {x: 0.33714285, y: 0.08285714}
-      - {x: 0.29142857, y: 0.114285715}
-      - {x: 0.24571428, y: 0.12285714}
-      - {x: 0.16571428, y: 0.12}
-      - {x: 0.17142858, y: 0.15714286}
-      - {x: 0.16285715, y: 0.23714286}
-      - {x: 0.15142857, y: 0.27714285}
-      - {x: 0.09142857, y: 0.34571427}
-      - {x: 0.06, y: 0.34571427}
-      - {x: 0.022857143, y: 0.32857144}
-      - {x: -0.037142858, y: 0.24857143}
-      - {x: -0.054285713, y: 0.16571428}
-      - {x: -0.108571425, y: 0.16571428}
-      - {x: -0.16571428, y: 0.15142857}
-      - {x: -0.22, y: 0.114285715}
-      - {x: -0.25428572, y: 0.048571426}
-      - {x: -0.25428572, y: -0.025714286}
-      - {x: -0.3342857, y: -0.117142856}
-      - {x: -0.33714285, y: -0.13428572}
-      - {x: -0.33714285, y: -0.19714285}
-      - {x: -0.33142856, y: -0.23142856}
-      - {x: -0.30571428, y: -0.27142856}
-      - {x: -0.26, y: -0.31428573}
-      - {x: -0.1942857, y: -0.34}
-      - {x: -0.12285714, y: -0.3342857}
-      - {x: -0.09714285, y: -0.3257143}
-      - {x: -0.06, y: -0.30285713}
-      - {x: 0.017142856, y: -0.34285715}
-      - {x: 0.12, y: -0.34285715}
-      - {x: 0.14285713, y: -0.3342857}
-      - {x: 0.20571429, y: -0.29142857}
-      - {x: 0.22285715, y: -0.2657143}
+    - - {x: 0.27333334, y: -0.28}
+      - {x: 0.28, y: -0.26000002}
+      - {x: 0.28333333, y: -0.24333334}
+      - {x: 0.28333333, y: -0.19}
+      - {x: 0.27666667, y: -0.16333334}
+      - {x: 0.27333334, y: -0.14666668}
+      - {x: 0.25666666, y: -0.10666667}
+      - {x: 0.30333334, y: -0.08}
+      - {x: 0.31666666, y: -0.07}
+      - {x: 0.35666668, y: -0.030000001}
+      - {x: 0.36666667, y: -0.01}
+      - {x: 0.39333335, y: 0.033333335}
+      - {x: 0.39333335, y: 0.09666667}
+      - {x: 0.34, y: 0.13333334}
+      - {x: 0.28666666, y: 0.14333333}
+      - {x: 0.19333334, y: 0.14}
+      - {x: 0.2, y: 0.18333334}
+      - {x: 0.19, y: 0.27666667}
+      - {x: 0.17666668, y: 0.32333335}
+      - {x: 0.10666667, y: 0.40333334}
+      - {x: 0.07, y: 0.40333334}
+      - {x: 0.026666667, y: 0.38333336}
+      - {x: -0.043333333, y: 0.29000002}
+      - {x: -0.06333333, y: 0.19333334}
+      - {x: -0.12666667, y: 0.19333334}
+      - {x: -0.19333334, y: 0.17666668}
+      - {x: -0.25666666, y: 0.13333334}
+      - {x: -0.29666668, y: 0.05666667}
+      - {x: -0.29666668, y: -0.030000001}
+      - {x: -0.39000002, y: -0.13666667}
+      - {x: -0.39333335, y: -0.15666667}
+      - {x: -0.39333335, y: -0.23}
+      - {x: -0.3866667, y: -0.27}
+      - {x: -0.35666668, y: -0.31666666}
+      - {x: -0.30333334, y: -0.36666667}
+      - {x: -0.22666667, y: -0.39666668}
+      - {x: -0.14333333, y: -0.39000002}
+      - {x: -0.11333334, y: -0.38}
+      - {x: -0.07, y: -0.35333335}
+      - {x: 0.02, y: -0.4}
+      - {x: 0.14, y: -0.4}
+      - {x: 0.16666667, y: -0.39000002}
+      - {x: 0.24000001, y: -0.34}
+      - {x: 0.26000002, y: -0.31}
   m_UseDelaunayMesh: 0
 --- !u!114 &8363153936267707286
 MonoBehaviour:
@@ -269,15 +269,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e9492b581774f01aa405659c8b6f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blueberry: {fileID: 3697831735463250505}
-  Apricot: {fileID: 8098823646160754856, guid: b9ead4a25697146f784db5054bbe0e97, type: 3}
-  Apple: {fileID: 208496547990194283, guid: 07f33ffe5b5424da582530b89e6002b4, type: 3}
-  Cloudberry: {fileID: 6274047450506621406, guid: ef6b5f8e57af14436b2f227d3416002b, type: 3}
-  Grapefruit: {fileID: 673719510762400153, guid: 8ecb5a8301ede4fd0a13db0fa6a70426, type: 3}
-  Guava: {fileID: 6228579229745099367, guid: 3659c0049fb3d425198377a10d21f6c9, type: 3}
-  Lucuma: {fileID: 1562824903510011274, guid: b29e2d344067145ada7a2e97b0f0aab4, type: 3}
-  Passionfruit: {fileID: 1960313574138554517, guid: ec3b08b3409c5486d80cc29470f9ea03, type: 3}
-  Watermelon: {fileID: 7981181805283800164, guid: 422e4203b16a146199ee33b993028441, type: 3}
+  Blueberry: {fileID: 21300000, guid: b371743f6eec6423e8268679eb5e3b82, type: 3}
+  Apricot: {fileID: 21300000, guid: a9b55c94431244021ab810de97e6e4ea, type: 3}
+  Apple: {fileID: 21300000, guid: 9666ab00d2d054612a41eb8025fee5e9, type: 3}
+  Cloudberry: {fileID: 21300000, guid: adefa1094953344638080ce7f3dbe7a7, type: 3}
+  Grapefruit: {fileID: 21300000, guid: 4a016d3c28eb1420a95c7afef36c8975, type: 3}
+  Guava: {fileID: 21300000, guid: 6346158128dfe4c419f63223f2e01132, type: 3}
+  Lucuma: {fileID: 21300000, guid: b9e500198ab0348709831ef729407f6c, type: 3}
+  Passionfruit: {fileID: 21300000, guid: 6348b23a58dd844639d13cc276f278bd, type: 3}
+  Watermelon: {fileID: 21300000, guid: 1f8ee03ea8d1045f68119fdcb377a64b, type: 3}
+  particle: {fileID: 6192724089161036655, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
 --- !u!1 &5681302331075979992
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,8 +305,8 @@ Transform:
   m_GameObject: {fileID: 5681302331075979992}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.025, y: -0.071, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.008, y: -0.064, z: 0}
+  m_LocalScale: {x: 1.2182894, y: 1.2182894, z: 1.2182894}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 271387423528279523}

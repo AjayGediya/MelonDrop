@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.IO;
+using DG.Tweening;
 
 
 public class GameManager : MonoBehaviour
@@ -59,6 +60,16 @@ public class GameManager : MonoBehaviour
 
     public bool isButtonFirst2Destroy = false;
 
+    public GameObject Box;
+
+    public float rotateSPeed;
+
+    public GameObject ColliderObject;
+
+    public Camera main;
+
+    public ParticleSystem particle;
+
     public static GameManager instance;
 
     private void Awake()
@@ -97,32 +108,39 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         GenratedGrid();
         nextImage();
-        if (SoundManager.Instance.SoundAudio.volume == 0)
+
+        if(SoundManager.Instance != null)
         {
-            SoundManager.Instance.isSound = true;
-            SoundManager.Instance.SoundAudio.mute = true;
-            SoundButton.GetComponent<Image>().sprite = Off;
-        }
-        else if (SoundManager.Instance.SoundAudio.volume == 1)
-        {
-            SoundManager.Instance.isSound = false;
-            SoundManager.Instance.SoundAudio.mute = false;
-            SoundButton.GetComponent<Image>().sprite = On;
+            if (SoundManager.Instance.SoundAudio.volume == 0)
+            {
+                SoundManager.Instance.isSound = true;
+                SoundManager.Instance.SoundAudio.mute = true;
+                SoundButton.GetComponent<Image>().sprite = Off;
+            }
+            else if (SoundManager.Instance.SoundAudio.volume == 1)
+            {
+                SoundManager.Instance.isSound = false;
+                SoundManager.Instance.SoundAudio.mute = false;
+                SoundButton.GetComponent<Image>().sprite = On;
+            }
         }
 
+        if(MusicManager.instnace != null)
+        {
+            if (MusicManager.instnace.MusicAudio.volume == 0)
+            {
+                MusicManager.instnace.isMusic = true;
+                MusicManager.instnace.MusicAudio.mute = true;
+                MusicButton.GetComponent<Image>().sprite = Off;
+            }
+            else if (MusicManager.instnace.MusicAudio.volume == 1)
+            {
+                MusicManager.instnace.isMusic = false;
+                MusicManager.instnace.MusicAudio.mute = false;
+                MusicButton.GetComponent<Image>().sprite = On;
+            }
+        }
 
-        if (MusicManager.instnace.MusicAudio.volume == 0)
-        {
-            MusicManager.instnace.isMusic = true;
-            MusicManager.instnace.MusicAudio.mute = true;
-            MusicButton.GetComponent<Image>().sprite = Off;
-        }
-        else if (MusicManager.instnace.MusicAudio.volume == 1)
-        {
-            MusicManager.instnace.isMusic = false;
-            MusicManager.instnace.MusicAudio.mute = false;
-            MusicButton.GetComponent<Image>().sprite = On;
-        }
 
         if (PlayerPrefs.GetInt("Vibrate", 0) == 0)
         {
@@ -140,9 +158,7 @@ public class GameManager : MonoBehaviour
         int Number = UnityEngine.Random.Range(0, Fruits.Length);
         // Debug.Log(Number);
         GameObject fruit = Instantiate(Fruits[Number]);
-        // Debug.Log(fruit + "::" + "Fruit");
-        // image.Add(fruit);
-        fruit.transform.SetParent(ParentObj.transform);
+        fruit.transform.SetParent(FruitsParent.transform);
         fruit.transform.position = FruitsParent.transform.position;
     }
 
@@ -155,8 +171,7 @@ public class GameManager : MonoBehaviour
     public void AfterNextImageCall()
     {
         GameObject fruit = Instantiate(Fruits[NextFruit]);
-        //  image.Add(fruit);
-        fruit.transform.SetParent(ParentObj.transform);
+        fruit.transform.SetParent(FruitsParent.transform);
         fruit.transform.position = FruitsParent.transform.position;
     }
 
@@ -177,7 +192,6 @@ public class GameManager : MonoBehaviour
     public IEnumerator DeletImage(GameObject deletimage)
     {
         yield return new WaitForSeconds(2);
-
         Destroy(deletimage);
         image.Remove(deletimage);
     }
@@ -279,11 +293,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RewardButtonClick()
-    {
-        AdManager.Instance.ShowRewardedAd();
-    }
-
     //public void ShareButtonClick()
     //{
     //    //StartCoroutine(TakeScreenshotAndShare());
@@ -315,16 +324,19 @@ public class GameManager : MonoBehaviour
 
     public void BomButtonClick()
     {
+        AdManager.Instance.ShowRewardedAd();
         Debug.Log("Bom");
         isButtonOption = true;
         foreach (var item in image)
         {
             item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetLoops(-1, LoopType.Incremental);
         }
     }
 
     public void ChangeButtonClick()
     {
+        AdManager.Instance.ShowRewardedAd();
         isButtonChange = true;
         Debug.Log("Changes");
         foreach (var item in image)
@@ -335,12 +347,85 @@ public class GameManager : MonoBehaviour
 
     public void BoxVibrateButtonClick()
     {
+        AdManager.Instance.ShowRewardedAd();
+        GameOverObject1.SetActive(false);
+        GameOverObject2.SetActive(false);
+        GameOverObject3.SetActive(false);
         isButtonBoxVibrate = true;
         Debug.Log("BoxVibrate");
+        main.DOOrthoSize(7, 0.5f);
+        BoxRotate();
+    }
+
+    public void BoxRotate()
+    {
+        StartCoroutine(WobbleObject());
+    }
+
+    public float wobbleDuration = 0.1f;
+    public float wobbleAngle = 5f;
+
+    public float distance = 1.5f;  // Distance to move left and right
+    public float duration = 0.5f;
+
+
+    IEnumerator WobbleObject()
+    {
+        yield return new WaitForSeconds(.5f);
+        ColliderObject.SetActive(true);
+        MoveLeftRight();
+        //Box.transform.DOShakePosition(1, new Vector3(1, 0, 0));
+        // Create a sequence for the wobble animation
+        Sequence wobbleSequence = DOTween.Sequence();
+
+        // Add a rotation to the positive angle on the Z-axis
+        wobbleSequence.Append(Box.transform.DORotate(new Vector3(0, 0, wobbleAngle), wobbleDuration)
+            .SetEase(Ease.InOutSine));
+
+        // Add a rotation back to the negative angle on the Z-axis
+        wobbleSequence.Append(Box.transform.DORotate(new Vector3(0, 0, -wobbleAngle), wobbleDuration)
+            .SetEase(Ease.InOutSine));
+
+        // Add a rotation back to the starting position
+        wobbleSequence.Append(Box.transform.DORotate(new Vector3(0, 0, 0), wobbleDuration)
+            .SetEase(Ease.InOutSine));
+
+        // Set the sequence to loop indefinitely
+        wobbleSequence.SetLoops(4, LoopType.Restart);
+
+        yield return new WaitForSeconds(1);
+        Box.transform.eulerAngles = Vector3.zero;
+        ColliderObject.SetActive(false);
+        isButtonBoxVibrate = false;
+        main.DOOrthoSize(6, 0.5f);
+        GameOverObject1.SetActive(true);
+        GameOverObject2.SetActive(true);
+        GameOverObject3.SetActive(true);
+    }
+
+    void MoveLeftRight()
+    {
+        // Create a sequence for the left-right movement
+        Sequence leftRightSequence = DOTween.Sequence();
+
+        // Move to the right
+        leftRightSequence.Append(ColliderObject.transform.DOMoveX(ColliderObject.transform.position.x + distance, duration)
+            .SetEase(Ease.InOutSine));
+
+        // Move to the left
+        leftRightSequence.Append(ColliderObject.transform.DOMoveX(ColliderObject.transform.position.x - distance, duration)
+            .SetEase(Ease.InOutSine));
+
+        // Set the sequence to loop indefinitely
+        leftRightSequence.SetLoops(2, LoopType.Yoyo);
+
+        // Play the sequence
+        leftRightSequence.Play();
     }
 
     public void First2DestroyButtonCLick()
     {
+        AdManager.Instance.ShowRewardedAd();
         isButtonFirst2Destroy = true;
         StartCoroutine(ResetFruits());
     }
@@ -349,43 +434,49 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("First2Destroy");
 
-        for (int i = 0; i < image.Count; i++)
+        if (isButtonFirst2Destroy == true && isButtonOption == false && isButtonChange == false && isButtonBoxVibrate == false)
         {
-
-            if (image[i].gameObject.name == "Strawberry(Clone)")
+            for (int i = 0; i < image.Count; i++)
             {
-                Debug.Log(image[i]);
-                First2Object.Add(image[i]);
+
+                if (image[i].gameObject.name == "Strawberry(Clone)")
+                {
+                    Debug.Log(image[i]);
+                    First2Object.Add(image[i]);
+                }
+
+                if (image[i].gameObject.name == "Apricot(Clone)")
+                {
+                    Debug.Log(image[i]);
+                    First2Object.Add(image[i]);
+                }
             }
 
-            if (image[i].gameObject.name == "Apricot(Clone)")
+            foreach (var itemObject in First2Object)
             {
-                Debug.Log(image[i]);
-                First2Object.Add(image[i]);
+                ParticleSystem particleSystem = Instantiate(particle);
+                particleSystem.transform.position = itemObject.transform.position;
+
+                Destroy(itemObject);
             }
-        }
-
-        foreach (var itemObject in First2Object)
-        {
-            Destroy(itemObject);
-        }
-        Debug.Log(image.Count);
+            Debug.Log(image.Count);
 
 
-        image.Clear();
-        First2Object.Clear();
+            image.Clear();
+            First2Object.Clear();
 
-        yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.1f);
 
-        for (int i = 0; i < ParentObj.transform.childCount; i++)
-        {
-            Rigidbody2D rb = ParentObj.transform.GetChild(i).GetComponent<Rigidbody2D>();
-
-            if (rb.isKinematic == false)
+            for (int i = 0; i < FruitsParent.transform.childCount; i++)
             {
-                image.Add(ParentObj.transform.GetChild(i).gameObject);
+                Rigidbody2D rb = FruitsParent.transform.GetChild(i).GetComponent<Rigidbody2D>();
+
+                if (rb.isKinematic == false)
+                {
+                    image.Add(FruitsParent.transform.GetChild(i).gameObject);
+                }
             }
+            isButtonFirst2Destroy = false;
         }
-        isButtonFirst2Destroy = false;
     }
 }

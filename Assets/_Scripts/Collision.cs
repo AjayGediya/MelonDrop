@@ -214,12 +214,13 @@ public class Collision : MonoBehaviour
             Vibration.Vibrate(50);
         }
         GameObject a = Instantiate(fruits);
-        SoundManager.Instance.SoundFruitMergePlay();
+        if(SoundManager.Instance != null)
+            SoundManager.Instance.SoundFruitMergePlay();
         a.transform.GetComponent<Collider2D>().enabled = true;
         GameManager.instance.image.Add(a);
         Movement.instance.isSelect = true;
         a.transform.position = gameObject.transform.position;
-        a.transform.SetParent(GameManager.instance.ParentObj.transform);
+        a.transform.SetParent(GameManager.instance.FruitsParent.transform);
         a.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 }

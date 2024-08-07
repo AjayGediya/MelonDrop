@@ -72,7 +72,8 @@ public class Movement : MonoBehaviour
             if (Input.GetMouseButtonUp(0) && isSelect == false && A.isGameOver == false && A.isButtonOption == false && A.isButtonFirst2Destroy == false && A.isButtonChange == false && A.isButtonBoxVibrate == false)
             {
                 // Debug.Log("Up");
-                SoundManager.Instance.FruitSoundPlay();
+                if(SoundManager.Instance != null)
+                    SoundManager.Instance.FruitSoundPlay();
                 gameObject.transform.GetComponent<PolygonCollider2D>().enabled = true;
                 GameManager.instance.image.Add(gameObject);
                 isSelect = true;
