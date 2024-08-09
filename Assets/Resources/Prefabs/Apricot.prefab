@@ -213,13 +213,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1dd3563dbb14c6e8d6b1223b26d292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPos: {x: 0, y: 0, z: 0}
-  EndPos: {x: 0, y: 0, z: 0}
-  ScreenSize: {x: 0, y: 0, z: 0}
-  Line: {fileID: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  endPos: {x: 0, y: 0, z: 0}
+  screenSize: {x: 0, y: 0, z: 0}
+  line: {fileID: 0}
   isSelect: 0
-  Min: -2.2
-  Max: 2.2
+  min: -2
+  max: 2
   rb: {fileID: 0}
 --- !u!114 &8327786144420350492
 MonoBehaviour:
@@ -266,15 +266,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e9492b581774f01aa405659c8b6f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blueberry: {fileID: 21300000, guid: b371743f6eec6423e8268679eb5e3b82, type: 3}
-  Apricot: {fileID: 21300000, guid: a9b55c94431244021ab810de97e6e4ea, type: 3}
-  Apple: {fileID: 21300000, guid: 9666ab00d2d054612a41eb8025fee5e9, type: 3}
-  Cloudberry: {fileID: 21300000, guid: adefa1094953344638080ce7f3dbe7a7, type: 3}
-  Grapefruit: {fileID: 21300000, guid: 4a016d3c28eb1420a95c7afef36c8975, type: 3}
-  Guava: {fileID: 21300000, guid: 6346158128dfe4c419f63223f2e01132, type: 3}
-  Lucuma: {fileID: 21300000, guid: b9e500198ab0348709831ef729407f6c, type: 3}
-  Passionfruit: {fileID: 21300000, guid: 6348b23a58dd844639d13cc276f278bd, type: 3}
-  Watermelon: {fileID: 21300000, guid: 1f8ee03ea8d1045f68119fdcb377a64b, type: 3}
+  blueberry: {fileID: 21300000, guid: b371743f6eec6423e8268679eb5e3b82, type: 3}
+  apricot: {fileID: 21300000, guid: a9b55c94431244021ab810de97e6e4ea, type: 3}
+  apple: {fileID: 21300000, guid: 9666ab00d2d054612a41eb8025fee5e9, type: 3}
+  cloudberry: {fileID: 21300000, guid: adefa1094953344638080ce7f3dbe7a7, type: 3}
+  grapefruit: {fileID: 21300000, guid: 4a016d3c28eb1420a95c7afef36c8975, type: 3}
+  guava: {fileID: 21300000, guid: 6346158128dfe4c419f63223f2e01132, type: 3}
+  lucuma: {fileID: 21300000, guid: b9e500198ab0348709831ef729407f6c, type: 3}
+  passionfruit: {fileID: 21300000, guid: 6348b23a58dd844639d13cc276f278bd, type: 3}
+  watermelon: {fileID: 21300000, guid: 1f8ee03ea8d1045f68119fdcb377a64b, type: 3}
   particle: {fileID: 6192724089161036655, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
 --- !u!58 &1762857266631513163
 CircleCollider2D:

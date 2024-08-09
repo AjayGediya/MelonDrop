@@ -5,34 +5,36 @@ using UnityEngine.SceneManagement;
 
 public class LoadingManager : MonoBehaviour
 {
-    public Slider LoadingSlider;
+    [SerializeField] private Slider loadingSlider;
+    [SerializeField] private TextMeshProUGUI loadTxt;
 
-    public TextMeshProUGUI LoadTxt;
+    private bool isLoading = false;
+    private const float maxLoadingValue = 5f;
+    private const int nextSceneIndex = 1;
 
-    public bool isLoading = false;
-
-    //private void Start()
-    //{
-    //    SceneManager.LoadScene(1);
-    //}
-    public void Awake()
+    private void Awake()
     {
         Application.targetFrameRate = 60;
     }
 
-    public void Update()
+    private void Update()
     {
-        if (isLoading == false)
+        if (!isLoading)
         {
-            LoadingSlider.value += Time.deltaTime;
-            LoadTxt.text = "Loading..." + ((int)(LoadingSlider.value * 20)) + "%";
+            loadingSlider.value += Time.deltaTime;
+            loadTxt.text = $"Loading... {Mathf.Clamp((int)(loadingSlider.value * 20), 0, 100)}%";
 
-            if (LoadingSlider.value >= 5)
+            if (loadingSlider.value >= maxLoadingValue)
             {
                 isLoading = true;
-                SceneManager.LoadScene(1);
-                Debug.Log("ScneChange");
+                LoadNextScene();
             }
         }
+    }
+
+    private void LoadNextScene()
+    {
+        SceneManager.LoadScene(nextSceneIndex);
+        Debug.Log("Scene changed");
     }
 }

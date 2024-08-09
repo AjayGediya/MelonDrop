@@ -182,7 +182,7 @@ public class Collision : MonoBehaviour
         }
 
         GameManager.instance.image.Add(newFruit);
-        Movement.instance.isSelect = true;
+        Movement.Instance.isSelect = true;
     }
 }
 
