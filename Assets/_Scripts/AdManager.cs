@@ -20,6 +20,8 @@ public class AdManager : MonoBehaviour
 
     public bool isRewardShow = false;
 
+    public bool isShow = false;
+
     private void Awake()
     {
         Instance = this;
@@ -161,6 +163,7 @@ public class AdManager : MonoBehaviour
 
     public void ShowInterstitialAd()
     {
+        isShow = true;
         if (_interstitialAd != null && _interstitialAd.CanShowAd())
         {
             Debug.Log("Showing interstitial ad.");
@@ -298,6 +301,7 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("Rewarded ad full screen content closed.");
             isRewardShow = false;
+            GameManager.instance.isBom = true;
             LoadRewardedAd();
             Debug.Log("E");
         };

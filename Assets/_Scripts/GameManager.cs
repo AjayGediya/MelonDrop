@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Profiling;
 using DG.Tweening;
 
 public class GameManager : MonoBehaviour
@@ -73,9 +74,11 @@ public class GameManager : MonoBehaviour
 
     public ShareText shareText;
 
+    public bool isBom = false;
+
     public static GameManager instance;
 
-    private void Awake()
+    public void Awake()
     {
         Application.targetFrameRate = 60;
         instance = this;
@@ -109,8 +112,14 @@ public class GameManager : MonoBehaviour
         Fruits = Resources.LoadAll<GameObject>("Prefabs");
         NextImages = Resources.LoadAll<Sprite>("Sprite");
         isGameOver = false;
+
+        Profiler.BeginSample("GenratedGrid");
         GenratedGrid();
+        Profiler.EndSample();
+
+        Profiler.BeginSample("nextImage");
         nextImage();
+        Profiler.EndSample();
 
         if (SoundManager.Instance != null)
         {
@@ -178,7 +187,7 @@ public class GameManager : MonoBehaviour
         fruit.transform.position = FruitsParent.transform.position;
     }
 
-    private void Update()
+    public void Update()
     {
         foreach (var item in image)
         {
@@ -186,7 +195,9 @@ public class GameManager : MonoBehaviour
             {
                 if (item.gameObject.GetComponent<SpriteRenderer>().enabled == false)
                 {
+                    Profiler.BeginSample("DeletImage");
                     StartCoroutine(DeletImage(item));
+                    Profiler.EndSample();
                 }
             }
         }
@@ -207,6 +218,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartBtnClick()
     {
+        AdManager.Instance.isShow = false;
         OverPanel.SetActive(false);
         ScoreValue = 0;
         ScoreText.text = "0";
@@ -224,7 +236,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Back");
         SettingPanel.SetActive(false);
+        Profiler.BeginSample("TimeforBack");
         StartCoroutine(TimeforBack());
+        Profiler.EndSample();
     }
 
     public IEnumerator TimeforBack()
@@ -306,8 +320,9 @@ public class GameManager : MonoBehaviour
         if (AdManager.Instance.isRewardShow)
         {
             AdManager.Instance.ShowRewardedAd();
-            Debug.Log("Bom");
+
             isButtonOption = true;
+            Debug.Log("Bom");
             foreach (var item in image)
             {
                 item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
@@ -316,9 +331,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Profiler.BeginSample("AdTimeChanges");
             StartCoroutine(AdTimeChanges());
+            Profiler.EndSample();
         }
     }
+
 
     public IEnumerator AdTimeChanges()
     {
@@ -341,7 +359,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Profiler.BeginSample("AdTimeChanges");
             StartCoroutine(AdTimeChanges());
+            Profiler.EndSample();
         }
     }
 
@@ -360,13 +380,17 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Profiler.BeginSample("AdTimeChanges");
             StartCoroutine(AdTimeChanges());
+            Profiler.EndSample();
         }
     }
 
     public void BoxRotate()
     {
+        Profiler.BeginSample("WobbleObject");
         StartCoroutine(WobbleObject());
+        Profiler.EndSample();
     }
 
     public float wobbleDuration = 0.1f;
@@ -407,10 +431,12 @@ public class GameManager : MonoBehaviour
         isButtonBoxVibrate = false;
         main.DOOrthoSize(6, 0.5f);
         ColliderObject.transform.DOMoveY(-4.5f, 1);
+        Profiler.BeginSample("Change");
         StartCoroutine(Change());
+        Profiler.EndSample();
     }
 
-    IEnumerator Change()
+    public IEnumerator Change()
     {
         yield return new WaitForSeconds(2);
         GameOverObject1.SetActive(true);
@@ -418,12 +444,12 @@ public class GameManager : MonoBehaviour
         GameOverObject3.SetActive(true);
     }
 
-    void MoveDown()
+    public void MoveDown()
     {
         ColliderObject.transform.DOMoveY(-3.3f, 1);
     }
 
-    void MoveLeftRight()
+    public void MoveLeftRight()
     {
         // Create a sequence for the left-right movement
         Sequence leftRightSequence = DOTween.Sequence();
@@ -449,12 +475,16 @@ public class GameManager : MonoBehaviour
         if (AdManager.Instance.isRewardShow)
         {
             AdManager.Instance.ShowRewardedAd();
-        isButtonFirst2Destroy = true;
-        StartCoroutine(ResetFruits());
+            isButtonFirst2Destroy = true;
+            Profiler.BeginSample("ResetFruits");
+            StartCoroutine(ResetFruits());
+            Profiler.EndSample();
         }
         else
         {
+            Profiler.BeginSample("AdTimeChanges");
             StartCoroutine(AdTimeChanges());
+            Profiler.EndSample();
         }
     }
 
@@ -467,25 +497,26 @@ public class GameManager : MonoBehaviour
 
     public bool isoff = false;
 
-    IEnumerator ResetFruits()
+    public IEnumerator ResetFruits()
     {
         Debug.Log("First2Destroy");
-        yield return new WaitForSeconds(0);
 
         if (isButtonFirst2Destroy == true && isButtonOption == false && isButtonChange == false && isButtonBoxVibrate == false)
         {
             for (int i = 0; i < image.Count; i++)
             {
-                if(image[i].gameObject.CompareTag("Strawberry") || image[i].gameObject.CompareTag("Apricot"))
+                if (image[i].gameObject.CompareTag("Strawberry") || image[i].gameObject.CompareTag("Apricot"))
                 {
                     First2Object.Add(image[i].gameObject);
                 }
-                
+
             }
 
-            if(First2Object.Count == 0)
+            if (First2Object.Count == 0)
             {
+                Profiler.BeginSample("NotFoundTimeChanges");
                 StartCoroutine(NotFoundTimeChanges());
+                Profiler.EndSample();
             }
 
 
@@ -495,7 +526,7 @@ public class GameManager : MonoBehaviour
                 particleSystem.transform.SetParent(itemObject.gameObject.transform);
                 particleSystem.transform.position = itemObject.transform.position;
 
-                Destroy(itemObject,0.2f);
+                Destroy(itemObject, 0.2f);
             }
             Debug.Log(image.Count);
 

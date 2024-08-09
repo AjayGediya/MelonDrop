@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class FruitTouch : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class FruitTouch : MonoBehaviour
 
     Vector3 POS;
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         if (GameManager.instance.isButtonOption == true && GameManager.instance.isButtonChange == false && GameManager.instance.isButtonFirst2Destroy == false && GameManager.instance.isButtonBoxVibrate == false)
         {
@@ -20,7 +21,9 @@ public class FruitTouch : MonoBehaviour
             ParticleSystem particleSystem = Instantiate(particle);
             particleSystem.transform.position = gameObject.transform.position;
             particleSystem.transform.SetParent(gameObject.transform);
-            StartCoroutine(DestroyFruit());
+            Profiler.BeginSample("DestroyFruit");
+            Destroy(gameObject,0.5f);
+            Profiler.EndSample();
             GameManager.instance.image.Remove(gameObject);
 
             foreach (var item in GameManager.instance.image)
@@ -28,6 +31,7 @@ public class FruitTouch : MonoBehaviour
                 item.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             }
             GameManager.instance.isButtonOption = false;
+            GameManager.instance.isBom = false;
         }
 
 
@@ -38,47 +42,65 @@ public class FruitTouch : MonoBehaviour
 
             if (gameObject.name == "Strawberry(Clone)")
             {
+                Profiler.BeginSample("FruitChange");
                 FruitChange(Apricot, "Apricot", new Vector3(1, 1, 1), 0.228f, new Vector2(0, -0.056f));
+                Profiler.EndSample();
             }
             else if (gameObject.name == "Apricot(Clone)")
             {
                 Debug.Log("Apr");
-                FruitChange(Blueberry, "Blueberry", new Vector3(1.3f, 1.3f, 1.3f),0,new Vector2 (0, 0));
+                Profiler.BeginSample("FruitChange");
+                FruitChange(Blueberry, "Blueberry", new Vector3(1.3f, 1.3f, 1.3f), 0.32f, new Vector2(-0.06f, -0.09f));
+                Profiler.EndSample();
             }
             else if (gameObject.name == "Blueberry(Clone)")
             {
                 Debug.Log("B");
-                FruitChange(Guava, "Guava", new Vector3(2, 2, 2),0.43f,new Vector2 (0, -0.05f));
+                Profiler.BeginSample("FruitChange");
+                FruitChange(Guava, "Guava", new Vector3(2, 2, 2), 0.43f, new Vector2(0, -0.05f));
+                Profiler.EndSample();
             }
             else if (gameObject.name == "Guava(Clone)")
             {
                 Debug.Log("G");
-                FruitChange(Apple, "Apple", new Vector3(2.5f, 2.5f, 2.5f),0.52f,new Vector2(0, -0.09f));
+                Profiler.BeginSample("FruitChange");
+                FruitChange(Apple, "Apple", new Vector3(2.5f, 2.5f, 2.5f), 0.52f, new Vector2(0, -0.09f));
+                Profiler.EndSample();
             }
             else if (gameObject.name == "Apple(Clone)")
             {
                 Debug.Log("App");
-                FruitChange(Grapefruit, "Grapefruit", new Vector3(3.5f, 3.5f, 3.5f),0.75f, new Vector2(0, -0.16f));
+                Profiler.BeginSample("FruitChange");
+                FruitChange(Grapefruit, "Grapefruit", new Vector3(3.5f, 3.5f, 3.5f), 0.75f, new Vector2(0, -0.16f));
+                Profiler.EndSample();
             }
             else if (gameObject.name == "Grapefruit(Clone)")
             {
                 Debug.Log("Gra");
-                FruitChange(Passionfruit, "Passionfruit", new Vector3(4, 4, 4),0.88f, new Vector2(0, -0.18f));
+                Profiler.BeginSample("FruitChange");
+                FruitChange(Passionfruit, "Passionfruit", new Vector3(4, 4, 4), 0.88f, new Vector2(0, -0.18f));
+                Profiler.EndSample();
             }
             else if (gameObject.name == "Passionfruit(Clone)")
             {
                 Debug.Log("Pa");
-                FruitChange(Lucuma, "Lucuma", new Vector3(4.5f, 4.5f, 4.5f),0.96f, new Vector2(0, -0.09f));
+                Profiler.BeginSample("FruitChange");
+                FruitChange(Lucuma, "Lucuma", new Vector3(4.5f, 4.5f, 4.5f), 0.96f, new Vector2(0, -0.09f));
+                Profiler.EndSample();
             }
             else if (gameObject.name == "Lucuma(Clone)")
             {
                 Debug.Log("L");
-                FruitChange(Cloudberry, "Cloudberry", new Vector3(4.5f, 4.5f, 4.5f),1, new Vector2(-0.05f, -0.1f));
+                Profiler.BeginSample("FruitChange");
+                FruitChange(Cloudberry, "Cloudberry", new Vector3(4.5f, 4.5f, 4.5f), 1, new Vector2(-0.05f, -0.1f));
+                Profiler.EndSample();
             }
             else if (gameObject.name == "Cloudberry(Clone)")
             {
                 Debug.Log("Clo");
-                FruitChange(Watermelon, "Watermelon", new Vector3(5.2f, 5.2f, 5.2f),1.15f, new Vector2(0, -0.13f));
+                Profiler.BeginSample("FruitChange");
+                FruitChange(Watermelon, "Watermelon", new Vector3(5.2f, 5.2f, 5.2f), 1.15f, new Vector2(0, -0.13f));
+                Profiler.EndSample();
             }
             else if (gameObject.name == "Watermelon(Clone)")
             {
@@ -94,15 +116,22 @@ public class FruitTouch : MonoBehaviour
         }
     }
 
-    public void FruitChange(Sprite sprite, string name, Vector3 Scale, float Number,Vector2 Value)
+    public void FruitChange(Sprite sprite, string name, Vector3 Scale, float Number, Vector2 Value)
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
-        Destroy(gameObject.GetComponent<CircleCollider2D>());
-        gameObject.AddComponent<CircleCollider2D>().radius = Number;
-        gameObject.AddComponent<CircleCollider2D>().offset = Value;
+
+        var oldCollider = gameObject.GetComponent<Collider2D>();
+        Destroy(oldCollider);
+
+
+        var newCollider = gameObject.AddComponent<CircleCollider2D>();
+        newCollider.radius = Number;
+        newCollider.offset = Value;
+
+
         gameObject.name = name + "(Clone)";
         gameObject.tag = name;
-        gameObject.transform.GetChild(0).gameObject.transform.localScale = Scale; 
+        gameObject.transform.GetChild(0).gameObject.transform.localScale = Scale;
     }
 
     IEnumerator DestroyFruit()

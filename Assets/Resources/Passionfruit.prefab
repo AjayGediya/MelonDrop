@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1921733006121626876}
   - component: {fileID: 985134872387041332}
   - component: {fileID: 3578481904115062301}
-  - component: {fileID: 2302390040166674229}
+  - component: {fileID: 862018856610148864}
   m_Layer: 0
   m_Name: Passionfruit
   m_TagString: Passionfruit
@@ -192,7 +192,7 @@ MonoBehaviour:
   Passionfruit: {fileID: 21300000, guid: 6348b23a58dd844639d13cc276f278bd, type: 3}
   Watermelon: {fileID: 21300000, guid: 1f8ee03ea8d1045f68119fdcb377a64b, type: 3}
   particle: {fileID: 6192724089161036655, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
---- !u!58 &2302390040166674229
+--- !u!58 &862018856610148864
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

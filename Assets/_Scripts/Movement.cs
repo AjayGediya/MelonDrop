@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class Movement : MonoBehaviour
 {
@@ -19,12 +20,12 @@ public class Movement : MonoBehaviour
 
     public Rigidbody2D rb;
 
-    private void Awake()
+    public void Awake()
     {
         instance = this;
     }
 
-    private void Start()
+    public void Start()
     {
         Line = GameObject.Find("Line");
 
@@ -34,6 +35,13 @@ public class Movement : MonoBehaviour
     }
 
     public void Update()
+    {
+        Profiler.BeginSample("TouchInput");
+        TouchInput();
+        Profiler.EndSample();
+    }
+
+    public void TouchInput()
     {
         Vector3 pos;
 
@@ -70,7 +78,7 @@ public class Movement : MonoBehaviour
             if (Input.GetMouseButtonUp(0) && isSelect == false && A.isGameOver == false && A.isButtonOption == false && A.isButtonFirst2Destroy == false && A.isButtonChange == false && A.isButtonBoxVibrate == false)
             {
                 // Debug.Log("Up");
-                if(SoundManager.Instance != null)
+                if (SoundManager.Instance != null)
                     SoundManager.Instance.FruitSoundPlay();
                 gameObject.transform.GetComponent<Collider2D>().enabled = true;
                 GameManager.instance.image.Add(gameObject);
@@ -79,8 +87,12 @@ public class Movement : MonoBehaviour
                 rb.bodyType = RigidbodyType2D.Dynamic;
                 rb.freezeRotation = false;
                 rb.angularVelocity = UnityEngine.Random.Range(-360, 360);
+                Profiler.BeginSample("valueChange");
                 StartCoroutine(valueChange());
+                Profiler.EndSample();
+                Profiler.BeginSample("ChangeOver");
                 StartCoroutine(ChangeOver());
+                Profiler.EndSample();
             }
         }
     }
@@ -99,7 +111,12 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(1);
         Line.SetActive(true);
         Line.transform.position = new Vector3(0, 0, 0);
+        Profiler.BeginSample("AfterNextImageCall");
         A.AfterNextImageCall();
+        Profiler.EndSample();
+
+        Profiler.BeginSample("nextImage");
         A.nextImage();
+        Profiler.EndSample();
     }
 }

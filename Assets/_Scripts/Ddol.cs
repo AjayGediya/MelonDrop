@@ -4,7 +4,7 @@ public class Ddol : MonoBehaviour
 {
     public bool isDon = false;
 
-    private void Awake()
+    public void Awake()
     {
         if (isDon == false)
         {

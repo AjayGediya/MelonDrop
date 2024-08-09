@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 7890630763909500312}
   - component: {fileID: 1179712593059662714}
   - component: {fileID: 7499390473183680158}
-  - component: {fileID: 4347241399299979559}
+  - component: {fileID: 6240138380421773614}
   m_Layer: 0
   m_Name: Cloudberry
   m_TagString: Cloudberry
@@ -276,7 +276,7 @@ MonoBehaviour:
   Passionfruit: {fileID: 21300000, guid: 6348b23a58dd844639d13cc276f278bd, type: 3}
   Watermelon: {fileID: 21300000, guid: 1f8ee03ea8d1045f68119fdcb377a64b, type: 3}
   particle: {fileID: 6192724089161036655, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
---- !u!58 &4347241399299979559
+--- !u!58 &6240138380421773614
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

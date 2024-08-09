@@ -13,7 +13,7 @@ public class MusicManager : MonoBehaviour
         instnace = this;
     }
 
-    private void Start()
+    public void Start()
     {
         MusicAudio = GetComponent<AudioSource>();
 

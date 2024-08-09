@@ -15,8 +15,12 @@ public class LoadingManager : MonoBehaviour
     //{
     //    SceneManager.LoadScene(1);
     //}
+    public void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
 
-    private void Update()
+    public void Update()
     {
         if (isLoading == false)
         {
@@ -27,6 +31,7 @@ public class LoadingManager : MonoBehaviour
             {
                 isLoading = true;
                 SceneManager.LoadScene(1);
+                Debug.Log("ScneChange");
             }
         }
     }

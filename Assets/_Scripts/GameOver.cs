@@ -4,7 +4,7 @@ public class GameOver : MonoBehaviour
 {
     public bool istouch = false;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         Movement movement = collision.gameObject.GetComponent<Movement>();
 
@@ -18,14 +18,14 @@ public class GameOver : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void OnTriggerExit2D(Collider2D collision)
     {
         istouch = false;
     }
 
-    private void Update()
+    public void Update()
     {
-        if (GameManager.instance.GameOverObject1.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject2.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject3.GetComponent<GameOver>().istouch == true)
+        if (AdManager.Instance.isShow == false && GameManager.instance.GameOverObject1.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject2.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject3.GetComponent<GameOver>().istouch == true)
         {
             // Debug.Log("GameOver");
             AdManager.Instance.ShowInterstitialAd();

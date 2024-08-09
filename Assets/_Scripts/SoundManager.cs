@@ -12,12 +12,12 @@ public class SoundManager : MonoBehaviour
 
     public static SoundManager Instance;
 
-    private void Awake()
+    public void Awake()
     {
         Instance = this;
     }
 
-    private void Start()
+    public void Start()
     {
         SoundAudio = GetComponent<AudioSource>();
 
