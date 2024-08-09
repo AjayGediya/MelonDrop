@@ -95,10 +95,10 @@ GameObject:
   - component: {fileID: 5848961649356856871}
   - component: {fileID: 5807143853164030835}
   - component: {fileID: 1384181342759862463}
-  - component: {fileID: 2298853714371804985}
   - component: {fileID: 4967822846178466199}
   - component: {fileID: 8327786144420350492}
   - component: {fileID: -6073199683448415097}
+  - component: {fileID: 1859848655775997444}
   m_Layer: 0
   m_Name: Apricot
   m_TagString: Apricot
@@ -162,7 +162,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: a9b55c94431244021ab810de97e6e4ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -189,7 +189,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.8
+  m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: d40e9ad130fe646b9a43bdbd80e49e18, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -197,94 +197,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
+  m_Interpolate: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!60 &2298853714371804985
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8098823646160754856}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: d40e9ad130fe646b9a43bdbd80e49e18, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
-    newSize: {x: 0.75, y: 0.75}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.195, y: -0.21249999}
-      - {x: 0.22749999, y: -0.14999999}
-      - {x: 0.2375, y: -0.1125}
-      - {x: 0.2375, y: -0.0075}
-      - {x: 0.22999999, y: 0.0275}
-      - {x: 0.205, y: 0.082499996}
-      - {x: 0.195, y: 0.099999994}
-      - {x: 0.14, y: 0.14999999}
-      - {x: 0.0775, y: 0.1725}
-      - {x: 0.0275, y: 0.17}
-      - {x: 0.0475, y: 0.265}
-      - {x: 0.0175, y: 0.2825}
-      - {x: 0.0075, y: 0.275}
-      - {x: -0.005, y: 0.26}
-      - {x: -0.03, y: 0.28}
-      - {x: -0.055, y: 0.2875}
-      - {x: -0.0875, y: 0.2875}
-      - {x: -0.1025, y: 0.2775}
-      - {x: -0.1025, y: 0.2375}
-      - {x: -0.0875, y: 0.205}
-      - {x: -0.057499997, y: 0.17999999}
-      - {x: -0.044999998, y: 0.175}
-      - {x: -0.0925, y: 0.17}
-      - {x: -0.1125, y: 0.16}
-      - {x: -0.14, y: 0.1475}
-      - {x: -0.1575, y: 0.13499999}
-      - {x: -0.19749999, y: 0.095}
-      - {x: -0.2225, y: 0.049999997}
-      - {x: -0.235, y: 0.01}
-      - {x: -0.24, y: -0.022499999}
-      - {x: -0.24, y: -0.11}
-      - {x: -0.2225, y: -0.16499999}
-      - {x: -0.195, y: -0.21}
-      - {x: -0.155, y: -0.255}
-      - {x: -0.12, y: -0.275}
-      - {x: -0.0875, y: -0.285}
-      - {x: 0.082499996, y: -0.285}
-      - {x: 0.114999995, y: -0.2775}
-      - {x: 0.1575, y: -0.2525}
-  m_UseDelaunayMesh: 0
 --- !u!114 &4967822846178466199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,6 +218,8 @@ MonoBehaviour:
   ScreenSize: {x: 0, y: 0, z: 0}
   Line: {fileID: 0}
   isSelect: 0
+  Min: -2.2
+  Max: 2.2
   rb: {fileID: 0}
 --- !u!114 &8327786144420350492
 MonoBehaviour:
@@ -358,3 +276,38 @@ MonoBehaviour:
   Passionfruit: {fileID: 21300000, guid: 6348b23a58dd844639d13cc276f278bd, type: 3}
   Watermelon: {fileID: 21300000, guid: 1f8ee03ea8d1045f68119fdcb377a64b, type: 3}
   particle: {fileID: 6192724089161036655, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
+--- !u!58 &1859848655775997444
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098823646160754856}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.056}
+  serializedVersion: 2
+  m_Radius: 0.228

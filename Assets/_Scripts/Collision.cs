@@ -1,14 +1,10 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
 
 public class Collision : MonoBehaviour
 {
-    //public GameObject apricot, redGrape, lime, peer, pineApple, orange, watermelonp;
-
     public GameObject Blueberry, Apricot, Apple, Cloudberry, Grapefruit, Guava, Lucuma, Passionfruit, Watermelon;
 
     public ParticleSystem Blue, Green, Green1, GreenDark, NewyBlue, Orange, Orange1, Red, Yellow;
@@ -168,6 +164,11 @@ public class Collision : MonoBehaviour
                     GameManager.instance.isFruit = true;
                     GameManager.instance.ScoreValue += 50;
                     TextCreate(50);
+                    GameManager.instance.image.Remove(gameObject);
+                    GameManager.instance.image.Remove(newcollisiton.gameObject);
+                    Destroy(gameObject);
+                    Destroy(newcollisiton.gameObject);
+                    GameManager.instance.isFruit = false;
                 }
             }
             GameManager.instance.ScoreText.text = GameManager.instance.ScoreValue.ToString();

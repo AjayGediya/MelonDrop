@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -13,13 +11,13 @@ public class Movement : MonoBehaviour
 
     public bool isSelect = false;
 
+    public float Min = 0, Max = 0;
+
     public static Movement instance;
 
     GameManager A = GameManager.instance;
 
     public Rigidbody2D rb;
-
-   // Vector3 newpos;
 
     private void Awake()
     {
@@ -62,7 +60,7 @@ public class Movement : MonoBehaviour
 
                 Vector3 diff = EndPos - StartPos;
 
-                diff.x = Mathf.Clamp(diff.x, -1.9f, 1.9f);
+                diff.x = Mathf.Clamp(diff.x, Min, Max);
 
                 transform.position = new Vector3(diff.x, transform.position.y, transform.position.z);
 
@@ -74,7 +72,7 @@ public class Movement : MonoBehaviour
                 // Debug.Log("Up");
                 if(SoundManager.Instance != null)
                     SoundManager.Instance.FruitSoundPlay();
-                gameObject.transform.GetComponent<PolygonCollider2D>().enabled = true;
+                gameObject.transform.GetComponent<Collider2D>().enabled = true;
                 GameManager.instance.image.Add(gameObject);
                 isSelect = true;
                 Line.SetActive(false);

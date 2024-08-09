@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
 using System;
@@ -20,6 +18,8 @@ public class AdManager : MonoBehaviour
 
     public static AdManager Instance;
 
+    public bool isRewardShow = false;
+
     private void Awake()
     {
         Instance = this;
@@ -35,6 +35,9 @@ public class AdManager : MonoBehaviour
         });
     }
 
+    /// <summary>
+    /// Creates the banner view and loads a banner ad.
+    /// </summary>
     public void CreateBannerView()
     {
         Debug.Log("Creating banner view");
@@ -50,10 +53,6 @@ public class AdManager : MonoBehaviour
         ListenToAdEvents();
     }
 
-
-    /// <summary>
-    /// Creates the banner view and loads a banner ad.
-    /// </summary>
     public void LoadAd()
     {
         // create an instance of a banner view first.
@@ -70,9 +69,6 @@ public class AdManager : MonoBehaviour
         _bannerView.LoadAd(adRequest);
     }
 
-    /// <summary>
-    /// listen to events the banner view may raise.
-    /// </summary>
     private void ListenToAdEvents()
     {
         // Raised when an ad is loaded into the banner view.
@@ -116,9 +112,6 @@ public class AdManager : MonoBehaviour
         };
     }
 
-    /// <summary>
-    /// Destroys the banner view.
-    /// </summary>
     public void DestroyAd()
     {
         if (_bannerView != null)
@@ -129,6 +122,9 @@ public class AdManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Shows the interstitial ad.
+    /// </summary>
     public void LoadInterstitialAd()
     {
         // Clean up the old ad before loading a new one.
@@ -163,9 +159,6 @@ public class AdManager : MonoBehaviour
             });
     }
 
-    /// <summary>
-    /// Shows the interstitial ad.
-    /// </summary>
     public void ShowInterstitialAd()
     {
         if (_interstitialAd != null && _interstitialAd.CanShowAd())
@@ -217,6 +210,10 @@ public class AdManager : MonoBehaviour
         };
     }
 
+
+    /// <summary>
+    /// Shows the Rewarded ad.
+    /// </summary>
     public void LoadRewardedAd()
     {
         // Clean up the old ad before loading a new one.
@@ -240,12 +237,14 @@ public class AdManager : MonoBehaviour
                 {
                     Debug.LogError("Rewarded ad failed to load an ad " +
                                    "with error : " + error);
+                    isRewardShow = false;
                     return;
                 }
 
                 Debug.Log("Rewarded ad loaded with response : "
                           + ad.GetResponseInfo());
 
+                isRewardShow = true;
                 _rewardedAd = ad;
                 RegisterEventHandlers(_rewardedAd);
             });
@@ -274,33 +273,40 @@ public class AdManager : MonoBehaviour
             Debug.Log(String.Format("Rewarded ad paid {0} {1}.",
                 adValue.Value,
                 adValue.CurrencyCode));
+            Debug.Log("A");
         };
         // Raised when an impression is recorded for an ad.
         ad.OnAdImpressionRecorded += () =>
         {
             Debug.Log("Rewarded ad recorded an impression.");
+            Debug.Log("B");
         };
         // Raised when a click is recorded for an ad.
         ad.OnAdClicked += () =>
         {
             Debug.Log("Rewarded ad was clicked.");
+            Debug.Log("C");
         };
         // Raised when an ad opened full screen content.
         ad.OnAdFullScreenContentOpened += () =>
         {
             Debug.Log("Rewarded ad full screen content opened.");
+            Debug.Log("D");
         };
         // Raised when the ad closed full screen content.
         ad.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("Rewarded ad full screen content closed.");
+            isRewardShow = false;
             LoadRewardedAd();
+            Debug.Log("E");
         };
         // Raised when the ad failed to open full screen content.
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
             Debug.LogError("Rewarded ad failed to open full screen content " +
                            "with error : " + error);
+            Debug.Log("f");
         };
     }
 }

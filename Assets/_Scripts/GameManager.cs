@@ -5,13 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.IO;
 using DG.Tweening;
-
 
 public class GameManager : MonoBehaviour
 {
-
     public GameObject[] Fruits;
 
     public GameObject FruitsParent;
@@ -68,7 +65,13 @@ public class GameManager : MonoBehaviour
 
     public Camera main;
 
+    public GameObject NotAd;
+
+    public GameObject NotFound;
+
     public ParticleSystem particle;
+
+    public ShareText shareText;
 
     public static GameManager instance;
 
@@ -109,7 +112,7 @@ public class GameManager : MonoBehaviour
         GenratedGrid();
         nextImage();
 
-        if(SoundManager.Instance != null)
+        if (SoundManager.Instance != null)
         {
             if (SoundManager.Instance.SoundAudio.volume == 0)
             {
@@ -125,7 +128,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(MusicManager.instnace != null)
+        if (MusicManager.instnace != null)
         {
             if (MusicManager.instnace.MusicAudio.volume == 0)
             {
@@ -293,68 +296,72 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //public void ShareButtonClick()
-    //{
-    //    //StartCoroutine(TakeScreenshotAndShare());
-    //}
-
-    ////private IEnumerator TakeScreenshotAndShare()
-    ////{
-    ////    yield return new WaitForEndOfFrame();
-
-    ////    Texture2D ss = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-    ////    ss.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-    ////    ss.Apply();
-
-    ////    string filePath = Path.Combine(Application.temporaryCachePath, "shared img.png");
-    ////    File.WriteAllBytes(filePath, ss.EncodeToPNG());
-
-    ////    // To avoid memory leaks
-    ////    Destroy(ss);
-
-    ////    new NativeShare().AddFile(filePath)
-    ////        .SetSubject("Subject goes here").SetText("Hello world!").SetUrl("https://github.com/yasirkula/UnityNativeShare")
-    ////        .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
-    ////        .Share();
-
-    ////    // Share on WhatsApp only, if installed (Android only)
-    ////    //if( NativeShare.TargetExists( "com.whatsapp" ) )
-    ////    //	new NativeShare().AddFile( filePath ).AddTarget( "com.whatsapp" ).Share();
-    ////}
+    public void ShareButtonClick()
+    {
+        shareText.Share("This is the text I want to share!");
+    }
 
     public void BomButtonClick()
     {
-        AdManager.Instance.ShowRewardedAd();
-        Debug.Log("Bom");
-        isButtonOption = true;
-        foreach (var item in image)
+        if (AdManager.Instance.isRewardShow)
         {
-            item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-            item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetLoops(-1, LoopType.Incremental);
+            AdManager.Instance.ShowRewardedAd();
+            Debug.Log("Bom");
+            isButtonOption = true;
+            foreach (var item in image)
+            {
+                item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetLoops(-1, LoopType.Incremental);
+            }
         }
+        else
+        {
+            StartCoroutine(AdTimeChanges());
+        }
+    }
+
+    public IEnumerator AdTimeChanges()
+    {
+        NotAd.transform.DOScale(new Vector3(1, 1, 1), 1);
+        yield return new WaitForSeconds(1.3f);
+        NotAd.transform.DOScale(new Vector3(0, 0, 0), 1);
     }
 
     public void ChangeButtonClick()
     {
-        AdManager.Instance.ShowRewardedAd();
-        isButtonChange = true;
-        Debug.Log("Changes");
-        foreach (var item in image)
+        if (AdManager.Instance.isRewardShow)
         {
-            item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            AdManager.Instance.ShowRewardedAd();
+            isButtonChange = true;
+            Debug.Log("Changes");
+            foreach (var item in image)
+            {
+                item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            StartCoroutine(AdTimeChanges());
         }
     }
 
     public void BoxVibrateButtonClick()
     {
-        AdManager.Instance.ShowRewardedAd();
-        GameOverObject1.SetActive(false);
-        GameOverObject2.SetActive(false);
-        GameOverObject3.SetActive(false);
-        isButtonBoxVibrate = true;
-        Debug.Log("BoxVibrate");
-        main.DOOrthoSize(7, 0.5f);
-        BoxRotate();
+        if (AdManager.Instance.isRewardShow)
+        {
+            AdManager.Instance.ShowRewardedAd();
+            GameOverObject1.SetActive(false);
+            GameOverObject2.SetActive(false);
+            GameOverObject3.SetActive(false);
+            isButtonBoxVibrate = true;
+            Debug.Log("BoxVibrate");
+            main.DOOrthoSize(7, 0.5f);
+            BoxRotate();
+        }
+        else
+        {
+            StartCoroutine(AdTimeChanges());
+        }
     }
 
     public void BoxRotate()
@@ -366,13 +373,14 @@ public class GameManager : MonoBehaviour
     public float wobbleAngle = 5f;
 
     public float distance = 1.5f;  // Distance to move left and right
-    public float duration = 0.5f;
-
+    public float duration = 1f;
 
     IEnumerator WobbleObject()
     {
         yield return new WaitForSeconds(.5f);
         ColliderObject.SetActive(true);
+        MoveDown();
+        yield return new WaitForSeconds(1f);
         MoveLeftRight();
         //Box.transform.DOShakePosition(1, new Vector3(1, 0, 0));
         // Create a sequence for the wobble animation
@@ -398,9 +406,21 @@ public class GameManager : MonoBehaviour
         ColliderObject.SetActive(false);
         isButtonBoxVibrate = false;
         main.DOOrthoSize(6, 0.5f);
+        ColliderObject.transform.DOMoveY(-4.5f, 1);
+        StartCoroutine(Change());
+    }
+
+    IEnumerator Change()
+    {
+        yield return new WaitForSeconds(2);
         GameOverObject1.SetActive(true);
         GameOverObject2.SetActive(true);
         GameOverObject3.SetActive(true);
+    }
+
+    void MoveDown()
+    {
+        ColliderObject.transform.DOMoveY(-3.3f, 1);
     }
 
     void MoveLeftRight()
@@ -425,39 +445,57 @@ public class GameManager : MonoBehaviour
 
     public void First2DestroyButtonCLick()
     {
-        AdManager.Instance.ShowRewardedAd();
+        isoff = false;
+        if (AdManager.Instance.isRewardShow)
+        {
+            AdManager.Instance.ShowRewardedAd();
         isButtonFirst2Destroy = true;
         StartCoroutine(ResetFruits());
+        }
+        else
+        {
+            StartCoroutine(AdTimeChanges());
+        }
     }
+
+    public IEnumerator NotFoundTimeChanges()
+    {
+        NotFound.transform.DOScale(new Vector3(1, 1, 1), 1);
+        yield return new WaitForSeconds(1.3f);
+        NotFound.transform.DOScale(new Vector3(0, 0, 0), 1);
+    }
+
+    public bool isoff = false;
 
     IEnumerator ResetFruits()
     {
         Debug.Log("First2Destroy");
+        yield return new WaitForSeconds(0);
 
         if (isButtonFirst2Destroy == true && isButtonOption == false && isButtonChange == false && isButtonBoxVibrate == false)
         {
             for (int i = 0; i < image.Count; i++)
             {
-
-                if (image[i].gameObject.name == "Strawberry(Clone)")
+                if(image[i].gameObject.CompareTag("Strawberry") || image[i].gameObject.CompareTag("Apricot"))
                 {
-                    Debug.Log(image[i]);
-                    First2Object.Add(image[i]);
+                    First2Object.Add(image[i].gameObject);
                 }
-
-                if (image[i].gameObject.name == "Apricot(Clone)")
-                {
-                    Debug.Log(image[i]);
-                    First2Object.Add(image[i]);
-                }
+                
             }
+
+            if(First2Object.Count == 0)
+            {
+                StartCoroutine(NotFoundTimeChanges());
+            }
+
 
             foreach (var itemObject in First2Object)
             {
                 ParticleSystem particleSystem = Instantiate(particle);
+                particleSystem.transform.SetParent(itemObject.gameObject.transform);
                 particleSystem.transform.position = itemObject.transform.position;
 
-                Destroy(itemObject);
+                Destroy(itemObject,0.2f);
             }
             Debug.Log(image.Count);
 
@@ -465,7 +503,7 @@ public class GameManager : MonoBehaviour
             image.Clear();
             First2Object.Clear();
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
 
             for (int i = 0; i < FruitsParent.transform.childCount; i++)
             {
@@ -473,10 +511,10 @@ public class GameManager : MonoBehaviour
 
                 if (rb.isKinematic == false)
                 {
+                    isButtonFirst2Destroy = false;
                     image.Add(FruitsParent.transform.GetChild(i).gameObject);
                 }
             }
-            isButtonFirst2Destroy = false;
         }
     }
 }

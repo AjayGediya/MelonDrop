@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 3968092158310024504}
   - component: {fileID: 6563186967785950291}
   - component: {fileID: 2125991038833783768}
-  - component: {fileID: 774944705116788037}
   - component: {fileID: 7554285693521350433}
   - component: {fileID: 6711978660960567195}
   - component: {fileID: 5879812976978214169}
+  - component: {fileID: 170272192303672525}
   m_Layer: 0
   m_Name: Lucuma
   m_TagString: Lucuma
@@ -113,99 +113,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
+  m_Interpolate: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!60 &774944705116788037
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1562824903510011274}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: d40e9ad130fe646b9a43bdbd80e49e18, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.7272727, y: 2.7272727}
-    newSize: {x: 0.8, y: 0.8}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.77272725, y: -0.7272727}
-      - {x: 0.8454545, y: -0.6363636}
-      - {x: 0.96363634, y: -0.43636364}
-      - {x: 0.99999994, y: -0.3181818}
-      - {x: 1.0181818, y: -0.19090909}
-      - {x: 1.0181818, y: 0.090909086}
-      - {x: 0.99999994, y: 0.21818182}
-      - {x: 0.9181818, y: 0.4090909}
-      - {x: 0.8272727, y: 0.5272727}
-      - {x: 0.6545454, y: 0.7}
-      - {x: 0.45454544, y: 0.8090909}
-      - {x: 0.24545453, y: 0.8636363}
-      - {x: 0.090909086, y: 0.8636363}
-      - {x: 0.19999999, y: 1.0818181}
-      - {x: 0.07272727, y: 1.1272727}
-      - {x: 0.009090909, y: 1.0272727}
-      - {x: -0.2090909, y: 1.1181818}
-      - {x: -0.34545454, y: 1.1545454}
-      - {x: -0.55454546, y: 1.1545454}
-      - {x: -0.6363636, y: 1.1363636}
-      - {x: -0.74545455, y: 1.1181818}
-      - {x: -0.9090909, y: 0.99999994}
-      - {x: -0.9181818, y: 0.9272727}
-      - {x: -0.77272725, y: 0.77272725}
-      - {x: -0.6818182, y: 0.6727272}
-      - {x: -0.8545454, y: 0.48181817}
-      - {x: -0.8909091, y: 0.4272727}
-      - {x: -0.97272724, y: 0.24545453}
-      - {x: -0.99999994, y: 0.14545454}
-      - {x: -1.0181818, y: 0.054545455}
-      - {x: -1.0181818, y: -0.19999999}
-      - {x: -0.96363634, y: -0.39090908}
-      - {x: -0.9090909, y: -0.5181818}
-      - {x: -0.8272727, y: -0.6636363}
-      - {x: -0.6181818, y: -0.8727273}
-      - {x: -0.5272727, y: -0.9272727}
-      - {x: -0.34545454, y: -1.0090909}
-      - {x: -0.17272727, y: -1.0545454}
-      - {x: -0.06363636, y: -1.1363636}
-      - {x: -0.027272727, y: -1.1454545}
-      - {x: 0.054545455, y: -1.1454545}
-      - {x: 0.13636363, y: -1.1}
-      - {x: 0.5181818, y: -0.94545454}
-      - {x: 0.6272727, y: -0.8636363}
-  m_UseDelaunayMesh: 0
 --- !u!114 &7554285693521350433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +134,8 @@ MonoBehaviour:
   ScreenSize: {x: 0, y: 0, z: 0}
   Line: {fileID: 0}
   isSelect: 0
+  Min: -2.2
+  Max: 2.2
   rb: {fileID: 0}
 --- !u!114 &6711978660960567195
 MonoBehaviour:
@@ -269,16 +182,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e9492b581774f01aa405659c8b6f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blueberry: {fileID: 3697831735463250505, guid: 8facf65f396eb4796b7ce61ec391aa97, type: 3}
-  Apricot: {fileID: 8098823646160754856, guid: b9ead4a25697146f784db5054bbe0e97, type: 3}
-  Apple: {fileID: 208496547990194283, guid: 07f33ffe5b5424da582530b89e6002b4, type: 3}
-  Cloudberry: {fileID: 6274047450506621406, guid: ef6b5f8e57af14436b2f227d3416002b, type: 3}
-  Grapefruit: {fileID: 673719510762400153, guid: 8ecb5a8301ede4fd0a13db0fa6a70426, type: 3}
-  Guava: {fileID: 6228579229745099367, guid: 3659c0049fb3d425198377a10d21f6c9, type: 3}
-  Lucuma: {fileID: 1562824903510011274}
-  Passionfruit: {fileID: 1960313574138554517, guid: ec3b08b3409c5486d80cc29470f9ea03, type: 3}
-  Watermelon: {fileID: 7981181805283800164, guid: 422e4203b16a146199ee33b993028441, type: 3}
+  Blueberry: {fileID: 21300000, guid: b371743f6eec6423e8268679eb5e3b82, type: 3}
+  Apricot: {fileID: 21300000, guid: a9b55c94431244021ab810de97e6e4ea, type: 3}
+  Apple: {fileID: 21300000, guid: 9666ab00d2d054612a41eb8025fee5e9, type: 3}
+  Cloudberry: {fileID: 21300000, guid: adefa1094953344638080ce7f3dbe7a7, type: 3}
+  Grapefruit: {fileID: 21300000, guid: 4a016d3c28eb1420a95c7afef36c8975, type: 3}
+  Guava: {fileID: 21300000, guid: 6346158128dfe4c419f63223f2e01132, type: 3}
+  Lucuma: {fileID: 21300000, guid: b9e500198ab0348709831ef729407f6c, type: 3}
+  Passionfruit: {fileID: 21300000, guid: 6348b23a58dd844639d13cc276f278bd, type: 3}
+  Watermelon: {fileID: 21300000, guid: 1f8ee03ea8d1045f68119fdcb377a64b, type: 3}
   particle: {fileID: 6192724089161036655, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
+--- !u!58 &170272192303672525
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562824903510011274}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.09}
+  serializedVersion: 2
+  m_Radius: 0.96
 --- !u!1 &8932846489448988554
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,7 +254,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.5, y: 4.5, z: 4}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3968092158310024504}

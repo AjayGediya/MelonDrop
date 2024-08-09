@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -13,25 +11,23 @@ public class LoadingManager : MonoBehaviour
 
     public bool isLoading = false;
 
-    private void Start()
-    {
-        SceneManager.LoadScene(1);
-    }
+    //private void Start()
+    //{
+    //    SceneManager.LoadScene(1);
+    //}
 
     private void Update()
     {
-        //if (isLoading == false)
-        //{
-        //    LoadingSlider.value += Time.deltaTime;
-        //    //Debug.Log((LoadingSlider.value * 20).ToString("00"));
-        //    LoadTxt.text = "Loading..." + ((int)(LoadingSlider.value * 20)) + "%";
+        if (isLoading == false)
+        {
+            LoadingSlider.value += Time.deltaTime;
+            LoadTxt.text = "Loading..." + ((int)(LoadingSlider.value * 20)) + "%";
 
-        //    if (LoadingSlider.value >= 5)
-        //    {
-        //        isLoading = true;
-        //        SceneManager.LoadScene(1);
-        //        // Debug.Log("LoadingDone");
-        //    }
-        //}
+            if (LoadingSlider.value >= 5)
+            {
+                isLoading = true;
+                SceneManager.LoadScene(1);
+            }
+        }
     }
 }
