@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Vector3 startPos, endPos;
     [SerializeField] private Vector3 screenSize;
     [SerializeField] private GameObject line;
-     public bool isSelect = false;
+    public bool isSelect = false;
     [SerializeField] private float min = 0, max = 0;
     [SerializeField] private Rigidbody2D rb;
 
@@ -48,10 +48,12 @@ public class Movement : MonoBehaviour
         if (gameManager.FruitsParent.transform.position.y > pos.y)
         {
             if (Input.GetMouseButtonDown(0))
-            {
+            { 
                 line.SetActive(true);
                 DeactivateGameOverObjects();
-                startPos = pos;
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                //Debug.Log(mousePos);
+                // startPos = pos;
             }
 
             if (Input.GetMouseButton(0))
@@ -89,12 +91,11 @@ public class Movement : MonoBehaviour
         {
             SoundManager.Instance.FruitSoundPlay();
         }
-
+        rb.bodyType = RigidbodyType2D.Dynamic;
         GetComponent<Collider2D>().enabled = true;
         gameManager.image.Add(gameObject);
         isSelect = true;
         line.SetActive(false);
-        rb.bodyType = RigidbodyType2D.Dynamic;
         rb.freezeRotation = false;
         rb.angularVelocity = Random.Range(-360, 360);
 
@@ -138,11 +139,13 @@ public class Movement : MonoBehaviour
 
 //    public float Min = 0, Max = 0;
 
-//    public static Movement instance;
+//    public static Movement Instance;
 
 //    GameManager A = GameManager.instance;
 
 //    public Rigidbody2D rb;
+
+//    Vector3 Mouse;
 
 //    public void Awake()
 //    {
@@ -175,11 +178,12 @@ public class Movement : MonoBehaviour
 //        {
 //            if (Input.GetMouseButtonDown(0) && isSelect == false && A.isGameOver == false && A.isButtonOption == false && A.isButtonFirst2Destroy == false && A.isButtonChange == false && A.isButtonBoxVibrate == false)
 //            {
-//                Line.SetActive(true);
+//                Mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+//                Line.SetActive(true);       
 //                A.GameOverObject1.SetActive(false);
 //                A.GameOverObject2.SetActive(false);
 //                A.GameOverObject3.SetActive(false);
-//                StartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+//                //StartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 //            }
 
 //            if (Input.GetMouseButton(0) && isSelect == false && A.isGameOver == false && A.isButtonOption == false && A.isButtonFirst2Destroy == false && A.isButtonChange == false && A.isButtonBoxVibrate == false)

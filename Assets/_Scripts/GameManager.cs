@@ -50,14 +50,47 @@ public class GameManager : MonoBehaviour
     public ShareText shareText;
     public bool isBom = false;
 
-    public static GameManager instance;
-
     public float wobbleDuration = 0.1f;
     public float wobbleAngle = 5f;
     public float distance = 1.5f;
     public float duration = 1f;
 
+    public bool isAppOpenChange = false;
+
     public bool isoff = false;
+
+    public GameObject UpdatePopUp;
+
+    public bool isAd = false;
+
+    public static GameManager instance;
+
+    private void OnApplicationFocus(bool focus)
+    {
+        Debug.Log("Focus");
+
+        if (isAd == false)
+        {
+            isAd = true;
+            if (focus == true && isAppOpenChange == false)
+            {
+                isAppOpenChange = true;
+                AdManager.Instance.ShowAppOpenAd();
+            }
+        }
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        Debug.Log("Game-Pause");
+        isAd = false;
+    }
+
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Quit");
+        AdManager.Instance.ShowAppOpenAd();
+    }
 
     void Awake()
     {
@@ -73,6 +106,35 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        AdManager.Instance.isAppOpen = false;
+        Debug.Log("Update" + AdManager.Instance.Number);
+
+        if (AdManager.Instance.RewardAcc == 2)
+        {
+            if (AdManager.Instance.AdAvailablevalue >= 1)
+            {
+                AdManager.Instance.LoadAd();
+                //BANER
+            }
+        }
+
+        if (AdManager.Instance.SplashAdAppOpen >= 1)
+        {
+            if (AdManager.Instance.AppOpenAcc == 2)
+            {
+                AdManager.Instance.ShowAppOpenAd();
+            }
+        }
+
+        if (AdManager.Instance.isAppOpen == false)
+        {
+            if (AdManager.Instance.AppOpenAcc == 2)
+            {
+                AdManager.Instance.LoadAppOpenAd();
+            }
+        }
+
+
         Fruits = Resources.LoadAll<GameObject>("Prefabs");
         NextImages = Resources.LoadAll<Sprite>("Sprite");
         isGameOver = false;
@@ -83,6 +145,14 @@ public class GameManager : MonoBehaviour
         SetupSound();
         SetupMusic();
         SetupVibration();
+
+        Debug.Log(PlayerPrefs.GetInt("Update", 1) + " " + AdManager.Instance.Number);
+        if (PlayerPrefs.GetInt("Update", 1) < AdManager.Instance.Number)
+        {
+            Debug.Log("update dialog");
+            //PlayerPrefs.SetInt("Update", AdManager.Instance.Number);
+            UpdatePopUp.SetActive(true);
+        }
     }
 
     void SetupSound()
@@ -158,6 +228,18 @@ public class GameManager : MonoBehaviour
         AdManager.Instance.isShow = false;
     }
 
+    public void UpdatebtnClick()
+    {
+        Application.OpenURL("https://play.google.com/store/games?utm_source=apac_med&hl=en-IN&utm_medium=hasem&utm_content=Jul3124&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1707570-med-hasem-py-Evergreen-Jul3124-Text_Search_BKWS-BKWS%7CONSEM_kwid_43700080171622144_creativeid_694609712106_device_c&gad_source=1&gclid=Cj0KCQjw5ea1BhC6ARIsAEOG5py_18eCYdEuOd6ctEyvsqWeFQ8qb16Nzrdxhqc_LyjfaRreVnxUUvIaApI4EALw_wcB&gclsrc=aw.ds");
+        PlayerPrefs.SetInt("Update", AdManager.Instance.Number);
+        UpdatePopUp.SetActive(false);
+    }
+
+    public void NotNowBtnClick()
+    {
+        UpdatePopUp.SetActive(false);
+    }
+
     public void SettingBtnClick()
     {
         isGameOver = true;
@@ -218,6 +300,7 @@ public class GameManager : MonoBehaviour
 
     public void BomButtonClick()
     {
+        isAd = true;
         if (AdManager.Instance.isRewardShow)
         {
             AdManager.Instance.ShowRewardedAd();
@@ -228,7 +311,7 @@ public class GameManager : MonoBehaviour
         {
             //Profiler.BeginSample("AdTimeChanges");
             StartCoroutine(AdTimeChanges());
-           // Profiler.EndSample();
+            // Profiler.EndSample();
         }
     }
 
@@ -237,10 +320,17 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         isButtonOption = true;
         Debug.Log("Bom");
-        foreach (var item in image)
+        if (image.Count == 0)
         {
-            item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-            item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetLoops(-1, LoopType.Incremental);
+            StartCoroutine(NotFoundTimeChanges());
+        }
+        else
+        {
+            foreach (var item in image)
+            {
+                item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetLoops(-1, LoopType.Incremental);
+            }
         }
     }
 
@@ -260,9 +350,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-           // Profiler.BeginSample("AdTimeChanges");
+            // Profiler.BeginSample("AdTimeChanges");
             StartCoroutine(AdTimeChanges());
-           // Profiler.EndSample();
+            // Profiler.EndSample();
         }
     }
 
@@ -271,9 +361,16 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         isButtonChange = true;
         Debug.Log("Changes");
-        foreach (var item in image)
+        if (image.Count == 0)
         {
-            item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            StartCoroutine(NotFoundTimeChanges());
+        }
+        else
+        {
+            foreach (var item in image)
+            {
+                item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
     }
 
@@ -286,22 +383,30 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-           // Profiler.BeginSample("AdTimeChanges");
+            // Profiler.BeginSample("AdTimeChanges");
             StartCoroutine(AdTimeChanges());
-           // Profiler.EndSample();
+            // Profiler.EndSample();
         }
     }
 
     public IEnumerator BoxVibrateChangeTime()
     {
         yield return new WaitForSeconds(0.4f);
-        GameOverObject1.SetActive(false);
-        GameOverObject2.SetActive(false);
-        GameOverObject3.SetActive(false);
-        isButtonBoxVibrate = true;
-        Debug.Log("BoxVibrate");
-        main.DOOrthoSize(7, 0.5f);
-        BoxRotate();
+
+        if (image.Count == 0)
+        {
+            StartCoroutine(NotFoundTimeChanges());
+        }
+        else
+        {
+            GameOverObject1.SetActive(false);
+            GameOverObject2.SetActive(false);
+            GameOverObject3.SetActive(false);
+            isButtonBoxVibrate = true;
+            Debug.Log("BoxVibrate");
+            main.DOOrthoSize(7, 0.5f);
+            BoxRotate();
+        }
     }
 
     public void BoxRotate()
@@ -397,9 +502,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-           // Profiler.BeginSample("AdTimeChanges");
+            // Profiler.BeginSample("AdTimeChanges");
             StartCoroutine(AdTimeChanges());
-           // Profiler.EndSample();
+            // Profiler.EndSample();
         }
     }
 
@@ -407,9 +512,17 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.4f);
         isButtonFirst2Destroy = true;
-       // Profiler.BeginSample("ResetFruits");
-        StartCoroutine(ResetFruits());
-        //Profiler.EndSample();
+
+        if (image.Count == 0)
+        {
+            StartCoroutine(NotFoundTimeChanges());
+        }
+        else
+        {
+            // Profiler.BeginSample("ResetFruits");
+            StartCoroutine(ResetFruits());
+            //Profiler.EndSample();
+        }
     }
 
     public IEnumerator NotFoundTimeChanges()
@@ -438,7 +551,7 @@ public class GameManager : MonoBehaviour
             {
                 //Profiler.BeginSample("NotFoundTimeChanges");
                 StartCoroutine(NotFoundTimeChanges());
-               // Profiler.EndSample();
+                // Profiler.EndSample();
             }
 
 

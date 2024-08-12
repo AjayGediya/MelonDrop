@@ -9,8 +9,8 @@ public class LoadingManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI loadTxt;
 
     private bool isLoading = false;
-    private const float maxLoadingValue = 5f;
-    private const int nextSceneIndex = 1;
+    private float maxLoadingValue = 20f;
+    private int nextSceneIndex = 1;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class LoadingManager : MonoBehaviour
         if (!isLoading)
         {
             loadingSlider.value += Time.deltaTime;
-            loadTxt.text = $"Loading... {Mathf.Clamp((int)(loadingSlider.value * 20), 0, 100)}%";
+            loadTxt.text = $"Loading... {Mathf.Clamp((int)(loadingSlider.value * 5), 0, 100)}%";
 
             if (loadingSlider.value >= maxLoadingValue)
             {

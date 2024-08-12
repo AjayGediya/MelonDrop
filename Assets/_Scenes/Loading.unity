@@ -466,6 +466,102 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &519094881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 519094883}
+  - component: {fileID: 519094882}
+  m_Layer: 0
+  m_Name: Ads
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &519094882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519094881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c32f70a33f5194854b5f0e48084847ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BannerId: 
+  InterStitleId: 
+  RewardId: 
+  AppOpenId: 
+  isRewardShow: 0
+  isShow: 0
+  root:
+    data:
+      developer_name: 
+      is_rate_dialog: 0
+      is_user_dialog: 0
+      user_dialog_text: 
+      user_dialog_url: 
+      app_version_code: 
+      app_version_code_ios: 
+      user_dialog_update_text: 
+      google_id: 
+      bitcoin_url: 
+      predchamp_url: 
+      game_url: 
+      is_back_press_count: 
+      is_normal_ad_count: 
+      is_advertise_available: 
+      app_url: 
+      app_node_url: 
+      testFlag: 
+      is_login_enable: 
+      is_splash_available: 
+      is_withdrawal: 
+      is_info_available: 
+      is_qureka: 
+      is_show_second: 0
+      inter_mill_sec: 
+      is_loader: 
+      is_back_button_show: 
+      start_button_inter: 
+      how_it_works: 
+      is_extra_rewards: 
+      is_on_resume: 0
+      is_stripe_payment: 0
+      privacy_url: 
+      terms_url: 
+      usr_dialog_btn: 
+      rate_text: 
+      user_dialog_img: 
+    ad_priority:
+      priority: 
+      ads: []
+    ResponseCode: 0
+    ResponseMsg: 
+    Result: 
+    ServerTime: 
+--- !u!4 &519094883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519094881}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1484727663}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &689948185
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,6 +1077,7 @@ Transform:
   m_Children:
   - {fileID: 175871613}
   - {fileID: 1987413223}
+  - {fileID: 519094883}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1937468587
@@ -1067,7 +1164,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 5
+  m_MaxValue: 20
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:

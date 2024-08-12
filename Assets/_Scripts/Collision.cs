@@ -14,14 +14,14 @@ public class Collision : MonoBehaviour
 
     private TextMeshPro newtext;
     private SpriteRenderer spriteRenderer;
-    private Collider2D collider2D;
+    private Collider2D Collide2D;
 
     public void Start()
     {
         ParticalParent = GameObject.Find("ParticalObject").transform;
         TextParent = GameObject.Find("TextObjects").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        collider2D = GetComponent<Collider2D>();
+        Collide2D = GetComponent<Collider2D>();
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -158,7 +158,7 @@ public class Collision : MonoBehaviour
         Profiler.EndSample();
 
         spriteRenderer.enabled = false;
-        collider2D.enabled = false;
+        Collide2D.enabled = false;
         newcollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         newcollision.gameObject.GetComponent<Collider2D>().enabled = false;
     }
