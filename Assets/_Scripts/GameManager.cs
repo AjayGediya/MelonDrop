@@ -143,13 +143,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (AdManager.Instance.isAppOpen == false)
-        {
-            if (AdManager.Instance.AppOpenAcc == 2)
-            {
-                AppOpen.Instance.LoadAppOpenAd();
-            }
-        }
+        //if (AdManager.Instance.isAppOpen == false)
+        //{
+        //    if (AdManager.Instance.AppOpenAcc == 2)
+        //    {
+        //        AppOpen.Instance.LoadAppOpenAd();
+        //    }
+        //}
 
 
         Fruits = Resources.LoadAll<GameObject>("Prefabs");
