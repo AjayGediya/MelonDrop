@@ -45,10 +45,14 @@ public class AppOpen : MonoBehaviour
         //public void LoadAfterGetData(string adID)
         //{
         //    _adUnitId = adID;
-        MobileAds.Initialize((InitializationStatus initStatus) =>
+
+        if (_adUnitId != null)
         {
-            LoadAppOpenAd();
-        });
+            MobileAds.Initialize((InitializationStatus initStatus) =>
+            {
+                LoadAppOpenAd();
+            });
+        }
     }
 
 
