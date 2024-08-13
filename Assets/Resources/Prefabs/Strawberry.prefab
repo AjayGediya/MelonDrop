@@ -242,15 +242,15 @@ MonoBehaviour:
   Lucuma: {fileID: 1562824903510011274, guid: b29e2d344067145ada7a2e97b0f0aab4, type: 3}
   Passionfruit: {fileID: 1960313574138554517, guid: ec3b08b3409c5486d80cc29470f9ea03, type: 3}
   Watermelon: {fileID: 7981181805283800164, guid: 422e4203b16a146199ee33b993028441, type: 3}
-  Blue: {fileID: 198799667656002238, guid: fba3984b4d1739047b5b3e699ebda36a, type: 3}
-  Green: {fileID: 198799667656002238, guid: fba3984b4d1739047b5b3e699ebda36a, type: 3}
-  Green1: {fileID: 198799667656002238, guid: fba3984b4d1739047b5b3e699ebda36a, type: 3}
-  GreenDark: {fileID: 198799667656002238, guid: fba3984b4d1739047b5b3e699ebda36a, type: 3}
-  NewyBlue: {fileID: 198799667656002238, guid: fba3984b4d1739047b5b3e699ebda36a, type: 3}
-  Orange: {fileID: 198799667656002238, guid: fba3984b4d1739047b5b3e699ebda36a, type: 3}
-  Orange1: {fileID: 198799667656002238, guid: fba3984b4d1739047b5b3e699ebda36a, type: 3}
-  Red: {fileID: 198799667656002238, guid: fba3984b4d1739047b5b3e699ebda36a, type: 3}
-  Yellow: {fileID: 198799667656002238, guid: fba3984b4d1739047b5b3e699ebda36a, type: 3}
+  Blue: {fileID: 2206872486147430419, guid: 5c710373c673442f38849630c8785b47, type: 3}
+  GreenLitedark: {fileID: 8548080542773341448, guid: 154b7d88ff9884d58ae2f947f131a90c, type: 3}
+  GreenLite: {fileID: 2499925451438917099, guid: 00efc2910e98a4eb2ad31405c0076725, type: 3}
+  GreenDark: {fileID: 3864013764698572500, guid: 7f7d2e4f7fd594ead8fe0526ee6f5ded, type: 3}
+  Purple: {fileID: 981676262752908607, guid: a012d15249c1141d39a06dfbcac5fd33, type: 3}
+  OrangeDark: {fileID: 7536928986203210824, guid: c92db5a3ed54a4296ae2dab4446d5dd0, type: 3}
+  OrangeLite: {fileID: 2762039219587636927, guid: b9090532441ea4cdebee3f606710a568, type: 3}
+  Red: {fileID: 3948381882101766628, guid: 5c640b078f6904c9489114600b63760e, type: 3}
+  DarkYellow: {fileID: 1694975042461689241, guid: b5c72058b56f940e88aeffff3fe678f7, type: 3}
   ParticalParent: {fileID: 0}
   textNumber: {fileID: 3198658975816447325, guid: 546c1ac270cef424fb11924a7718967e, type: 3}
   TextParent: {fileID: 0}
@@ -275,7 +275,7 @@ MonoBehaviour:
   lucuma: {fileID: 21300000, guid: b9e500198ab0348709831ef729407f6c, type: 3}
   passionfruit: {fileID: 21300000, guid: 6348b23a58dd844639d13cc276f278bd, type: 3}
   watermelon: {fileID: 21300000, guid: 1f8ee03ea8d1045f68119fdcb377a64b, type: 3}
-  particle: {fileID: 6192724089161036655, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
+  particle: {fileID: 725748389856807712, guid: 4bda94453d2ca7444a0fff05b2d425f5, type: 3}
 --- !u!58 &2446059303146954708
 CircleCollider2D:
   m_ObjectHideFlags: 0

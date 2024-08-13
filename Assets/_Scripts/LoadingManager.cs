@@ -17,6 +17,11 @@ public class LoadingManager : MonoBehaviour
         Application.targetFrameRate = 60;
     }
 
+    private void Start()
+    {
+        AppOpen.Instance.LoadAppOpenAd();
+    }
+
     private void Update()
     {
         if (!isLoading)

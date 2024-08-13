@@ -82,18 +82,19 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
+
+
     private void OnApplicationFocus(bool focus)
     {
         Debug.Log("Focus");
-
         if (isAd == false)
         {
             isAd = true;
-            if (focus == true && isAppOpenChange == false)
-            {
-                isAppOpenChange = true;
-                AdManager.Instance.ShowAppOpenAd();
-            }
+            Debug.Log("Focus++" + focus);
+            Debug.Log("iaAd+++" + isAd);
+            isAppOpenChange = true;
+            AppOpen.Instance.ShowAppOpenAd();
+
         }
     }
 
@@ -106,7 +107,7 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         Debug.Log("Quit");
-        AdManager.Instance.ShowAppOpenAd();
+        //AdManager.Instance.ShowAppOpenAd();
     }
 
     void Awake()
@@ -124,8 +125,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         timerIsRunning = true;
-        AdManager.Instance.isAppOpen = false;
-        Debug.Log("Update" + AdManager.Instance.Number);
 
         if (AdManager.Instance.RewardAcc == 2)
         {
@@ -140,7 +139,7 @@ public class GameManager : MonoBehaviour
         {
             if (AdManager.Instance.AppOpenAcc == 2)
             {
-                AdManager.Instance.ShowAppOpenAd();
+                AppOpen.Instance.ShowAppOpenAd();
             }
         }
 
@@ -148,7 +147,7 @@ public class GameManager : MonoBehaviour
         {
             if (AdManager.Instance.AppOpenAcc == 2)
             {
-                AdManager.Instance.LoadAppOpenAd();
+                AppOpen.Instance.LoadAppOpenAd();
             }
         }
 
@@ -267,7 +266,7 @@ public class GameManager : MonoBehaviour
     IEnumerator ChangeBoolForTimer()
     {
         yield return new WaitForSeconds(0.2f);
-        timeRemaining = 60f;
+        timeRemaining = 300f;
         timerIsRunning = true;
         isTime = false;
     }
@@ -374,7 +373,7 @@ public class GameManager : MonoBehaviour
 
     public void BomButtonClick()
     {
-        isAd = true;
+        isAd = false;
         if (AdManager.Instance.isRewardShow)
         {
             AdManager.Instance.ShowRewardedAd();

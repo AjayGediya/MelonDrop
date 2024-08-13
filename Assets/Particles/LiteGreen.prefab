@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 803257902196927017}
   - component: {fileID: 2499925451438917099}
   - component: {fileID: 6308565427376014958}
+  - component: {fileID: 5000210678942756540}
   m_Layer: 0
   m_Name: LiteGreen
   m_TagString: Untagged
@@ -4802,6 +4803,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &5000210678942756540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5463248007844138560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e194bb9d6e3474068a70dad20636b444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6032100151812506208
 GameObject:
   m_ObjectHideFlags: 0

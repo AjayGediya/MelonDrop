@@ -7,7 +7,7 @@ using UnityEngine.Profiling;
 public class Collision : MonoBehaviour
 {
     public GameObject Blueberry, Apricot, Apple, Cloudberry, Grapefruit, Guava, Lucuma, Passionfruit, Watermelon;
-    public ParticleSystem Blue, Green, Green1, GreenDark, NewyBlue, Orange, Orange1, Red, Yellow;
+    public ParticleSystem Blue, GreenLitedark, GreenLite, GreenDark, Purple, OrangeDark, OrangeLite, Red, DarkYellow;
     public Transform ParticalParent;
     public TextMeshPro textNumber;
     public Transform TextParent;
@@ -55,34 +55,34 @@ public class Collision : MonoBehaviour
             switch (currentTag)
             {
                 case "Strawberry":
-                    PerformFruitAction("Strawberry + Apricot", Orange, Apricot, 1, newcollision);
+                    PerformFruitAction("Strawberry + Apricot", OrangeLite, Apricot, 1, newcollision);
                     break;
                 case "Apricot":
                     PerformFruitAction("Apricot + Blueberry", Blue, Blueberry, 2, newcollision);
                     break;
                 case "Blueberry":
-                    PerformFruitAction("Blueberry + Guava", Green, Guava, 5, newcollision);
+                    PerformFruitAction("Blueberry + Guava", GreenLite, Guava, 5, newcollision);
                     break;
                 case "Guava":
                     PerformFruitAction("Guava + Apple", Red, Apple, 10, newcollision);
                     break;
                 case "Apple":
-                    PerformFruitAction("Apple + Grapefruit", Orange1, Grapefruit, 15, newcollision);
+                    PerformFruitAction("Apple + Grapefruit", OrangeDark, Grapefruit, 15, newcollision);
                     break;
                 case "Grapefruit":
-                    PerformFruitAction("Grapefruit + Passionfruit", NewyBlue, Passionfruit, 20, newcollision);
+                    PerformFruitAction("Grapefruit + Passionfruit", Purple, Passionfruit, 20, newcollision);
                     break;
                 case "Passionfruit":
                     PerformFruitAction("Passionfruit + Lucuma", GreenDark, Lucuma, 25, newcollision);
                     break;
                 case "Lucuma":
-                    PerformFruitAction("Lucuma + Cloudberry", Yellow, Cloudberry, 35, newcollision);
+                    PerformFruitAction("Lucuma + Cloudberry", DarkYellow, Cloudberry, 35, newcollision);
                     break;
                 case "Cloudberry":
-                    PerformFruitAction("Cloudberry + Watermelon", Green1, Watermelon, 40, newcollision);
+                    PerformFruitAction("Cloudberry + Watermelon", GreenLitedark, Watermelon, 40, newcollision);
                     break;
                 case "Watermelon":
-                    HandleFinalFruit(newcollision, Green1, 50);
+                    HandleFinalFruit(newcollision, GreenLitedark, 50);
                     break;
             }
 
@@ -165,6 +165,12 @@ public class Collision : MonoBehaviour
 
     public void FruitChanges(GameObject fruits)
     {
+        StartCoroutine(FruitTime(fruits));
+    }
+
+    IEnumerator FruitTime(GameObject fruits)
+    {
+        yield return new WaitForSeconds(0.2f);
         if (PlayerPrefs.GetInt("Vibrate", 0) == 0)
         {
             Vibration.Vibrate(50);

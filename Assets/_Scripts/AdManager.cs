@@ -18,8 +18,6 @@ public class AdManager : MonoBehaviour
     //private string RewardId = "ca-app-pub-3940256099942544/5224354917";
     public string RewardId;
 
-    // private string _adUnitId = "ca-app-pub-3940256099942544/9257395921";
-    public string AppOpenId;
 
     private BannerView _bannerView;
 
@@ -68,26 +66,6 @@ public class AdManager : MonoBehaviour
         //Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(initStatus =>
         {
-            if (AppOpenAcc == 2)
-            {
-                if (SplashAdAppOpen >= 1)
-                {
-                    isAppOpen = false;
-                    if (isAppOpen == false)
-                    {
-                        LoadAppOpenAd();
-                    }
-                }
-                else if (SplashAdAppOpen == 0)
-                {
-                    isAppOpen = true;
-                    if (isAppOpen == false)
-                    {
-                        LoadAppOpenAd();
-                    }
-                }
-            }
-
             if (InterstitialAcc == 2)
             {
                 if (AdAvailablevalue >= 1)
@@ -132,7 +110,7 @@ public class AdManager : MonoBehaviour
                     BannerId = root.ad_priority.ads[8].id;
                     InterStitleId = root.ad_priority.ads[4].id;
                     RewardId = root.ad_priority.ads[9].id;
-                    AppOpenId = root.ad_priority.ads[7].id;
+                    AppOpen.Instance._adUnitId = root.ad_priority.ads[7].id;
                     Number = int.Parse(root.data.app_version_code.ToString());
                     AdAvailablevalue = int.Parse(root.data.is_advertise_available.ToString());
                     SplashAdAppOpen = int.Parse(root.data.is_splash_available.ToString());
@@ -439,120 +417,6 @@ public class AdManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Loads the app open ad.
-    /// </summary>
-    public void LoadAppOpenAd()
-    {
-        // Clean up the old ad before loading a new one.
-        if (appOpenAd != null)
-        {
-            appOpenAd.Destroy();
-            appOpenAd = null;
-        }
-
-        Debug.Log("Loading the app open ad.");
-        Debug.Log("App Open id" + AppOpenId);
-        // Create our request used to load the ad.
-        var adRequest = new AdRequest();
-
-        // send the request to load the ad.
-        AppOpenAd.Load(AppOpenId, adRequest,
-            (AppOpenAd ad, LoadAdError error) =>
-            {
-                // if error is not null, the load request failed.
-                if (error != null || ad == null)
-                {
-                    Debug.LogError("app open ad failed to load an ad " +
-                                   "with error : " + error);
-                    return;
-                }
-
-                Debug.Log("App open ad loaded with response : "
-                          + ad.GetResponseInfo());
-
-                appOpenAd = ad;
-                RegisterEventHandlers(ad);
-            });
-    }
-
-    public void RegisterEventHandlers(AppOpenAd ad)
-    {
-        // Raised when the ad is estimated to have earned money.
-        ad.OnAdPaid += (AdValue adValue) =>
-        {
-            Debug.Log(String.Format("App open ad paid {0} {1}.",
-                adValue.Value,
-                adValue.CurrencyCode));
-        };
-        // Raised when an impression is recorded for an ad.
-        ad.OnAdImpressionRecorded += () =>
-        {
-            Debug.Log("App open ad recorded an impression.");
-        };
-        // Raised when a click is recorded for an ad.
-        ad.OnAdClicked += () =>
-        {
-            Debug.Log("App open ad was clicked.");
-        };
-        // Raised when an ad opened full screen content.
-        ad.OnAdFullScreenContentOpened += () =>
-        {
-            Debug.Log("App open ad full screen content opened.");
-        };
-        // Raised when the ad closed full screen content.
-        ad.OnAdFullScreenContentClosed += () =>
-        {
-            Debug.Log("App open ad full screen content closed.");
-            LoadAppOpenAd();
-            GameManager.instance.isAd = false;
-        };
-        // Raised when the ad failed to open full screen content.
-        ad.OnAdFullScreenContentFailed += (AdError error) =>
-        {
-            Debug.LogError("App open ad failed to open full screen content " +
-                           "with error : " + error);
-        };
-    }
-
-
-    public bool IsAdAvailable
-    {
-        get
-        {
-            return appOpenAd != null;
-        }
-    }
-
-    public void OnAppStateChanged(AppState state)
-    {
-        Debug.Log("App State changed to : " + state);
-
-        // if the app is Foregrounded and the ad is available, show it.
-        if (state == AppState.Foreground)
-        {
-            if (IsAdAvailable)
-            {
-                ShowAppOpenAd();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Shows the app open ad.
-    /// </summary>
-    public void ShowAppOpenAd()
-    {
-        if (appOpenAd != null && appOpenAd.CanShowAd())
-        {
-            Debug.Log("Showing app open ad.");
-            appOpenAd.Show();
-        }
-        else
-        {
-           // Debug.LogError("App open ad is not ready yet.");
-        }
-    }
 }
 
 [System.Serializable]

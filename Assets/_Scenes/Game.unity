@@ -9961,7 +9961,7 @@ MonoBehaviour:
   UpdatePopUp: {fileID: 2037387953}
   isAd: 0
   Timer: 
-  timeRemaining: 60
+  timeRemaining: 300
   timerIsRunning: 0
   Second5: 
   isTime: 0
