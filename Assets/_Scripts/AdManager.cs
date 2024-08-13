@@ -158,11 +158,13 @@ public class AdManager : MonoBehaviour
         if (_bannerView != null)
         {
             DestroyAd();
+            Debug.Log("Destroy");
         }
 
         // Create a 320x50 banner at top of the screen
         _bannerView = new BannerView(BannerId, AdSize.Banner, AdPosition.Bottom);
         ListenToAdEvents();
+        Debug.Log("Event");
     }
 
     public void LoadAd()
@@ -171,6 +173,7 @@ public class AdManager : MonoBehaviour
         if (_bannerView == null)
         {
             CreateBannerView();
+            Debug.Log("A"); //load
         }
 
         // create our request used to load the ad.
@@ -221,6 +224,7 @@ public class AdManager : MonoBehaviour
         _bannerView.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("Banner view full screen content closed.");
+            StartCoroutine(ChangeBool());
         };
     }
 
@@ -279,6 +283,7 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("Showing interstitial ad.");
             _interstitialAd.Show();
+            StartCoroutine(ChangeBool());
         }
         else
         {

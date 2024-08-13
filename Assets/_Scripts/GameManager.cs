@@ -63,6 +63,23 @@ public class GameManager : MonoBehaviour
 
     public bool isAd = false;
 
+    //public Text timerText;
+    public string Timer;
+    public float timeRemaining = 0; // 300 seconds = 5 minutes
+    public bool timerIsRunning = false;
+    private bool fiveSecondWarningGiven = false;
+
+    public string Second5;
+
+    float minutes;
+    float seconds;
+
+    public bool isTime = false;
+
+    public TextMeshProUGUI TimerTxt;
+
+    public GameObject TimerPopup;
+
     public static GameManager instance;
 
     private void OnApplicationFocus(bool focus)
@@ -106,6 +123,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        timerIsRunning = true;
         AdManager.Instance.isAppOpen = false;
         Debug.Log("Update" + AdManager.Instance.Number);
 
@@ -203,6 +221,40 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (TimerPopup.activeInHierarchy == true && isTime == false)
+        {
+            isTime = true;
+        }
+
+        if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                UpdateTimerDisplay(timeRemaining);
+
+                if (timeRemaining <= 5f && !fiveSecondWarningGiven)
+                {
+                    TimerPopup.SetActive(true);
+                    Debug.Log("5 seconds remaining!");
+                    Second5 = string.Format("{00}", seconds);
+                    TimerTxt.text = Second5;
+                }
+
+            }
+            else
+            {
+                timeRemaining = 0;
+                timerIsRunning = false;
+                fiveSecondWarningGiven = false;
+                AdManager.Instance.ShowInterstitialAd();
+                TimerPopup.SetActive(false);
+                StartCoroutine(ChangeBoolForTimer());
+                // Timer has run out, you can trigger any event here
+                Debug.Log("Time's up!");
+            }
+        }
+
         for (int i = image.Count - 1; i >= 0; i--)
         {
             if (image[i] != null && !image[i].GetComponent<SpriteRenderer>().enabled)
@@ -211,6 +263,28 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    IEnumerator ChangeBoolForTimer()
+    {
+        yield return new WaitForSeconds(0.2f);
+        timeRemaining = 60f;
+        timerIsRunning = true;
+        isTime = false;
+    }
+
+
+    void UpdateTimerDisplay(float timeToDisplay)
+    {
+        timeToDisplay += 1; // To ensure the timer ends at 0
+
+        minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        // Debug.Log(string.Format("{0:00}:{1:00}", minutes, seconds));
+
+        Timer = string.Format("{0:00}:{1:00}", minutes, seconds);
+        //timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
 
     IEnumerator DeletImage(GameObject deletimage)
     {
