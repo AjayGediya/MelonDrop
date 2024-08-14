@@ -4,11 +4,11 @@ public class SoundManager : MonoBehaviour
 {
     public AudioSource SoundAudio;
 
-    public bool isSound = false;
-
     public AudioClip FruitMergeClip;
 
     public AudioClip FruitClip;
+
+    public bool isSound = false;
 
     public static SoundManager Instance;
 

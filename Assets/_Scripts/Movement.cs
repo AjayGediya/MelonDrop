@@ -5,11 +5,16 @@ using UnityEngine.Profiling;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private Vector3 startPos, endPos;
+
     [SerializeField] private Vector3 screenSize;
+
     [SerializeField] private GameObject line;
-    public bool isSelect = false;
+
     [SerializeField] private float min = 0, max = 0;
+
     [SerializeField] private Rigidbody2D rb;
+
+    public bool isSelect = false;
 
     private GameManager gameManager;
 

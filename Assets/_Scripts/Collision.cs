@@ -7,13 +7,19 @@ using UnityEngine.Profiling;
 public class Collision : MonoBehaviour
 {
     public GameObject Blueberry, Apricot, Apple, Cloudberry, Grapefruit, Guava, Lucuma, Passionfruit, Watermelon;
+
     public ParticleSystem Blue, GreenLitedark, GreenLite, GreenDark, Purple, OrangeDark, OrangeLite, Red, DarkYellow;
+
     public Transform ParticalParent;
-    public TextMeshPro textNumber;
+
     public Transform TextParent;
 
+    public TextMeshPro textNumber;
+
     private TextMeshPro newtext;
+
     private SpriteRenderer spriteRenderer;
+
     private Collider2D Collide2D;
 
     public void Start()
@@ -22,6 +28,7 @@ public class Collision : MonoBehaviour
         TextParent = GameObject.Find("TextObjects").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
         Collide2D = GetComponent<Collider2D>();
+
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -148,7 +155,7 @@ public class Collision : MonoBehaviour
     public void ParticalesEffect(ParticleSystem newparticle)
     {
         ParticleSystem particleSystem = Instantiate(newparticle, ParticalParent);
-        particleSystem.transform.position = transform.position;
+        particleSystem.transform.position = gameObject.transform.position;
     }
 
     public void DestroyObject(Collision2D newcollision)
@@ -165,12 +172,6 @@ public class Collision : MonoBehaviour
 
     public void FruitChanges(GameObject fruits)
     {
-        StartCoroutine(FruitTime(fruits));
-    }
-
-    IEnumerator FruitTime(GameObject fruits)
-    {
-        yield return new WaitForSeconds(0.2f);
         if (PlayerPrefs.GetInt("Vibrate", 0) == 0)
         {
             Vibration.Vibrate(50);

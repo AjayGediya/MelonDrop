@@ -10,104 +10,132 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     public GameObject[] Fruits;
-    public GameObject FruitsParent;
-    public GameObject ParentObj;
-    public List<GameObject> image = new List<GameObject>();
-    public bool isFruit = false;
-
-    public TextMeshProUGUI ScoreText;
-    public int ScoreValue;
-    public TextMeshProUGUI HighScoreText;
-    public TextMeshProUGUI ScoreValueOver;
-    public int HighScore;
-
-    public GameObject GameOverObject1, GameOverObject2, GameOverObject3;
-    public GameObject GamePanel, OverPanel, SettingPanel;
-    public bool isGameOver = false;
 
     public Sprite[] NextImages;
-    public Image NextImage;
 
-    public Toggle VibrateToggle;
-    int NextFruit;
-    public Sprite On, Off;
-    public Button SoundButton, MusicButton;
+    public GameObject FruitsParent;
 
-    public List<GameObject> First2Object = new List<GameObject>();
-    public bool isButtonOption = false;
-    public bool isButtonChange = false;
-    public bool isButtonBoxVibrate = false;
-    public bool isButtonFirst2Destroy = false;
+    public GameObject ParentObj;
+
+    public GameObject GameOverObject1, GameOverObject2, GameOverObject3;
+
+    public GameObject GamePanel, OverPanel, SettingPanel;
 
     public GameObject Box;
-    public float rotateSPeed;
-    public GameObject ColliderObject;
-    public Camera main;
-    public GameObject NotAd;
-    public GameObject NotFound;
-    public ParticleSystem particle;
 
-    public ShareText shareText;
-    public bool isBom = false;
+    public GameObject ColliderObject;
+
+    public GameObject NotAd;
+
+    public GameObject NotFound;
+
+    public GameObject UpdatePopUp;
+
+    public GameObject TimerPopup;
+
+    public int HighScore;
+
+    int NextFruit;
+
+    public int ScoreValue;
+
+    public float rotateSPeed;
 
     public float wobbleDuration = 0.1f;
+
     public float wobbleAngle = 5f;
+
     public float distance = 1.5f;
+
     public float duration = 1f;
+
+    //public Text timerText;
+    public string Timer;
+
+    public float timeRemaining = 0; // 300 seconds = 5 minutes
+
+    public string Second5;
+
+    float minutes;
+
+    float seconds;
+
+    public bool timerIsRunning = false;
+
+    private bool fiveSecondWarningGiven = false;
+
+    public bool isTime = false;
 
     public bool isAppOpenChange = false;
 
     public bool isoff = false;
 
-    public GameObject UpdatePopUp;
+    public bool isBom = false;
 
-    public bool isAd = false;
+    public bool isGameOver = false;
 
-    //public Text timerText;
-    public string Timer;
-    public float timeRemaining = 0; // 300 seconds = 5 minutes
-    public bool timerIsRunning = false;
-    private bool fiveSecondWarningGiven = false;
+    public bool isButtonOption = false;
 
-    public string Second5;
+    public bool isButtonChange = false;
 
-    float minutes;
-    float seconds;
+    public bool isButtonBoxVibrate = false;
 
-    public bool isTime = false;
+    public bool isButtonFirst2Destroy = false;
+
+    public bool isFruit = false;
+
+    public Sprite On, Off;
+
+    public Button SoundButton, MusicButton;
+
+    public Image NextImage;
+
+    public Toggle VibrateToggle;
+
+    public Camera main;
+
+    public ParticleSystem particle;
+
+    public ShareText shareText;
 
     public TextMeshProUGUI TimerTxt;
 
-    public GameObject TimerPopup;
+    public TextMeshProUGUI ScoreText;
+
+    public TextMeshProUGUI HighScoreText;
+
+    public TextMeshProUGUI ScoreValueOver;
+
+    public List<GameObject> First2Object = new List<GameObject>();
+
+    public List<GameObject> image = new List<GameObject>();
 
     public static GameManager instance;
 
+    GameObject Fruit;
 
+    public GameObject[] AllFruit;
 
     private void OnApplicationFocus(bool focus)
     {
-        Debug.Log("Focus");
-        if (isAd == false)
+        if (focus)
         {
-            isAd = true;
-            Debug.Log("Focus++" + focus);
-            Debug.Log("iaAd+++" + isAd);
-            isAppOpenChange = true;
-            AppOpen.Instance.ShowAppOpenAd();
-
+            if (AdManager.Instance.isAdStop == false)
+            {
+                AdManager.Instance.ShowAppOpenAd();
+                Debug.Log("Focus");
+            }
         }
     }
 
     private void OnApplicationPause(bool pause)
     {
         Debug.Log("Game-Pause");
-        isAd = false;
     }
 
     private void OnApplicationQuit()
     {
         Debug.Log("Quit");
-        //AdManager.Instance.ShowAppOpenAd();
     }
 
     void Awake()
@@ -124,33 +152,37 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (AdManager.Instance.AdSplashvalue >= 1)
+        {
+            AdManager.Instance.ShowAppOpenAd();
+        }
+        else
+        {
+            Debug.Log("Ad Number Not Match");
+        }
+
         timerIsRunning = true;
 
-        if (AdManager.Instance.RewardAcc == 2)
+        if (AdManager.Instance.BannerAcc == 2 && AdManager.Instance.AdAvailablevalue > 0)
         {
-            if (AdManager.Instance.AdAvailablevalue >= 1)
-            {
-                AdManager.Instance.LoadAd();
-                //BANER
-            }
+            AdManager.Instance.LoadAd();
+            //BANER
         }
 
-        if (AdManager.Instance.SplashAdAppOpen >= 1)
+        if (AdManager.Instance._interstitialAd == null && AdManager.Instance._rewardedAd == null)
         {
-            if (AdManager.Instance.AppOpenAcc == 2)
+            if (AdManager.Instance.InterstitialAcc == 2 && AdManager.Instance.RewardAcc == 2 && AdManager.Instance.AdAvailablevalue > 0)
             {
-                AppOpen.Instance.ShowAppOpenAd();
+                Debug.Log("AdLoading");
+                Debug.Log("Game_Ad_Load");
+                AdManager.Instance.LoadInterstitialAd();
+                AdManager.Instance.LoadRewardedAd();
             }
         }
-
-        //if (AdManager.Instance.isAppOpen == false)
-        //{
-        //    if (AdManager.Instance.AppOpenAcc == 2)
-        //    {
-        //        AppOpen.Instance.LoadAppOpenAd();
-        //    }
-        //}
-
+        else
+        {
+            Debug.Log("Ad_Not_Null");
+        }
 
         Fruits = Resources.LoadAll<GameObject>("Prefabs");
         NextImages = Resources.LoadAll<Sprite>("Sprite");
@@ -163,11 +195,20 @@ public class GameManager : MonoBehaviour
         SetupMusic();
         SetupVibration();
 
+        if (PlayerPrefs.GetInt("FirstOpen", 0) == 0)
+        {
+            Debug.Log("AAAAA");
+            PlayerPrefs.SetInt("Update", AdManager.Instance.Number);
+            PlayerPrefs.SetInt("FirstOpen", 1);
+            Debug.Log("Update" + PlayerPrefs.GetInt("Update"));
+        }
+
         Debug.Log(PlayerPrefs.GetInt("Update", 1) + " " + AdManager.Instance.Number);
         if (PlayerPrefs.GetInt("Update", 1) < AdManager.Instance.Number)
         {
             Debug.Log("update dialog");
             //PlayerPrefs.SetInt("Update", AdManager.Instance.Number);
+            GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 120);
             UpdatePopUp.SetActive(true);
         }
     }
@@ -205,6 +246,7 @@ public class GameManager : MonoBehaviour
     {
         int number = UnityEngine.Random.Range(0, Fruits.Length);
         GameObject fruit = Instantiate(Fruits[number], FruitsParent.transform.position, Quaternion.identity, FruitsParent.transform);
+        
     }
 
     public void nextImage()
@@ -215,7 +257,7 @@ public class GameManager : MonoBehaviour
 
     public void AfterNextImageCall()
     {
-        Instantiate(Fruits[NextFruit], FruitsParent.transform.position, Quaternion.identity, FruitsParent.transform);
+        Fruit = Instantiate(Fruits[NextFruit], FruitsParent.transform.position, Quaternion.identity, FruitsParent.transform);
     }
 
     void Update()
@@ -234,6 +276,7 @@ public class GameManager : MonoBehaviour
 
                 if (timeRemaining <= 5f && !fiveSecondWarningGiven)
                 {
+                    GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 120);
                     TimerPopup.SetActive(true);
                     Debug.Log("5 seconds remaining!");
                     Second5 = string.Format("{00}", seconds);
@@ -247,6 +290,7 @@ public class GameManager : MonoBehaviour
                 timerIsRunning = false;
                 fiveSecondWarningGiven = false;
                 AdManager.Instance.ShowInterstitialAd();
+                GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
                 TimerPopup.SetActive(false);
                 StartCoroutine(ChangeBoolForTimer());
                 // Timer has run out, you can trigger any event here
@@ -271,7 +315,6 @@ public class GameManager : MonoBehaviour
         isTime = false;
     }
 
-
     void UpdateTimerDisplay(float timeToDisplay)
     {
         timeToDisplay += 1; // To ensure the timer ends at 0
@@ -281,9 +324,9 @@ public class GameManager : MonoBehaviour
         // Debug.Log(string.Format("{0:00}:{1:00}", minutes, seconds));
 
         Timer = string.Format("{0:00}:{1:00}", minutes, seconds);
+        //Debug.Log(Timer);
         //timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
 
     IEnumerator DeletImage(GameObject deletimage)
     {
@@ -306,11 +349,14 @@ public class GameManager : MonoBehaviour
         Application.OpenURL("https://play.google.com/store/games?utm_source=apac_med&hl=en-IN&utm_medium=hasem&utm_content=Jul3124&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1707570-med-hasem-py-Evergreen-Jul3124-Text_Search_BKWS-BKWS%7CONSEM_kwid_43700080171622144_creativeid_694609712106_device_c&gad_source=1&gclid=Cj0KCQjw5ea1BhC6ARIsAEOG5py_18eCYdEuOd6ctEyvsqWeFQ8qb16Nzrdxhqc_LyjfaRreVnxUUvIaApI4EALw_wcB&gclsrc=aw.ds");
         PlayerPrefs.SetInt("Update", AdManager.Instance.Number);
         UpdatePopUp.SetActive(false);
+        GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+
     }
 
     public void NotNowBtnClick()
     {
         UpdatePopUp.SetActive(false);
+        GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
     }
 
     public void SettingBtnClick()
@@ -373,7 +419,6 @@ public class GameManager : MonoBehaviour
 
     public void BomButtonClick()
     {
-        isAd = false;
         if (AdManager.Instance.isRewardShow)
         {
             AdManager.Instance.ShowRewardedAd();
@@ -396,13 +441,14 @@ public class GameManager : MonoBehaviour
         if (image.Count == 0)
         {
             StartCoroutine(NotFoundTimeChanges());
+            isButtonOption = false;
         }
         else
         {
             foreach (var item in image)
             {
                 item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 180), 1, RotateMode.Fast).SetLoops(-1, LoopType.Incremental);
+                item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 360), 1, RotateMode.Fast).SetLoops(-2, LoopType.Incremental);
             }
         }
     }
@@ -437,12 +483,14 @@ public class GameManager : MonoBehaviour
         if (image.Count == 0)
         {
             StartCoroutine(NotFoundTimeChanges());
+            isButtonChange = false;
         }
         else
         {
             foreach (var item in image)
             {
                 item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 360), 1, RotateMode.Fast).SetLoops(-2, LoopType.Incremental);
             }
         }
     }
@@ -469,6 +517,7 @@ public class GameManager : MonoBehaviour
         if (image.Count == 0)
         {
             StartCoroutine(NotFoundTimeChanges());
+            isButtonBoxVibrate = false;
         }
         else
         {
@@ -488,12 +537,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WobbleObject());
         //Profiler.EndSample();
     }
-
-    //public float wobbleDuration = 0.1f;
-    //public float wobbleAngle = 5f;
-
-    //public float distance = 1.5f;  // Distance to move left and right
-    //public float duration = 1f;
 
     IEnumerator WobbleObject()
     {
@@ -589,6 +632,7 @@ public class GameManager : MonoBehaviour
         if (image.Count == 0)
         {
             StartCoroutine(NotFoundTimeChanges());
+            isButtonFirst2Destroy = false;
         }
         else
         {

@@ -18,35 +18,43 @@ public class AdManager : MonoBehaviour
     //private string RewardId = "ca-app-pub-3940256099942544/5224354917";
     public string RewardId;
 
+    //private string AppOpenId = "ca-app-pub-3940256099942544/9257395921";
+    public string AppOpenId;
 
-    private BannerView _bannerView;
+    public BannerView _bannerView;
 
-    private InterstitialAd _interstitialAd;
+    public InterstitialAd _interstitialAd;
 
-    private RewardedAd _rewardedAd;
+    public RewardedAd _rewardedAd;
 
-    private AppOpenAd appOpenAd;
-
-    public static AdManager Instance;
+    public AppOpenAd _appOpenAd;
 
     public bool isRewardShow = false;
 
     public bool isShow = false;
 
-    public Root root;
+    public bool isAdStop = false;
 
     public int Number = 0;
 
     public int AdAvailablevalue = 0;
 
-    public int SplashAdAppOpen = 0;
-
-    public bool isAppOpen = false;
+    public int AdSplashvalue = 0;
 
     public int InterstitialAcc = 0;
+
     public int BannerAcc = 0;
+
     public int RewardAcc = 0;
+
     public int AppOpenAcc = 0;
+
+    public Root root;
+
+    private DateTime _expireTime;
+
+    public static AdManager Instance;
+
 
     private void Awake()
     {
@@ -57,33 +65,34 @@ public class AdManager : MonoBehaviour
     {
         StartCoroutine(GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2"));
 
-        StartCoroutine(AdManage());
+      //  StartCoroutine(AdManage());
     }
 
-    public IEnumerator AdManage()
+    public void AdManage()
     {
-        yield return new WaitForSeconds(2);
-        //Initialize the Google Mobile Ads SDK.
+       // yield return new WaitForSeconds(1.4f);
+
         MobileAds.Initialize(initStatus =>
         {
-            if (InterstitialAcc == 2)
+            if (AppOpenAcc == 2)
             {
-                if (AdAvailablevalue >= 1)
-                {
-                    LoadInterstitialAd();
-                }
+                LoadAppOpenAd();
             }
 
-            if (RewardAcc == 2)
+            Debug.Log(InterstitialAcc);
+            Debug.Log(RewardAcc);
+            Debug.Log(AdAvailablevalue);
+            Debug.Log(AppOpenAcc);
+
+            if (InterstitialAcc == 2 && RewardAcc == 2 && AdAvailablevalue > 0)
             {
-                if (AdAvailablevalue >= 1)
-                {
-                    LoadRewardedAd();
-                }
+                Debug.Log("AdLoading");
+                LoadInterstitialAd();
+                LoadRewardedAd();
             }
-           
         });
     }
+
 
     IEnumerator GetRequest(string uri)
     {
@@ -107,22 +116,30 @@ public class AdManager : MonoBehaviour
                 case UnityWebRequest.Result.Success:
                     Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
                     root = JsonUtility.FromJson<Root>(webRequest.downloadHandler.text);
-                    BannerId = root.ad_priority.ads[8].id;
                     InterStitleId = root.ad_priority.ads[4].id;
+                    AppOpenId = root.ad_priority.ads[7].id;
+                    BannerId = root.ad_priority.ads[8].id;
                     RewardId = root.ad_priority.ads[9].id;
-                    AppOpen.Instance._adUnitId = root.ad_priority.ads[7].id;
                     Number = int.Parse(root.data.app_version_code.ToString());
                     AdAvailablevalue = int.Parse(root.data.is_advertise_available.ToString());
-                    SplashAdAppOpen = int.Parse(root.data.is_splash_available.ToString());
+                    Debug.Log("AdAvailablevalue" + AdAvailablevalue);
+                    AdSplashvalue = int.Parse(root.data.is_splash_available.ToString());
+                    Debug.Log("AdSplashvalue" + AdSplashvalue);
                     InterstitialAcc = int.Parse(root.ad_priority.ads[4].acc_type.ToString());
+                    Debug.Log(InterstitialAcc + "InterstitialAcc");
                     BannerAcc = int.Parse(root.ad_priority.ads[8].acc_type.ToString());
+                    Debug.Log("BannerAcc" + BannerAcc);
                     RewardAcc = int.Parse(root.ad_priority.ads[9].acc_type.ToString());
+                    Debug.Log("RewardAcc" + RewardAcc);
                     AppOpenAcc = int.Parse(root.ad_priority.ads[7].acc_type.ToString());
-                    Debug.Log("Appopnid Create");
                     break;
             }
+
+            AdManage();
         }
     }
+
+
 
 
     /// <summary>
@@ -202,7 +219,7 @@ public class AdManager : MonoBehaviour
         _bannerView.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("Banner view full screen content closed.");
-            StartCoroutine(ChangeBool());
+            LoadAd();
         };
     }
 
@@ -215,6 +232,8 @@ public class AdManager : MonoBehaviour
             _bannerView = null;
         }
     }
+
+
 
 
     /// <summary>
@@ -261,11 +280,12 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("Showing interstitial ad.");
             _interstitialAd.Show();
-            StartCoroutine(ChangeBool());
+            isAdStop = true;
         }
         else
         {
             Debug.LogError("Interstitial ad is not ready yet.");
+            LoadInterstitialAd();
         }
     }
 
@@ -298,15 +318,23 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("Interstitial ad full screen content closed.");
             LoadInterstitialAd();
+            StartCoroutine(ChangeStopBool());
         };
         // Raised when the ad failed to open full screen content.
         interstitialAd.OnAdFullScreenContentFailed += (AdError error) =>
         {
             Debug.LogError("Interstitial ad failed to open full screen content " +
                            "with error : " + error);
+            LoadInterstitialAd();
         };
     }
 
+
+    IEnumerator ChangeStopBool()
+    {
+        yield return new WaitForSeconds(0.3f);
+        isAdStop = false;
+    }
 
     /// <summary>
     /// Shows the Rewarded ad.
@@ -359,15 +387,13 @@ public class AdManager : MonoBehaviour
                 // TODO: Reward the user.
                 Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
                 Debug.Log("View + Pouse");
-                StartCoroutine(ChangeBool());
+                isAdStop = true;
             });
         }
-    }
-
-    IEnumerator ChangeBool()
-    {
-        yield return new WaitForSeconds(1);
-        GameManager.instance.isAd = false;
+        else
+        {
+            LoadRewardedAd();
+        }
     }
 
     private void RegisterEventHandlers(RewardedAd ad)
@@ -405,6 +431,7 @@ public class AdManager : MonoBehaviour
             isRewardShow = false;
             GameManager.instance.isBom = true;
             LoadRewardedAd();
+            StartCoroutine(ChangeStopBool());
             Debug.Log("E");
         };
         // Raised when the ad failed to open full screen content.
@@ -413,10 +440,127 @@ public class AdManager : MonoBehaviour
             Debug.LogError("Rewarded ad failed to open full screen content " +
                            "with error : " + error);
             Debug.Log("f");
+            LoadRewardedAd();
         };
     }
 
 
+
+
+    /// <summary>
+    /// Loads the app open ad.
+    /// </summary>
+    ///
+
+    public bool IsAdAvailable
+    {
+        get
+        {
+            return _appOpenAd != null
+                && DateTime.Now < _expireTime;
+        }
+    }
+
+    public void LoadAppOpenAd()
+    {
+        // Clean up the old ad before loading a new one.
+        if (_appOpenAd != null)
+        {
+            _appOpenAd.Destroy();
+            _appOpenAd = null;
+        }
+
+        Debug.Log("Loading the app open ad.");
+
+        // Create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        AppOpenAd.Load(AppOpenId, adRequest,
+            (AppOpenAd ad, LoadAdError error) =>
+            {
+                // if error is not null, the load request failed.
+                if (error != null || ad == null)
+                {
+                    Debug.LogError("app open ad failed to load an ad " +
+                                   "with error : " + error);
+                    return;
+                }
+
+                Debug.Log("App open ad loaded with response : "
+                          + ad.GetResponseInfo());
+
+                _appOpenAd = ad;
+                RegisterEventHandlers(ad);
+            });
+    }
+
+    private void RegisterEventHandlers(AppOpenAd ad)
+    {
+        // Raised when the ad is estimated to have earned money.
+        ad.OnAdPaid += (AdValue adValue) =>
+        {
+            Debug.Log(String.Format("App open ad paid {0} {1}.",
+                adValue.Value,
+                adValue.CurrencyCode));
+        };
+        // Raised when an impression is recorded for an ad.
+        ad.OnAdImpressionRecorded += () =>
+        {
+            Debug.Log("App open ad recorded an impression.");
+        };
+        // Raised when a click is recorded for an ad.
+        ad.OnAdClicked += () =>
+        {
+            Debug.Log("App open ad was clicked.");
+        };
+        // Raised when an ad opened full screen content.
+        ad.OnAdFullScreenContentOpened += () =>
+        {
+            Debug.Log("App open ad full screen content opened.");
+        };
+        // Raised when the ad closed full screen content.
+        ad.OnAdFullScreenContentClosed += () =>
+        {
+            Debug.Log("App open ad full screen content closed.");
+            LoadAppOpenAd();
+        };
+        // Raised when the ad failed to open full screen content.
+        ad.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.LogError("App open ad failed to open full screen content " +
+                           "with error : " + error);
+            LoadAppOpenAd();
+        };
+    }
+
+    private void OnAppStateChanged(AppState state)
+    {
+        Debug.Log("App State changed to : " + state);
+
+        // if the app is Foregrounded and the ad is available, show it.
+        if (state == AppState.Foreground)
+        {
+            if (IsAdAvailable)
+            {
+                ShowAppOpenAd();
+            }
+        }
+    }
+
+    public void ShowAppOpenAd()
+    {
+        if (_appOpenAd != null && _appOpenAd.CanShowAd())
+        {
+            Debug.Log("Showing app open ad.");
+            _appOpenAd.Show();
+        }
+        else
+        {
+            Debug.LogError("App open ad is not ready yet.");
+            LoadAppOpenAd();
+        }
+    }
 }
 
 [System.Serializable]

@@ -5,6 +5,7 @@ using UnityEngine.Profiling;
 public class FruitTouch : MonoBehaviour
 {
     [SerializeField] private Sprite blueberry, apricot, apple, cloudberry, grapefruit, guava, lucuma, passionfruit, watermelon;
+
     [SerializeField] private ParticleSystem particle;
 
     private GameManager gameManager;
@@ -54,31 +55,31 @@ public class FruitTouch : MonoBehaviour
         switch (gameObject.name)
         {
             case "Strawberry(Clone)":
-                FruitChange(apricot, "Apricot", new Vector3(1, 1, 1), 0.228f, new Vector2(0, -0.056f));
+                FruitChange(apricot, "Apricot", new Vector3(0.15f, 0.15f, 0.15f), 0.27f, new Vector2(0, -0.03f));//done
                 break;
             case "Apricot(Clone)":
-                FruitChange(blueberry, "Blueberry", new Vector3(1.3f, 1.3f, 1.3f), 0.32f, new Vector2(-0.06f, -0.09f));
+                FruitChange(blueberry, "Blueberry", new Vector3(0.14f, 0.14f, 0.14f), 0.3f, new Vector2(-0.03f, -0.04f));//done
                 break;
             case "Blueberry(Clone)":
-                FruitChange(guava, "Guava", new Vector3(2, 2, 2), 0.43f, new Vector2(0, -0.05f));
+                FruitChange(guava, "Guava", new Vector3(0.2f, 0.2f, 0.2f), 0.34f, new Vector2(0, -0.01f));//done
                 break;
             case "Guava(Clone)":
-                FruitChange(apple, "Apple", new Vector3(2.5f, 2.5f, 2.5f), 0.52f, new Vector2(0, -0.09f));
+                FruitChange(apple, "Apple", new Vector3(0.2f, 0.2f, 0.2f), 0.34f, new Vector2(0, -0.08f));//done
                 break;
             case "Apple(Clone)":
-                FruitChange(grapefruit, "Grapefruit", new Vector3(3.5f, 3.5f, 3.5f), 0.75f, new Vector2(0, -0.16f));
+                FruitChange(grapefruit, "Grapefruit", new Vector3(0.3f, 0.3f, 0.3f), 0.5f, new Vector2(0, 0));//done
                 break;
             case "Grapefruit(Clone)":
-                FruitChange(passionfruit, "Passionfruit", new Vector3(4, 4, 4), 0.88f, new Vector2(0, -0.18f));
+                FruitChange(passionfruit, "Passionfruit", new Vector3(0.35f, 0.35f, 0.35f), 0.57f, new Vector2(0, -0.06f));//done
                 break;
             case "Passionfruit(Clone)":
-                FruitChange(lucuma, "Lucuma", new Vector3(4.5f, 4.5f, 4.5f), 0.96f, new Vector2(0, -0.09f));
+                FruitChange(lucuma, "Lucuma", new Vector3(0.35f, 0.35f, 0.35f), 0.72f, new Vector2(0, 0));//done
                 break;
             case "Lucuma(Clone)":
-                FruitChange(cloudberry, "Cloudberry", new Vector3(4.5f, 4.5f, 4.5f), 1, new Vector2(-0.05f, -0.1f));
+                FruitChange(cloudberry, "Cloudberry", new Vector3(0.55f, 0.55f, 0.55f), 0.95f, new Vector2(-0.04f, -0.15f));//done
                 break;
             case "Cloudberry(Clone)":
-                FruitChange(watermelon, "Watermelon", new Vector3(5.2f, 5.2f, 5.2f), 1.15f, new Vector2(0, -0.13f));
+                FruitChange(watermelon, "Watermelon", new Vector3(0.7f, 0.7f, 0.7f), 1.18f, new Vector2(0, -0.05f));
                 break;
             case "Watermelon(Clone)":
                 Destroy(gameObject);
@@ -120,6 +121,16 @@ public class FruitTouch : MonoBehaviour
 
         gameObject.name = $"{newName}(Clone)";
         gameObject.tag = newName;
+
+        gameObject.GetComponent<Collision>().Apricot = GameManager.instance.AllFruit[1];
+        gameObject.GetComponent<Collision>().Blueberry = GameManager.instance.AllFruit[2];
+        gameObject.GetComponent<Collision>().Guava = GameManager.instance.AllFruit[3];
+        gameObject.GetComponent<Collision>().Apple = GameManager.instance.AllFruit[4];
+        gameObject.GetComponent<Collision>().Grapefruit = GameManager.instance.AllFruit[5];
+        gameObject.GetComponent<Collision>().Passionfruit = GameManager.instance.AllFruit[6];
+        gameObject.GetComponent<Collision>().Lucuma = GameManager.instance.AllFruit[7];
+        gameObject.GetComponent<Collision>().Cloudberry = GameManager.instance.AllFruit[8];
+        gameObject.GetComponent<Collision>().Watermelon = GameManager.instance.AllFruit[9];
 
         var childTransform = transform.GetChild(0).transform;
         childTransform.localScale = newScale;

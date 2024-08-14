@@ -1,28 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class LoadingManager : MonoBehaviour
 {
     [SerializeField] private Slider loadingSlider;
+
     [SerializeField] private TextMeshProUGUI loadTxt;
 
-    private bool isLoading = false;
     private float maxLoadingValue = 20f;
+
     private int nextSceneIndex = 1;
 
-    private void Awake()
+    private bool isLoading = false;
+
+    public bool isAppOpenAdTest = false;
+
+    public void Awake()
     {
         Application.targetFrameRate = 60;
     }
 
-    private void Start()
-    {
-        AppOpen.Instance.LoadAppOpenAd();
-    }
-
-    private void Update()
+    public void Update()
     {
         if (!isLoading)
         {
@@ -35,9 +36,35 @@ public class LoadingManager : MonoBehaviour
                 LoadNextScene();
             }
         }
+
+        //if (AdManager.Instance._appOpenAd == null && isAppOpenAdTest == false)
+        //{
+        //    Debug.Log("NOT FOUND APPOPEN AD");
+        //    AdManager.Instance.LoadAppOpenAd();
+        //    Debug.Log("isAppOpenAdTest" + isAppOpenAdTest);
+        //}
     }
 
-    private void LoadNextScene()
+    IEnumerator AdTime()
+    {
+        yield return new WaitForSeconds(1);
+        Debug.Log("Ad Start with load");
+        if (AdManager.Instance._appOpenAd == null && isAppOpenAdTest == false)
+        {
+            Debug.Log("NOT FOUND APPOPEN AD");
+            AdManager.Instance.LoadAppOpenAd();
+            Debug.Log("isAppOpenAdTest" + isAppOpenAdTest);
+            isAppOpenAdTest = true;
+        }
+        else if (AdManager.Instance._appOpenAd != null)
+        {
+            Debug.Log("FOUND APPOPEN AD");
+            isAppOpenAdTest = true;
+            Debug.Log("isAppOpenAdTest" + isAppOpenAdTest + "::::" + "AdFound");
+        }
+    }
+
+    public void LoadNextScene()
     {
         SceneManager.LoadScene(nextSceneIndex);
         Debug.Log("Scene changed");
