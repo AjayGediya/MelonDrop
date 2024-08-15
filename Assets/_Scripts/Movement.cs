@@ -55,7 +55,7 @@ public class Movement : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 line.SetActive(true);
-               // DeactivateGameOverObjects();
+                // DeactivateGameOverObjects();
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Debug.Log(mousePos);
                 // startPos = pos;
@@ -63,7 +63,7 @@ public class Movement : MonoBehaviour
 
             if (Input.GetMouseButton(0))
             {
-               // DeactivateGameOverObjects();
+                // DeactivateGameOverObjects();
                 endPos = pos;
                 Vector3 diff = endPos - startPos;
                 diff.x = Mathf.Clamp(diff.x, min, max);
@@ -119,7 +119,7 @@ public class Movement : MonoBehaviour
 
     private IEnumerator ValueChange()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
         line.SetActive(true);
         line.transform.position = Vector3.zero;
 

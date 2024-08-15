@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject GameOverObject1, GameOverObject2, GameOverObject3;
 
-    public GameObject GamePanel, OverPanel, SettingPanel;
+    public GameObject GamePanel, OverPanel, SettingPanel, HelpPanel;
 
     public GameObject Box;
 
@@ -264,8 +264,24 @@ public class GameManager : MonoBehaviour
         Fruit = Instantiate(Fruits[NextFruit], FruitsParent.transform.position, Quaternion.identity, FruitsParent.transform);
     }
 
+    public void HelpBtnClick()
+    {
+        HelpPanel.SetActive(true);
+    }
+
+    public void HelpBackBtnClick()
+    {
+        HelpPanel.SetActive(false);
+    }
+
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SettingPanel.SetActive(false);
+        }
+
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             if (isNet == false)
@@ -344,7 +360,7 @@ public class GameManager : MonoBehaviour
 
         minutes = Mathf.FloorToInt(timeToDisplay / 60);
         seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        Debug.Log(string.Format("{0:00}:{1:00}", minutes, seconds));
+        //Debug.Log(string.Format("{0:00}:{1:00}", minutes, seconds));
 
         Timer = string.Format("{0:00}:{1:00}", minutes, seconds);
         //Debug.Log(Timer);

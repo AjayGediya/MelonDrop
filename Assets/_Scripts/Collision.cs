@@ -112,7 +112,7 @@ public class Collision : MonoBehaviour
         Profiler.EndSample();
 
         GameManager.instance.ScoreValue += scoreValue;
-        TextCreate(scoreValue);
+        TextCreate(scoreValue,newcollision);
     }
 
     public void HandleFinalFruit(Collision2D newcollision, ParticleSystem particleEffect, int scoreValue)
@@ -123,7 +123,7 @@ public class Collision : MonoBehaviour
         Profiler.EndSample();
 
         GameManager.instance.ScoreValue += scoreValue;
-        TextCreate(scoreValue);
+        TextCreate(scoreValue,newcollision);
 
         GameManager.instance.image.Remove(gameObject);
         GameManager.instance.image.Remove(newcollision.gameObject);
@@ -134,11 +134,11 @@ public class Collision : MonoBehaviour
         GameManager.instance.isFruit = false;
     }
 
-    public void TextCreate(int value)
+    public void TextCreate(int value, Collision2D collision2DNew)
     {
         newtext = Instantiate(textNumber, TextParent);
         newtext.text = "+" + value;
-        newtext.transform.position = transform.position;
+        newtext.transform.position = collision2DNew.transform.position;
 
         Profiler.BeginSample("TextColorChange");
         StartCoroutine(TextColorChange());
@@ -147,8 +147,8 @@ public class Collision : MonoBehaviour
 
     public IEnumerator TextColorChange()
     {
-        newtext.DOFade(0, 1);
         yield return new WaitForSeconds(1);
+        newtext.DOFade(0, 1);
     }
 
     public void ParticalesEffect(ParticleSystem newparticle, Collision2D newcollision)
