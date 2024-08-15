@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject TimerPopup;
 
+    public GameObject InterNetPopup;
+
     public int HighScore;
 
     int NextFruit;
@@ -83,6 +85,8 @@ public class GameManager : MonoBehaviour
     public bool isButtonFirst2Destroy = false;
 
     public bool isFruit = false;
+
+    public bool isNet = false;
 
     public Sprite On, Off;
 
@@ -152,6 +156,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        AdManager.Instance.isShow = false;
         if (AdManager.Instance.AdSplashvalue >= 1)
         {
             AdManager.Instance.ShowAppOpenAd();
@@ -173,15 +178,15 @@ public class GameManager : MonoBehaviour
         {
             if (AdManager.Instance.InterstitialAcc == 2 && AdManager.Instance.RewardAcc == 2 && AdManager.Instance.AdAvailablevalue > 0)
             {
-                Debug.Log("AdLoading");
-                Debug.Log("Game_Ad_Load");
+                //Debug.Log("AdLoading");
+                //Debug.Log("Game_Ad_Load");
                 AdManager.Instance.LoadInterstitialAd();
                 AdManager.Instance.LoadRewardedAd();
             }
         }
         else
         {
-            Debug.Log("Ad_Not_Null");
+            //Debug.Log("Ad_Not_Null");
         }
 
         Fruits = Resources.LoadAll<GameObject>("Prefabs");
@@ -203,10 +208,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("Update" + PlayerPrefs.GetInt("Update"));
         }
 
-        Debug.Log(PlayerPrefs.GetInt("Update", 1) + " " + AdManager.Instance.Number);
+        //Debug.Log(PlayerPrefs.GetInt("Update", 1) + " " + AdManager.Instance.Number);
         if (PlayerPrefs.GetInt("Update", 1) < AdManager.Instance.Number)
         {
-            Debug.Log("update dialog");
+            //Debug.Log("update dialog");
             //PlayerPrefs.SetInt("Update", AdManager.Instance.Number);
             GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 120);
             UpdatePopUp.SetActive(true);
@@ -246,7 +251,6 @@ public class GameManager : MonoBehaviour
     {
         int number = UnityEngine.Random.Range(0, Fruits.Length);
         GameObject fruit = Instantiate(Fruits[number], FruitsParent.transform.position, Quaternion.identity, FruitsParent.transform);
-        
     }
 
     public void nextImage()
@@ -262,6 +266,19 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            if (isNet == false)
+            {
+                isNet = true;
+                InterNetPopup.SetActive(true);
+            }
+        }
+        else
+        {
+            InterNetPopup.SetActive(false);
+        }
+
         if (TimerPopup.activeInHierarchy == true && isTime == false)
         {
             isTime = true;
@@ -278,7 +295,7 @@ public class GameManager : MonoBehaviour
                 {
                     GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 120);
                     TimerPopup.SetActive(true);
-                    Debug.Log("5 seconds remaining!");
+                    //Debug.Log("5 seconds remaining!");
                     Second5 = string.Format("{00}", seconds);
                     TimerTxt.text = Second5;
                 }
@@ -294,7 +311,7 @@ public class GameManager : MonoBehaviour
                 TimerPopup.SetActive(false);
                 StartCoroutine(ChangeBoolForTimer());
                 // Timer has run out, you can trigger any event here
-                Debug.Log("Time's up!");
+                //Debug.Log("Time's up!");
             }
         }
 
@@ -305,6 +322,12 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(DeletImage(image[i]));
             }
         }
+    }
+
+    public void OkBtnClick()
+    {
+        InterNetPopup.SetActive(false);
+        isNet = true;
     }
 
     IEnumerator ChangeBoolForTimer()
@@ -321,7 +344,7 @@ public class GameManager : MonoBehaviour
 
         minutes = Mathf.FloorToInt(timeToDisplay / 60);
         seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        // Debug.Log(string.Format("{0:00}:{1:00}", minutes, seconds));
+        Debug.Log(string.Format("{0:00}:{1:00}", minutes, seconds));
 
         Timer = string.Format("{0:00}:{1:00}", minutes, seconds);
         //Debug.Log(Timer);
@@ -341,7 +364,6 @@ public class GameManager : MonoBehaviour
         ScoreValue = 0;
         ScoreText.text = "0";
         SceneManager.LoadScene(1);
-        AdManager.Instance.isShow = false;
     }
 
     public void UpdatebtnClick()
@@ -577,7 +599,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator Change()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2f);
         GameOverObject1.SetActive(true);
         GameOverObject2.SetActive(true);
         GameOverObject3.SetActive(true);

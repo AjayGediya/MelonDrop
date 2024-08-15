@@ -53,17 +53,17 @@ public class Movement : MonoBehaviour
         if (gameManager.FruitsParent.transform.position.y > pos.y)
         {
             if (Input.GetMouseButtonDown(0))
-            { 
+            {
                 line.SetActive(true);
-                DeactivateGameOverObjects();
+               // DeactivateGameOverObjects();
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                //Debug.Log(mousePos);
+                Debug.Log(mousePos);
                 // startPos = pos;
             }
 
             if (Input.GetMouseButton(0))
             {
-                DeactivateGameOverObjects();
+               // DeactivateGameOverObjects();
                 endPos = pos;
                 Vector3 diff = endPos - startPos;
                 diff.x = Mathf.Clamp(diff.x, min, max);
@@ -72,6 +72,7 @@ public class Movement : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
+                DeactivateGameOverObjects();
                 OnMouseButtonUp();
             }
         }
@@ -92,12 +93,12 @@ public class Movement : MonoBehaviour
 
     private void OnMouseButtonUp()
     {
+        GetComponent<Collider2D>().enabled = true;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         if (SoundManager.Instance != null)
         {
             SoundManager.Instance.FruitSoundPlay();
         }
-        rb.bodyType = RigidbodyType2D.Dynamic;
-        GetComponent<Collider2D>().enabled = true;
         gameManager.image.Add(gameObject);
         isSelect = true;
         line.SetActive(false);
@@ -110,7 +111,7 @@ public class Movement : MonoBehaviour
 
     private IEnumerator ChangeOver()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.7f);
         gameManager.GameOverObject1.SetActive(true);
         gameManager.GameOverObject2.SetActive(true);
         gameManager.GameOverObject3.SetActive(true);

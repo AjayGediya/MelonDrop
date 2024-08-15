@@ -56,39 +56,55 @@ public class FruitTouch : MonoBehaviour
         {
             case "Strawberry(Clone)":
                 FruitChange(apricot, "Apricot", new Vector3(0.15f, 0.15f, 0.15f), 0.27f, new Vector2(0, -0.03f));//done
+                Debug.Log("apricot");
                 break;
             case "Apricot(Clone)":
                 FruitChange(blueberry, "Blueberry", new Vector3(0.14f, 0.14f, 0.14f), 0.3f, new Vector2(-0.03f, -0.04f));//done
+                Debug.Log("blueberry");
                 break;
             case "Blueberry(Clone)":
                 FruitChange(guava, "Guava", new Vector3(0.2f, 0.2f, 0.2f), 0.34f, new Vector2(0, -0.01f));//done
+                Debug.Log("guava");
                 break;
             case "Guava(Clone)":
                 FruitChange(apple, "Apple", new Vector3(0.2f, 0.2f, 0.2f), 0.34f, new Vector2(0, -0.08f));//done
+                Debug.Log("apple");
                 break;
             case "Apple(Clone)":
                 FruitChange(grapefruit, "Grapefruit", new Vector3(0.3f, 0.3f, 0.3f), 0.5f, new Vector2(0, 0));//done
+                Debug.Log("grapefruit");
                 break;
             case "Grapefruit(Clone)":
                 FruitChange(passionfruit, "Passionfruit", new Vector3(0.35f, 0.35f, 0.35f), 0.57f, new Vector2(0, -0.06f));//done
+                Debug.Log("passionfruit");
                 break;
             case "Passionfruit(Clone)":
                 FruitChange(lucuma, "Lucuma", new Vector3(0.35f, 0.35f, 0.35f), 0.72f, new Vector2(0, 0));//done
+                Debug.Log("lucuma");
                 break;
             case "Lucuma(Clone)":
                 FruitChange(cloudberry, "Cloudberry", new Vector3(0.55f, 0.55f, 0.55f), 0.95f, new Vector2(-0.04f, -0.15f));//done
+                Debug.Log("cloudberry");
                 break;
             case "Cloudberry(Clone)":
                 FruitChange(watermelon, "Watermelon", new Vector3(0.7f, 0.7f, 0.7f), 1.18f, new Vector2(0, -0.05f));
+                Debug.Log("watermelon");
                 break;
             case "Watermelon(Clone)":
                 Destroy(gameObject);
+                Debug.Log("blueberry");
                 break;
         }
         Profiler.EndSample();
 
         DeactivateAllChildObjects();
 
+        StartCoroutine(ChangeBool());
+    }
+
+    public IEnumerator ChangeBool()
+    {
+        yield return new WaitForSeconds(0.2f);
         gameManager.isButtonChange = false;
     }
 
@@ -111,16 +127,25 @@ public class FruitTouch : MonoBehaviour
     {
         var spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = newSprite;
+        Debug.Log("Sprite Change");
 
+        gameObject.GetComponent<CircleCollider2D>().enabled = false;
         var oldCollider = GetComponent<Collider2D>();
         Destroy(oldCollider);
+        Debug.Log("old collider distroy");
 
         var newCollider = gameObject.AddComponent<CircleCollider2D>();
         newCollider.radius = newRadius;
         newCollider.offset = newOffset;
+        Debug.Log("new collider ad");
 
         gameObject.name = $"{newName}(Clone)";
         gameObject.tag = newName;
+        Debug.Log("name And Tag Change");
+
+        var childTransform = transform.GetChild(0).transform;
+        childTransform.localScale = newScale;
+        Debug.Log("Child No Scle Bdle");
 
         gameObject.GetComponent<Collision>().Apricot = GameManager.instance.AllFruit[1];
         gameObject.GetComponent<Collision>().Blueberry = GameManager.instance.AllFruit[2];
@@ -131,9 +156,6 @@ public class FruitTouch : MonoBehaviour
         gameObject.GetComponent<Collision>().Lucuma = GameManager.instance.AllFruit[7];
         gameObject.GetComponent<Collision>().Cloudberry = GameManager.instance.AllFruit[8];
         gameObject.GetComponent<Collision>().Watermelon = GameManager.instance.AllFruit[9];
-
-        var childTransform = transform.GetChild(0).transform;
-        childTransform.localScale = newScale;
     }
 }
 

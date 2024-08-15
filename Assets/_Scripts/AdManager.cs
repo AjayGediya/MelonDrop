@@ -65,13 +65,10 @@ public class AdManager : MonoBehaviour
     {
         StartCoroutine(GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2"));
 
-      //  StartCoroutine(AdManage());
     }
 
     public void AdManage()
     {
-       // yield return new WaitForSeconds(1.4f);
-
         MobileAds.Initialize(initStatus =>
         {
             if (AppOpenAcc == 2)
@@ -385,8 +382,8 @@ public class AdManager : MonoBehaviour
             _rewardedAd.Show((Reward reward) =>
             {
                 // TODO: Reward the user.
-                Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
-                Debug.Log("View + Pouse");
+                //Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
+                //Debug.Log("View + Pouse");
                 isAdStop = true;
             });
         }
@@ -432,7 +429,7 @@ public class AdManager : MonoBehaviour
             GameManager.instance.isBom = true;
             LoadRewardedAd();
             StartCoroutine(ChangeStopBool());
-            Debug.Log("E");
+            //Debug.Log("E");
         };
         // Raised when the ad failed to open full screen content.
         ad.OnAdFullScreenContentFailed += (AdError error) =>

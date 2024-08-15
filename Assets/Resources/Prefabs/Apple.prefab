@@ -225,10 +225,10 @@ MonoBehaviour:
   endPos: {x: 0, y: 0, z: 0}
   screenSize: {x: 0, y: 0, z: 0}
   line: {fileID: 0}
-  isSelect: 0
   min: -2
   max: 2
   rb: {fileID: 0}
+  isSelect: 0
 --- !u!114 &2740854727263259824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,8 +260,8 @@ MonoBehaviour:
   Red: {fileID: 3948381882101766628, guid: 5c640b078f6904c9489114600b63760e, type: 3}
   DarkYellow: {fileID: 1694975042461689241, guid: b5c72058b56f940e88aeffff3fe678f7, type: 3}
   ParticalParent: {fileID: 0}
-  textNumber: {fileID: 3198658975816447325, guid: 546c1ac270cef424fb11924a7718967e, type: 3}
   TextParent: {fileID: 0}
+  textNumber: {fileID: 3198658975816447325, guid: 546c1ac270cef424fb11924a7718967e, type: 3}
 --- !u!114 &678500682978095858
 MonoBehaviour:
   m_ObjectHideFlags: 0

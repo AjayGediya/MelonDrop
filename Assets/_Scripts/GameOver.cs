@@ -25,10 +25,14 @@ public class GameOver : MonoBehaviour
 
     public void Update()
     {
-        if (AdManager.Instance.isShow == false && GameManager.instance.GameOverObject1.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject2.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject3.GetComponent<GameOver>().istouch == true)
+        if (GameManager.instance.GameOverObject1.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject2.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject3.GetComponent<GameOver>().istouch == true)
         {
-            // Debug.Log("GameOver");
-            AdManager.Instance.ShowInterstitialAd();
+            if (AdManager.Instance.isShow == false)
+            {
+                AdManager.Instance.ShowInterstitialAd();
+            }
+
+            Debug.Log("GameOver");
             GameManager.instance.isGameOver = true;
             GameManager.instance.OverPanel.SetActive(true);
             GameManager.instance.ScoreValueOver.text = GameManager.instance.ScoreValue.ToString();
