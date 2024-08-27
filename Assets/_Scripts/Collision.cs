@@ -167,11 +167,6 @@ public class Collision : MonoBehaviour
         spriteRenderer.enabled = false;
         newcollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         Debug.Log("newCollision Sprite And Collider False");
-
-        //if (Collide2D != null)
-        //{
-        //    gameObject.GetComponent<Collider2D>.enabled = false;
-        //}
         gameObject.GetComponent<Collider2D>().enabled = false;
         newcollision.gameObject.GetComponent<Collider2D>().enabled = false;
 

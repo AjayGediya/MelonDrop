@@ -292,8 +292,20 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            InterNetPopup.SetActive(false);
+            if (isNet)
+            {
+                // Load ads only when the internet is reconnected
+                StartCoroutine(AdManager.Instance.GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2"));
+
+                if (AdManager.Instance.BannerAcc == 2 && AdManager.Instance.AdAvailablevalue > 0)
+                {
+                    AdManager.Instance.LoadAd();
+                    //BANER
+                }
+                isNet = false; // Reset the flag after loading ads
+            }
         }
+
 
         if (TimerPopup.activeInHierarchy == true && isTime == false)
         {
@@ -417,6 +429,7 @@ public class GameManager : MonoBehaviour
 
     public void SoundBtnClick()
     {
+        Debug.Log("Sound");
         var soundManager = SoundManager.Instance;
         if (soundManager != null)
         {
@@ -430,6 +443,7 @@ public class GameManager : MonoBehaviour
 
     public void MusicBtnClick()
     {
+        Debug.Log("Music");
         var musicManager = MusicManager.instnace;
         if (musicManager != null)
         {
@@ -443,6 +457,7 @@ public class GameManager : MonoBehaviour
 
     public void VibrateBtnClick()
     {
+        Debug.Log("Vibrate");
         PlayerPrefs.SetInt("Vibrate", VibrateToggle.isOn ? 0 : 1);
         if (VibrateToggle.isOn)
         {
@@ -452,7 +467,7 @@ public class GameManager : MonoBehaviour
 
     public void ShareButtonClick()
     {
-        shareText.Share("This is the text I want to share!");
+        shareText.Share("https://play.google.com/store/games?hl=en-IN");
     }
 
     public void BomButtonClick()

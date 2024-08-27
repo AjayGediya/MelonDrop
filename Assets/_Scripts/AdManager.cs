@@ -91,7 +91,7 @@ public class AdManager : MonoBehaviour
     }
 
 
-    IEnumerator GetRequest(string uri)
+    public IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
