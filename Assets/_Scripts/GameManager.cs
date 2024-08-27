@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject Box;
 
-    public GameObject ColliderObject;
+    GameObject ColliderObject;
 
     public GameObject NotAd;
 
@@ -218,6 +218,78 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SettingPanel.SetActive(false);
+        }
+
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            if (isNet == false)
+            {
+                isNet = true;
+                InterNetPopup.SetActive(true);
+                AdManager.Instance.DestroyAd();
+            }
+        }
+        else
+        {
+            if (isNet)
+            {
+                // Load ads only when the internet is reconnected
+                StartCoroutine(AdManager.Instance.GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2"));
+                StartCoroutine(AdBanner());
+                isNet = false; // Reset the flag after loading ads
+            }
+        }
+
+
+        if (TimerPopup.activeInHierarchy == true && isTime == false)
+        {
+            isTime = true;
+        }
+
+        if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                UpdateTimerDisplay(timeRemaining);
+
+                if (timeRemaining <= 5f && !fiveSecondWarningGiven)
+                {
+                    TimerPopup.SetActive(true);
+                    //Debug.Log("5 seconds remaining!");
+                    Second5 = string.Format("{00}", seconds);
+                    TimerTxt.text = Second5;
+                }
+
+            }
+            else
+            {
+                timeRemaining = 0;
+                timerIsRunning = false;
+                fiveSecondWarningGiven = false;
+                AdManager.Instance.ShowInterstitialAd();
+                GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+                TimerPopup.SetActive(false);
+                StartCoroutine(ChangeBoolForTimer());
+                // Timer has run out, you can trigger any event here
+                //Debug.Log("Time's up!");
+            }
+        }
+
+        for (int i = image.Count - 1; i >= 0; i--)
+        {
+            if (image[i] != null && !image[i].GetComponent<SpriteRenderer>().enabled)
+            {
+                StartCoroutine(DeletImage(image[i]));
+            }
+        }
+    }
+
     void SetupSound()
     {
         var soundManager = SoundManager.Instance;
@@ -274,81 +346,15 @@ public class GameManager : MonoBehaviour
         HelpPanel.SetActive(false);
     }
 
-    void Update()
+    public IEnumerator AdBanner()
     {
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        yield return new WaitForSeconds(3f);
+        Debug.Log("Update Banner" + AdManager.Instance.BannerAcc + ":::" + AdManager.Instance.AdAvailablevalue);
+        if (AdManager.Instance.BannerAcc == 2 && AdManager.Instance.AdAvailablevalue > 0)
         {
-            SettingPanel.SetActive(false);
-        }
-
-        if (Application.internetReachability == NetworkReachability.NotReachable)
-        {
-            if (isNet == false)
-            {
-                isNet = true;
-                InterNetPopup.SetActive(true);
-            }
-        }
-        else
-        {
-            if (isNet)
-            {
-                // Load ads only when the internet is reconnected
-                StartCoroutine(AdManager.Instance.GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2"));
-
-                if (AdManager.Instance.BannerAcc == 2 && AdManager.Instance.AdAvailablevalue > 0)
-                {
-                    AdManager.Instance.LoadAd();
-                    //BANER
-                }
-                isNet = false; // Reset the flag after loading ads
-            }
-        }
-
-
-        if (TimerPopup.activeInHierarchy == true && isTime == false)
-        {
-            isTime = true;
-        }
-
-        if (timerIsRunning)
-        {
-            if (timeRemaining > 0)
-            {
-                timeRemaining -= Time.deltaTime;
-                UpdateTimerDisplay(timeRemaining);
-
-                if (timeRemaining <= 5f && !fiveSecondWarningGiven)
-                {
-                    GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 120);
-                    TimerPopup.SetActive(true);
-                    //Debug.Log("5 seconds remaining!");
-                    Second5 = string.Format("{00}", seconds);
-                    TimerTxt.text = Second5;
-                }
-
-            }
-            else
-            {
-                timeRemaining = 0;
-                timerIsRunning = false;
-                fiveSecondWarningGiven = false;
-                AdManager.Instance.ShowInterstitialAd();
-                GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
-                TimerPopup.SetActive(false);
-                StartCoroutine(ChangeBoolForTimer());
-                // Timer has run out, you can trigger any event here
-                //Debug.Log("Time's up!");
-            }
-        }
-
-        for (int i = image.Count - 1; i >= 0; i--)
-        {
-            if (image[i] != null && !image[i].GetComponent<SpriteRenderer>().enabled)
-            {
-                StartCoroutine(DeletImage(image[i]));
-            }
+            Debug.Log("");
+            AdManager.Instance.LoadAd();
+            //BANER
         }
     }
 
@@ -467,7 +473,7 @@ public class GameManager : MonoBehaviour
 
     public void ShareButtonClick()
     {
-        shareText.Share("https://play.google.com/store/games?hl=en-IN");
+        shareText.Share("FruitMelonDrop" + "\n" + "Let me Recommend you this application" + "\n" + "https://play.google.com/store/games?hl=en-IN");
     }
 
     public void BomButtonClick()

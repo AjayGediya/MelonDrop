@@ -25,8 +25,11 @@ public class Collision : MonoBehaviour
     public void Start()
     {
         ParticalParent = GameObject.Find("ParticalObject").transform;
+
         TextParent = GameObject.Find("TextObjects").transform;
+
         spriteRenderer = GetComponent<SpriteRenderer>();
+
         Collide2D = GetComponent<Collider2D>();
 
     }
@@ -46,7 +49,9 @@ public class Collision : MonoBehaviour
         if (!GameManager.instance.isGameOver && !GameManager.instance.isFruit)
         {
             Profiler.BeginSample("ChekFruits");
+
             ChekFruits(collision);
+
             Profiler.EndSample();
         }
     }
@@ -54,11 +59,13 @@ public class Collision : MonoBehaviour
     public void ChekFruits(Collision2D newcollision)
     {
         string currentTag = gameObject.tag;
+
         string collisionTag = newcollision.gameObject.tag;
 
         if (currentTag == collisionTag)
         {
             GameManager.instance.isFruit = true;
+
             switch (currentTag)
             {
                 case "Strawberry":
@@ -99,36 +106,50 @@ public class Collision : MonoBehaviour
     public void PerformFruitAction(string logMessage, ParticleSystem particleEffect, GameObject nextFruit, int scoreValue, Collision2D newcollision)
     {
         Debug.Log(logMessage);
+
         Profiler.BeginSample("ParticalesEffect");
+
         ParticalesEffect(particleEffect, newcollision);
+
         Profiler.EndSample();
 
         Profiler.BeginSample("FruitChanges");
+
         FruitChanges(nextFruit, newcollision);
+
         Profiler.EndSample();
 
         Profiler.BeginSample("DestroyObject");
+
         DestroyObject(newcollision);
+
         Profiler.EndSample();
 
         GameManager.instance.ScoreValue += scoreValue;
+
         TextCreate(scoreValue,newcollision);
     }
 
     public void HandleFinalFruit(Collision2D newcollision, ParticleSystem particleEffect, int scoreValue)
     {
         Debug.Log("Watermelon");
+
         Profiler.BeginSample("ParticalesEffect");
+
         ParticalesEffect(particleEffect, newcollision);
+
         Profiler.EndSample();
 
         GameManager.instance.ScoreValue += scoreValue;
+
         TextCreate(scoreValue,newcollision);
 
         GameManager.instance.image.Remove(gameObject);
+
         GameManager.instance.image.Remove(newcollision.gameObject);
 
         Destroy(gameObject);
+
         Destroy(newcollision.gameObject);
 
         GameManager.instance.isFruit = false;
@@ -137,39 +158,51 @@ public class Collision : MonoBehaviour
     public void TextCreate(int value, Collision2D collision2DNew)
     {
         newtext = Instantiate(textNumber, TextParent);
+
         newtext.text = "+" + value;
+
         newtext.transform.position = collision2DNew.transform.position;
 
         Profiler.BeginSample("TextColorChange");
+
         StartCoroutine(TextColorChange());
+
         Profiler.EndSample();
     }
 
     public IEnumerator TextColorChange()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
+
         newtext.DOFade(0, 1);
     }
 
     public void ParticalesEffect(ParticleSystem newparticle, Collision2D newcollision)
     {
         ParticleSystem particleSystem = Instantiate(newparticle, ParticalParent);
+
         particleSystem.transform.position = newcollision.transform.position;
     }
 
     public void DestroyObject(Collision2D newcollision)
     {
         Profiler.BeginSample("IsFruit");
+
         StartCoroutine(GameManager.instance.IsFruit());
+
         Profiler.EndSample();
 
         Debug.Log("GameObject Sprite And Collider False");
-        spriteRenderer.enabled = false;
-        newcollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        Debug.Log("newCollision Sprite And Collider False");
-        gameObject.GetComponent<Collider2D>().enabled = false;
-        newcollision.gameObject.GetComponent<Collider2D>().enabled = false;
 
+        spriteRenderer.enabled = false;
+
+        newcollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+
+        Debug.Log("newCollision Sprite And Collider False");
+
+        gameObject.GetComponent<Collider2D>().enabled = false;
+
+        newcollision.gameObject.GetComponent<Collider2D>().enabled = false;
     }
 
     public void FruitChanges(GameObject fruits, Collision2D collsionnew)
@@ -180,9 +213,13 @@ public class Collision : MonoBehaviour
         }
 
         GameObject newFruit = Instantiate(fruits);
+
         newFruit.transform.position = collsionnew.transform.position;
+
         newFruit.transform.SetParent(GameManager.instance.FruitsParent.transform);
+
         newFruit.GetComponent<Collider2D>().enabled = true;
+
         newFruit.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
         if (SoundManager.Instance != null)
@@ -191,8 +228,8 @@ public class Collision : MonoBehaviour
         }
 
         GameManager.instance.image.Add(newFruit);
-        Movement.Instance.isSelect = true;
 
+        Movement.Instance.isSelect = true;
     }
 }
 
