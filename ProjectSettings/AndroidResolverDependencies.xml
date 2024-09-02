@@ -1,12 +1,13 @@
 <dependencies>
   <packages>
-    <package>com.google.android.gms:play-services-ads:22.2.0</package>
-    <package>com.google.android.ump:user-messaging-platform:2.0.0</package>
+    <package>androidx.constraintlayout:constraintlayout:2.1.4</package>
+    <package>com.google.android.gms:play-services-ads:23.2.0</package>
+    <package>com.google.android.ump:user-messaging-platform:2.2.0</package>
   </packages>
   <files />
   <settings>
     <setting name="androidAbis" value="arm64-v8a,armeabi-v7a" />
-    <setting name="bundleId" value="com.DefaultCompany.Fruit" />
+    <setting name="bundleId" value="com.DefaultCompany.FruitMergeWorld" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
     <setting name="gradlePropertiesTemplateEnabled" value="True" />

@@ -31,6 +31,9 @@ public class AdManager : MonoBehaviour
 
     public bool isRewardShow = false;
 
+
+    public bool isRewardLoad = false;
+
     public bool isShow = false;
 
     public bool isAdStop = false;
@@ -53,6 +56,8 @@ public class AdManager : MonoBehaviour
 
     private DateTime _expireTime;
 
+    private bool isShowingAd = false;
+
     public static AdManager Instance;
 
 
@@ -64,14 +69,15 @@ public class AdManager : MonoBehaviour
     public void Start()
     {
         StartCoroutine(GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2"));
-
     }
+
 
     public void AdManage()
     {
         MobileAds.Initialize(initStatus =>
         {
-            if (AppOpenAcc == 2)
+
+            if (AppOpenAcc == 2 && AdAvailablevalue >= 1)
             {
                 LoadAppOpenAd();
             }
@@ -81,12 +87,19 @@ public class AdManager : MonoBehaviour
             Debug.Log(AdAvailablevalue);
             Debug.Log(AppOpenAcc);
 
-            if (InterstitialAcc == 2 && RewardAcc == 2 && AdAvailablevalue > 0)
+            if (InterstitialAcc == 2 && AdAvailablevalue >= 1)
             {
                 Debug.Log("AdLoading");
                 LoadInterstitialAd();
+            }
+
+            if (RewardAcc == 2 && AdAvailablevalue >= 1)
+            {
+                Debug.Log("AdLoading");
                 LoadRewardedAd();
             }
+
+            //AppStateEventNotifier.AppStateChanged += OnAppStateChanged;
         });
     }
 
@@ -98,6 +111,7 @@ public class AdManager : MonoBehaviour
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
 
+            Debug.Log("webRequest.result" + webRequest.result);
             string[] pages = uri.Split('/');
             int page = pages.Length - 1;
 
@@ -113,22 +127,22 @@ public class AdManager : MonoBehaviour
                 case UnityWebRequest.Result.Success:
                     Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
                     root = JsonUtility.FromJson<Root>(webRequest.downloadHandler.text);
-                    InterStitleId = root.ad_priority.ads[4].id;
-                    AppOpenId = root.ad_priority.ads[7].id;
-                    BannerId = root.ad_priority.ads[8].id;
-                    RewardId = root.ad_priority.ads[9].id;
+                    InterStitleId = root.ad_priority.ads[0].id;
+                    AppOpenId = root.ad_priority.ads[1].id;
+                    BannerId = root.ad_priority.ads[2].id;
+                    RewardId = root.ad_priority.ads[3].id;
                     Number = int.Parse(root.data.app_version_code.ToString());
                     AdAvailablevalue = int.Parse(root.data.is_advertise_available.ToString());
                     Debug.Log("AdAvailablevalue" + AdAvailablevalue);
                     AdSplashvalue = int.Parse(root.data.is_splash_available.ToString());
                     Debug.Log("AdSplashvalue" + AdSplashvalue);
-                    InterstitialAcc = int.Parse(root.ad_priority.ads[4].acc_type.ToString());
+                    InterstitialAcc = int.Parse(root.ad_priority.ads[0].acc_type.ToString());
                     Debug.Log(InterstitialAcc + "InterstitialAcc");
-                    BannerAcc = int.Parse(root.ad_priority.ads[8].acc_type.ToString());
+                    BannerAcc = int.Parse(root.ad_priority.ads[2].acc_type.ToString());
                     Debug.Log("BannerAcc" + BannerAcc);
-                    RewardAcc = int.Parse(root.ad_priority.ads[9].acc_type.ToString());
+                    RewardAcc = int.Parse(root.ad_priority.ads[3].acc_type.ToString());
                     Debug.Log("RewardAcc" + RewardAcc);
-                    AppOpenAcc = int.Parse(root.ad_priority.ads[7].acc_type.ToString());
+                    AppOpenAcc = int.Parse(root.ad_priority.ads[1].acc_type.ToString());
                     break;
             }
 
@@ -360,6 +374,7 @@ public class AdManager : MonoBehaviour
                     Debug.LogError("Rewarded ad failed to load an ad " +
                                    "with error : " + error);
                     isRewardShow = false;
+                    isRewardLoad = false;
                     return;
                 }
 
@@ -367,6 +382,7 @@ public class AdManager : MonoBehaviour
                           + ad.GetResponseInfo());
 
                 isRewardShow = true;
+                isRewardLoad = true;
                 _rewardedAd = ad;
                 RegisterEventHandlers(_rewardedAd);
             });
@@ -426,7 +442,7 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("Rewarded ad full screen content closed.");
             isRewardShow = false;
-            GameManager.instance.isBom = true;
+            //GameManager.instance.isBom = true;
             LoadRewardedAd();
             StartCoroutine(ChangeStopBool());
             //Debug.Log("E");
@@ -470,6 +486,7 @@ public class AdManager : MonoBehaviour
         Debug.Log("Loading the app open ad.");
 
         // Create our request used to load the ad.
+
         var adRequest = new AdRequest();
 
         // send the request to load the ad.
@@ -489,6 +506,7 @@ public class AdManager : MonoBehaviour
 
                 _appOpenAd = ad;
                 RegisterEventHandlers(ad);
+                _expireTime = DateTime.UtcNow;
             });
     }
 
@@ -545,6 +563,7 @@ public class AdManager : MonoBehaviour
         }
     }
 
+
     public void ShowAppOpenAd()
     {
         if (_appOpenAd != null && _appOpenAd.CanShowAd())
@@ -559,6 +578,8 @@ public class AdManager : MonoBehaviour
         }
     }
 }
+
+
 
 [System.Serializable]
 public class Ad

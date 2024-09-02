@@ -32,12 +32,12 @@ public class GameOver : MonoBehaviour
                 AdManager.Instance.ShowInterstitialAd();
             }
 
-            Debug.Log("GameOver");
+            //Debug.Log("GameOver");
             GameManager.instance.isGameOver = true;
             GameManager.instance.OverPanel.SetActive(true);
             GameManager.instance.ScoreValueOver.text = GameManager.instance.ScoreValue.ToString();
-            Debug.Log("SCOREOVER" + GameManager.instance.ScoreValue.ToString());
-            Debug.Log("HIGHSCOREOVER" + GameManager.instance.HighScore.ToString());
+            //Debug.Log("SCOREOVER" + GameManager.instance.ScoreValue.ToString());
+            //Debug.Log("HIGHSCOREOVER" + GameManager.instance.HighScore.ToString());
 
             if (GameManager.instance.ScoreValue > GameManager.instance.HighScore)
             {

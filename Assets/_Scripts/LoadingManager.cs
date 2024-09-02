@@ -39,6 +39,6 @@ public class LoadingManager : MonoBehaviour
     public void LoadNextScene()
     {
         SceneManager.LoadScene(nextSceneIndex);
-        Debug.Log("Scene changed");
+        //Debug.Log("Scene changed");
     }
 }

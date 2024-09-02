@@ -43,7 +43,7 @@ public class Movement : MonoBehaviour
     private void HandleTouchInput()
     {
         if (gameManager.isGameOver || isSelect || gameManager.isButtonOption || gameManager.isButtonFirst2Destroy ||
-            gameManager.isButtonChange || gameManager.isButtonBoxVibrate || gameManager.isTime)
+            gameManager.isButtonChange || gameManager.isButtonBoxVibrate || gameManager.isTime || gameManager.isBoxVibrate || gameManager.isExit)
         {
             return;
         }
@@ -57,7 +57,7 @@ public class Movement : MonoBehaviour
                 line.SetActive(true);
                 // DeactivateGameOverObjects();
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Debug.Log(mousePos);
+                //Debug.Log(mousePos);
                 // startPos = pos;
             }
 

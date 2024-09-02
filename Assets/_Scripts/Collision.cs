@@ -1,8 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
-using UnityEngine.Profiling;
 
 public class Collision : MonoBehaviour
 {
@@ -48,11 +48,7 @@ public class Collision : MonoBehaviour
     {
         if (!GameManager.instance.isGameOver && !GameManager.instance.isFruit)
         {
-            Profiler.BeginSample("ChekFruits");
-
             ChekFruits(collision);
-
-            Profiler.EndSample();
         }
     }
 
@@ -105,25 +101,11 @@ public class Collision : MonoBehaviour
 
     public void PerformFruitAction(string logMessage, ParticleSystem particleEffect, GameObject nextFruit, int scoreValue, Collision2D newcollision)
     {
-        Debug.Log(logMessage);
-
-        Profiler.BeginSample("ParticalesEffect");
-
         ParticalesEffect(particleEffect, newcollision);
-
-        Profiler.EndSample();
-
-        Profiler.BeginSample("FruitChanges");
 
         FruitChanges(nextFruit, newcollision);
 
-        Profiler.EndSample();
-
-        Profiler.BeginSample("DestroyObject");
-
         DestroyObject(newcollision);
-
-        Profiler.EndSample();
 
         GameManager.instance.ScoreValue += scoreValue;
 
@@ -132,13 +114,7 @@ public class Collision : MonoBehaviour
 
     public void HandleFinalFruit(Collision2D newcollision, ParticleSystem particleEffect, int scoreValue)
     {
-        Debug.Log("Watermelon");
-
-        Profiler.BeginSample("ParticalesEffect");
-
         ParticalesEffect(particleEffect, newcollision);
-
-        Profiler.EndSample();
 
         GameManager.instance.ScoreValue += scoreValue;
 
@@ -152,6 +128,16 @@ public class Collision : MonoBehaviour
 
         Destroy(newcollision.gameObject);
 
+        GameManager.instance.isBoxVibrate = false;
+        GameManager.instance.isButtonFirst2Destroy = false;
+        GameManager.instance.isButtonChange = false;
+        GameManager.instance.isButtonOption = false;
+
+        GameManager.instance.VibrateBtn.GetComponent<Button>().interactable = true;
+        GameManager.instance.First2Destroybtn.GetComponent<Button>().interactable = true;
+        GameManager.instance.BomBtn.GetComponent<Button>().interactable = true;
+        GameManager.instance.ChangeBtn.GetComponent<Button>().interactable = true;
+
         GameManager.instance.isFruit = false;
     }
 
@@ -163,11 +149,7 @@ public class Collision : MonoBehaviour
 
         newtext.transform.position = collision2DNew.transform.position;
 
-        Profiler.BeginSample("TextColorChange");
-
         StartCoroutine(TextColorChange());
-
-        Profiler.EndSample();
     }
 
     public IEnumerator TextColorChange()
@@ -186,19 +168,15 @@ public class Collision : MonoBehaviour
 
     public void DestroyObject(Collision2D newcollision)
     {
-        Profiler.BeginSample("IsFruit");
-
         StartCoroutine(GameManager.instance.IsFruit());
 
-        Profiler.EndSample();
-
-        Debug.Log("GameObject Sprite And Collider False");
+       // Debug.Log("GameObject Sprite And Collider False");
 
         spriteRenderer.enabled = false;
 
         newcollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
-        Debug.Log("newCollision Sprite And Collider False");
+       // Debug.Log("newCollision Sprite And Collider False");
 
         gameObject.GetComponent<Collider2D>().enabled = false;
 
