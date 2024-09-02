@@ -77,7 +77,7 @@ public class AdManager : MonoBehaviour
         MobileAds.Initialize(initStatus =>
         {
 
-            if (AppOpenAcc == 2 && AdAvailablevalue >= 1)
+            if (AppOpenAcc == 2 && AdAvailablevalue == 1)
             {
                 LoadAppOpenAd();
             }
@@ -87,13 +87,13 @@ public class AdManager : MonoBehaviour
             Debug.Log(AdAvailablevalue);
             Debug.Log(AppOpenAcc);
 
-            if (InterstitialAcc == 2 && AdAvailablevalue >= 1)
+            if (InterstitialAcc == 2 && AdAvailablevalue == 1)
             {
                 Debug.Log("AdLoading");
                 LoadInterstitialAd();
             }
 
-            if (RewardAcc == 2 && AdAvailablevalue >= 1)
+            if (RewardAcc == 2 && AdAvailablevalue == 1)
             {
                 Debug.Log("AdLoading");
                 LoadRewardedAd();

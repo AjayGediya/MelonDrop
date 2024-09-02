@@ -136,14 +136,14 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationFocus(bool focus)
     {
-        if (focus)
-        {
-            if (AdManager.Instance.isAdStop == false && AdManager.Instance.AppOpenAcc == 2 && AdManager.Instance.AdAvailablevalue >= 1)
-            {
-                AdManager.Instance.ShowAppOpenAd();
-                Debug.Log("Focus");
-            }
-        }
+        //    if (focus)
+        //    {
+        //        if (AdManager.Instance.isAdStop == false && AdManager.Instance.AppOpenAcc == 2 && AdManager.Instance.AdAvailablevalue == 1)
+        //        {
+        //            AdManager.Instance.ShowAppOpenAd();
+        //            Debug.Log("Focus");
+        //        }
+        //    }
     }
 
     private void OnApplicationPause(bool pause)
@@ -171,14 +171,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         isChangeOneTime = true;
-        
+
         AdManager.Instance.isShow = false;
 
         if (PlayerPrefs.GetInt("Ad") == 0)
         {
-            if (AdManager.Instance.AdSplashvalue >= 1 && AdManager.Instance.AppOpenAcc == 2)
+            if (AdManager.Instance.AdSplashvalue == 1 && AdManager.Instance.AppOpenAcc == 2)
             {
-               AdManager.Instance.ShowAppOpenAd();
+                AdManager.Instance.ShowAppOpenAd();
             }
         }
         else if (PlayerPrefs.GetInt("Ad") == 1)
@@ -186,9 +186,9 @@ public class GameManager : MonoBehaviour
             Debug.Log("Not Ad");
         }
 
-       timerIsRunning = true;
+        timerIsRunning = true;
 
-        if (AdManager.Instance.BannerAcc == 2 && AdManager.Instance.AdAvailablevalue >= 1)
+        if (AdManager.Instance.BannerAcc == 2 && AdManager.Instance.AdAvailablevalue == 1)
         {
             AdManager.Instance.LoadAd();
             //BANER
@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
 
         if (AdManager.Instance._interstitialAd == null)
         {
-            if (AdManager.Instance.InterstitialAcc == 2 && AdManager.Instance.AdAvailablevalue >= 1)
+            if (AdManager.Instance.InterstitialAcc == 2 && AdManager.Instance.AdAvailablevalue == 1)
             {
                 AdManager.Instance.LoadInterstitialAd();
             }
@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour
 
         if (AdManager.Instance._rewardedAd == null)
         {
-            if (AdManager.Instance.RewardAcc == 2 && AdManager.Instance.AdAvailablevalue >= 1)
+            if (AdManager.Instance.RewardAcc == 2 && AdManager.Instance.AdAvailablevalue == 1)
             {
                 AdManager.Instance.LoadRewardedAd();
             }
@@ -286,7 +286,7 @@ public class GameManager : MonoBehaviour
             isTime = true;
         }
 
-        if (AdManager.Instance.InterstitialAcc == 2 && AdManager.Instance.AdAvailablevalue >= 1)
+        if (AdManager.Instance.InterstitialAcc == 2 && AdManager.Instance.AdAvailablevalue == 1)
         {
             if (timerIsRunning)
             {
@@ -396,6 +396,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PrivacypolicyBtnClick()
+    {
+        Application.OpenURL("https://www.termsfeed.com/live/74303810-e2df-4b7c-b583-762038680d53");
+    }
+
     public void OkBtnClick()
     {
         InterNetPopup.SetActive(false);
@@ -432,7 +437,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartBtnClick()
     {
-        PlayerPrefs.SetInt("Ad",1);
+        PlayerPrefs.SetInt("Ad", 1);
         OverPanel.SetActive(false);
         ScoreValue = 0;
         ScoreText.text = "0";
@@ -758,7 +763,7 @@ public class GameManager : MonoBehaviour
 
     public void First2DestroyButtonCLick()
     {
-      
+
         isoff = false;
         if (AdManager.Instance.isRewardShow)
         {
