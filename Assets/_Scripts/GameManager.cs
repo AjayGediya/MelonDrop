@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject GameOverObject1, GameOverObject2, GameOverObject3;
 
-    public GameObject GamePanel, OverPanel, SettingPanel, HelpPanel, ExitPanel, HowtoPlayPanel;
+    public GameObject GamePanel, OverPanel, SettingPanel, HelpPanel, ExitPanel;
 
     public GameObject Box;
 
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject InterNetPopup;
 
-    public GameObject Hand;
+    public GameObject HowtoPlayPopup;
 
     public int HighScore;
 
@@ -86,6 +86,8 @@ public class GameManager : MonoBehaviour
 
     public bool isButtonFirst2Destroy = false;
 
+    public bool isHelp = false;
+
     public bool isFruit = false;
 
     public bool isNet = false;
@@ -103,6 +105,10 @@ public class GameManager : MonoBehaviour
     public bool isChangeOneTime = false;
 
     public bool isHowToPlayTouch = false;
+
+    public bool isPanelStart = false;
+
+    public bool isSetting = false;
 
     public Sprite On, Off;
 
@@ -150,19 +156,20 @@ public class GameManager : MonoBehaviour
         HighScoreText.text = HighScore.ToString();
     }
 
-
-    //if (AdManager.Instance.AdSplashvalue == 1 && AdManager.Instance.AppOpenAcc == 2)
-    //       {
-    //           Debug.Log("Show App opwn");
-
-    //           AdManager.Instance.ShowAppOpenAd();
-    //       }
-
-
-
     void Start()
     {
-        //isHowToPlayTouch = true;
+
+        if (PlayerPrefs.GetInt("HowToPlay") == 0)
+        {
+            isHowToPlayTouch = true;
+            isPanelStart = true;
+        }
+        else if (PlayerPrefs.GetInt("HowToPlay") == 1)
+        {
+            HowtoPlayPopup.SetActive(false);
+            isHowToPlayTouch = false;
+            isPanelStart = false;
+        }
 
         isChangeOneTime = true;
 
@@ -225,20 +232,28 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isLastExit == false)
+            if (OverPanel.activeInHierarchy == false)
             {
-                isExit = true;
-                Debug.Log("Exit Panel Bool " + isLastExit);
-                ExitPanel.SetActive(true);
-                isLastExit = true;
-                Debug.Log("Exit Panel Bool " + isLastExit);
-            }
-            else if (isLastExit == true)
-            {
-                Debug.Log("Setting Panel Bool " + isLastExit);
-                SettingPanel.SetActive(false);
-                StartCoroutine(TimeforBack());
-                Debug.Log("Setting Panel Bool " + isLastExit);
+                if (TimerPopup.activeInHierarchy == false)
+                {
+                    if (isLastExit == false)
+                    {
+                        isExit = true;
+                        Debug.Log("Exit Panel Bool " + isLastExit);
+
+                        ExitPanel.SetActive(true);
+                        timerIsRunning = false;
+                        isLastExit = true;
+                        Debug.Log("Exit Panel Bool " + isLastExit);
+                    }
+                    else if (isLastExit == true)
+                    {
+                        Debug.Log("Setting Panel Bool " + isLastExit);
+                        SettingPanel.SetActive(false);
+                        StartCoroutine(TimeforBack());
+                        Debug.Log("Setting Panel Bool " + isLastExit);
+                    }
+                }
             }
         }
 
@@ -280,6 +295,10 @@ public class GameManager : MonoBehaviour
                     if (timeRemaining <= 5f && !fiveSecondWarningGiven)
                     {
                         TimerPopup.SetActive(true);
+                        VibrateBtn.GetComponent<Button>().interactable = false;
+                        First2Destroybtn.GetComponent<Button>().interactable = false;
+                        BomBtn.GetComponent<Button>().interactable = false;
+                        ChangeBtn.GetComponent<Button>().interactable = false;
                         //Debug.Log("5 seconds remaining!");
                         Second5 = string.Format("{00}", seconds);
                         TimerTxt.text = Second5;
@@ -288,15 +307,18 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    timeRemaining = 0;
-                    timerIsRunning = false;
-                    fiveSecondWarningGiven = false;
-                    AdManager.Instance.ShowInterstitialAd();
-                    GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
-                    TimerPopup.SetActive(false);
-                    StartCoroutine(ChangeBoolForTimer());
-                    // Timer has run out, you can trigger any event here
-                    //Debug.Log("Time's up!");
+                    if (OverPanel.activeInHierarchy == false && ExitPanel.activeInHierarchy == false)
+                    {
+                        timeRemaining = 0;
+                        timerIsRunning = false;
+                        fiveSecondWarningGiven = false;
+                        AdManager.Instance.ShowInterstitialAd();
+                        GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+                        TimerPopup.SetActive(false);
+                        StartCoroutine(ChangeBoolForTimer());
+                        // Timer has run out, you can trigger any event here
+                        //Debug.Log("Time's up!");
+                    }
                 }
             }
         }
@@ -313,13 +335,17 @@ public class GameManager : MonoBehaviour
 
     public void HowToPlayPanelBtnClick()
     {
-        HowtoPlayPanel.SetActive(false);
-        isHowToPlayTouch = false;
+        HowtoPlayPopup.SetActive(false);
+        PlayerPrefs.SetInt("HowToPlay", 1);
+        StartCoroutine(ChangesBool());
     }
 
-    //public IEnumerator ChangesBool()
-    //{
-    //}
+    public IEnumerator ChangesBool()
+    {
+        yield return new WaitForSeconds(0.1f);
+        isHowToPlayTouch = false;
+        isPanelStart = false;
+    }
 
 
     void SetupSound()
@@ -371,11 +397,15 @@ public class GameManager : MonoBehaviour
     public void HelpBtnClick()
     {
         HelpPanel.SetActive(true);
+        isHelp = true;
+        timerIsRunning = false;
     }
 
     public void HelpBackBtnClick()
     {
         HelpPanel.SetActive(false);
+        isHelp = false;
+        timerIsRunning = true;
     }
 
     public IEnumerator AdBanner()
@@ -407,6 +437,11 @@ public class GameManager : MonoBehaviour
         timeRemaining = 120f;
         timerIsRunning = true;
         isTime = false;
+        isExit = false;
+        VibrateBtn.GetComponent<Button>().interactable = true;
+        First2Destroybtn.GetComponent<Button>().interactable = true;
+        BomBtn.GetComponent<Button>().interactable = true;
+        ChangeBtn.GetComponent<Button>().interactable = true;
     }
 
     void UpdateTimerDisplay(float timeToDisplay)
@@ -458,8 +493,9 @@ public class GameManager : MonoBehaviour
 
     public void SettingBtnClick()
     {
-        isGameOver = true;
+        isSetting = true;
         isLastExit = true;
+        timerIsRunning = false;
         Debug.Log("Setting Panel Bool " + isLastExit);
         SettingPanel.SetActive(true);
     }
@@ -473,8 +509,9 @@ public class GameManager : MonoBehaviour
     IEnumerator TimeforBack()
     {
         yield return new WaitForSeconds(0.1f);
-        isGameOver = false;
+        isSetting = false;
         isLastExit = false;
+        timerIsRunning = true;
         Debug.Log("Setting Panel Bool " + isLastExit);
     }
 
@@ -518,23 +555,39 @@ public class GameManager : MonoBehaviour
 
     public void ShareButtonClick()
     {
-        shareText.Share("Fruit Merge World" + "\n" + "Let me Recommend you this application" + "\n" + "https://play.google.com/store/games?hl=en-IN");
+        shareText.Share("Fruit Merge World" + "\n" + "\n" + "Let me Recommend you this application" + "\n" + "\n" + "https://play.google.com/store/games?hl=en-IN");
     }
 
     public void BomButtonClick()
     {
         isChangeOneTime = false;
-        if (AdManager.Instance.isRewardShow)
+        timerIsRunning = false;
+        if (image.Count == 0)
         {
-            AdManager.Instance.ShowRewardedAd();
-
-            StartCoroutine(ChangeBomTime());
+            StartCoroutine(NotFoundTimeChanges());
+            isButtonOption = false;
+            isChangeOneTime = true;
+            VibrateBtn.GetComponent<Button>().interactable = true;
+            First2Destroybtn.GetComponent<Button>().interactable = true;
+            BomBtn.GetComponent<Button>().interactable = true;
+            ChangeBtn.GetComponent<Button>().interactable = true;
+            Debug.Log("isButtonOption" + isButtonOption);
+            timerIsRunning = true;
         }
         else
         {
-            //Profiler.BeginSample("AdTimeChanges");
-            StartCoroutine(AdTimeChanges());
-            // Profiler.EndSample();
+            if (AdManager.Instance.isRewardShow)
+            {
+                AdManager.Instance.ShowRewardedAd();
+
+                StartCoroutine(ChangeBomTime());
+            }
+            else
+            {
+                //Profiler.BeginSample("AdTimeChanges");
+                StartCoroutine(AdTimeChanges());
+                // Profiler.EndSample();
+            }
         }
     }
 
@@ -547,24 +600,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         isButtonOption = true;
         Debug.Log("isButtonOption" + isButtonOption);
-        if (image.Count == 0)
+
+        foreach (var item in image)
         {
-            StartCoroutine(NotFoundTimeChanges());
-            isButtonOption = false;
-            isChangeOneTime = true;
-            VibrateBtn.GetComponent<Button>().interactable = true;
-            First2Destroybtn.GetComponent<Button>().interactable = true;
-            BomBtn.GetComponent<Button>().interactable = true;
-            ChangeBtn.GetComponent<Button>().interactable = true;
-            Debug.Log("isButtonOption" + isButtonOption);
-        }
-        else
-        {
-            foreach (var item in image)
-            {
-                item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 360), 1, RotateMode.Fast).SetLoops(-2, LoopType.Incremental);
-            }
+            item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 360), 1, RotateMode.Fast).SetLoops(-2, LoopType.Incremental);
         }
     }
 
@@ -589,22 +629,40 @@ public class GameManager : MonoBehaviour
         First2Destroybtn.GetComponent<Button>().interactable = true;
         BomBtn.GetComponent<Button>().interactable = true;
         ChangeBtn.GetComponent<Button>().interactable = true;
+        timerIsRunning = true;
     }
 
     public void ChangeButtonClick()
     {
         isChangeOneTime = false;
-        Debug.Log("Click With Bool Click ChangeBtn" + isChangeOneTime);
-        if (AdManager.Instance.isRewardShow)
+        timerIsRunning = false;
+
+        if (image.Count == 0)
         {
-            AdManager.Instance.ShowRewardedAd();
-            StartCoroutine(ChangeTimeForChanges());
+            StartCoroutine(NotFoundTimeChanges());
+            isButtonChange = false;
+            isChangeOneTime = true;
+            VibrateBtn.GetComponent<Button>().interactable = true;
+            First2Destroybtn.GetComponent<Button>().interactable = true;
+            BomBtn.GetComponent<Button>().interactable = true;
+            ChangeBtn.GetComponent<Button>().interactable = true;
+            Debug.Log("isButtonChange" + isButtonChange);
+            timerIsRunning = true;
         }
         else
         {
-            // Profiler.BeginSample("AdTimeChanges");
-            StartCoroutine(AdTimeChanges());
-            // Profiler.EndSample();
+            Debug.Log("Click With Bool Click ChangeBtn" + isChangeOneTime);
+            if (AdManager.Instance.isRewardShow)
+            {
+                AdManager.Instance.ShowRewardedAd();
+                StartCoroutine(ChangeTimeForChanges());
+            }
+            else
+            {
+                // Profiler.BeginSample("AdTimeChanges");
+                StartCoroutine(AdTimeChanges());
+                // Profiler.EndSample();
+            }
         }
     }
 
@@ -617,43 +675,46 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         isButtonChange = true;
         Debug.Log("isButtonChange" + isButtonChange);
-        if (image.Count == 0)
+
+        foreach (var item in image)
         {
-            StartCoroutine(NotFoundTimeChanges());
-            isButtonChange = false;
-            isChangeOneTime = true;
-            VibrateBtn.GetComponent<Button>().interactable = true;
-            First2Destroybtn.GetComponent<Button>().interactable = true;
-            BomBtn.GetComponent<Button>().interactable = true;
-            ChangeBtn.GetComponent<Button>().interactable = true;
-            Debug.Log("isButtonChange" + isButtonChange);
-        }
-        else
-        {
-            foreach (var item in image)
-            {
-                item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 360), 1, RotateMode.Fast).SetLoops(-2, LoopType.Incremental);
-            }
+            item.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            item.gameObject.transform.GetChild(0).gameObject.transform.DORotate(new Vector3(0, 0, 360), 1, RotateMode.Fast).SetLoops(-2, LoopType.Incremental);
         }
     }
 
     public void BoxVibrateButtonClick()
     {
+        timerIsRunning = false;
         if (isBoxVibrate == false)
         {
             isBoxVibrate = true;
-            Debug.Log("isBoxVibrate" + isBoxVibrate);
-            if (AdManager.Instance.isRewardShow)
+
+            if (image.Count == 0)
             {
-                AdManager.Instance.ShowRewardedAd();
-                StartCoroutine(BoxVibrateChangeTime());
+                isBoxVibrate = false;
+                isButtonBoxVibrate = false;
+                VibrateBtn.GetComponent<Button>().interactable = true;
+                First2Destroybtn.GetComponent<Button>().interactable = true;
+                BomBtn.GetComponent<Button>().interactable = true;
+                ChangeBtn.GetComponent<Button>().interactable = true;
+                timerIsRunning = true;
+                StartCoroutine(NotFoundTimeChanges());
             }
             else
             {
-                // Profiler.BeginSample("AdTimeChanges");
-                StartCoroutine(AdTimeChanges());
-                // Profiler.EndSample();
+                Debug.Log("isBoxVibrate" + isBoxVibrate);
+                if (AdManager.Instance.isRewardShow)
+                {
+                    AdManager.Instance.ShowRewardedAd();
+                    StartCoroutine(BoxVibrateChangeTime());
+                }
+                else
+                {
+                    // Profiler.BeginSample("AdTimeChanges");
+                    StartCoroutine(AdTimeChanges());
+                    // Profiler.EndSample();
+                }
             }
         }
     }
@@ -667,26 +728,13 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
 
-        if (image.Count == 0)
-        {
-            isBoxVibrate = false;
-            isButtonBoxVibrate = false;
-            VibrateBtn.GetComponent<Button>().interactable = true;
-            First2Destroybtn.GetComponent<Button>().interactable = true;
-            BomBtn.GetComponent<Button>().interactable = true;
-            ChangeBtn.GetComponent<Button>().interactable = true;
-            StartCoroutine(NotFoundTimeChanges());
-        }
-        else
-        {
-            GameOverObject1.SetActive(false);
-            GameOverObject2.SetActive(false);
-            GameOverObject3.SetActive(false);
-            isButtonBoxVibrate = true;
-            Debug.Log("BoxVibrate");
-            main.DOOrthoSize(7, 0.5f);
-            BoxRotate();
-        }
+        GameOverObject1.SetActive(false);
+        GameOverObject2.SetActive(false);
+        GameOverObject3.SetActive(false);
+        isButtonBoxVibrate = true;
+        Debug.Log("BoxVibrate");
+        main.DOOrthoSize(7, 0.5f);
+        BoxRotate();
     }
 
     public void BoxRotate()
@@ -738,6 +786,7 @@ public class GameManager : MonoBehaviour
         GameOverObject2.SetActive(true);
         GameOverObject3.SetActive(true);
         isBoxVibrate = false;
+        timerIsRunning = true;
         VibrateBtn.GetComponent<Button>().interactable = true;
         First2Destroybtn.GetComponent<Button>().interactable = true;
         BomBtn.GetComponent<Button>().interactable = true;
@@ -771,18 +820,34 @@ public class GameManager : MonoBehaviour
 
     public void First2DestroyButtonCLick()
     {
+        timerIsRunning = false;
         isButtonFirst2Destroy = true;
         isoff = false;
-        if (AdManager.Instance.isRewardShow)
+
+        if (image.Count == 0)
         {
-            AdManager.Instance.ShowRewardedAd();
-            StartCoroutine(ChangesTimeForFirst2Object());
+            StartCoroutine(NotFoundTimeChanges());
+            isButtonFirst2Destroy = false;
+            VibrateBtn.GetComponent<Button>().interactable = true;
+            First2Destroybtn.GetComponent<Button>().interactable = true;
+            BomBtn.GetComponent<Button>().interactable = true;
+            ChangeBtn.GetComponent<Button>().interactable = true;
+            timerIsRunning = true;
+            Debug.Log("isButtonFirst2Destroy" + isButtonFirst2Destroy);
         }
         else
         {
-            // Profiler.BeginSample("AdTimeChanges");
-            StartCoroutine(AdTimeChanges());
-            // Profiler.EndSample();
+            if (AdManager.Instance.isRewardShow)
+            {
+                AdManager.Instance.ShowRewardedAd();
+                StartCoroutine(ChangesTimeForFirst2Object());
+            }
+            else
+            {
+                // Profiler.BeginSample("AdTimeChanges");
+                StartCoroutine(AdTimeChanges());
+                // Profiler.EndSample();
+            }
         }
     }
 
@@ -795,20 +860,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
         Debug.Log("isButtonFirst2Destroy" + isButtonFirst2Destroy);
-        if (image.Count == 0)
-        {
-            StartCoroutine(NotFoundTimeChanges());
-            isButtonFirst2Destroy = false;
-            VibrateBtn.GetComponent<Button>().interactable = true;
-            First2Destroybtn.GetComponent<Button>().interactable = true;
-            BomBtn.GetComponent<Button>().interactable = true;
-            ChangeBtn.GetComponent<Button>().interactable = true;
-            Debug.Log("isButtonFirst2Destroy" + isButtonFirst2Destroy);
-        }
-        else
-        {
-            StartCoroutine(ResetFruits());
-        }
+        StartCoroutine(ResetFruits());
     }
 
     public IEnumerator NotFoundTimeChanges()
@@ -863,32 +915,35 @@ public class GameManager : MonoBehaviour
 
                 if (rb.isKinematic == false)
                 {
-                    isButtonFirst2Destroy = false;
                     image.Add(FruitsParent.transform.GetChild(i).gameObject);
-                    VibrateBtn.GetComponent<Button>().interactable = true;
-                    First2Destroybtn.GetComponent<Button>().interactable = true;
-                    BomBtn.GetComponent<Button>().interactable = true;
-                    ChangeBtn.GetComponent<Button>().interactable = true;
                 }
             }
+
+            isButtonFirst2Destroy = false;
+            VibrateBtn.GetComponent<Button>().interactable = true;
+            First2Destroybtn.GetComponent<Button>().interactable = true;
+            BomBtn.GetComponent<Button>().interactable = true;
+            ChangeBtn.GetComponent<Button>().interactable = true;
+            timerIsRunning = true;
         }
     }
 
-    public void GameOver()
-    {
-        GamePanel.SetActive(false);
-        OverPanel.SetActive(true);
-        ScoreValueOver.text = ScoreValue.ToString();
+    //public void GameOver()
+    //{
+    //    GamePanel.SetActive(false);
 
-        if (ScoreValue > HighScore)
-        {
-            HighScore = ScoreValue;
-            HighScoreText.text = HighScore.ToString();
-            PlayerPrefs.SetInt("HighScore", HighScore);
-        }
+    //    OverPanel.SetActive(true);
+    //    ScoreValueOver.text = ScoreValue.ToString();
 
-        AdManager.Instance.ShowInterstitialAd();
-    }
+    //    if (ScoreValue > HighScore)
+    //    {
+    //        HighScore = ScoreValue;
+    //        HighScoreText.text = HighScore.ToString();
+    //        PlayerPrefs.SetInt("HighScore", HighScore);
+    //    }
+
+    //    AdManager.Instance.ShowInterstitialAd();
+    //}
 
     public IEnumerator IsFruit()
     {
@@ -910,6 +965,7 @@ public class GameManager : MonoBehaviour
         isLastExit = false;
         ExitPanel.SetActive(false);
         Debug.Log("Exit Panel Bool " + isLastExit);
+        timerIsRunning = true;
     }
 }
 

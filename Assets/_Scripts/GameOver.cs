@@ -27,9 +27,21 @@ public class GameOver : MonoBehaviour
     {
         if (GameManager.instance.GameOverObject1.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject2.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject3.GetComponent<GameOver>().istouch == true)
         {
+            GameManager.instance.timerIsRunning = false;
             //Debug.Log("GameOver");
-            GameManager.instance.isGameOver = true;
-            GameManager.instance.OverPanel.SetActive(true);
+            if (!GameManager.instance.isGameOver)
+            {
+                Debug.Log("OverPanelUpdate");
+                GameManager.instance.isGameOver = true;
+                GameManager.instance.OverPanel.SetActive(true);
+            }
+
+
+            if (GameManager.instance.OverPanel.activeInHierarchy == true)
+            {
+                GameManager.instance.TimerPopup.SetActive(false);
+            }
+
             GameManager.instance.ScoreValueOver.text = GameManager.instance.ScoreValue.ToString();
             //Debug.Log("SCOREOVER" + GameManager.instance.ScoreValue.ToString());
             //Debug.Log("HIGHSCOREOVER" + GameManager.instance.HighScore.ToString());

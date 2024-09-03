@@ -42,38 +42,41 @@ public class Movement : MonoBehaviour
 
     private void HandleTouchInput()
     {
-        if (gameManager.isGameOver || isSelect || gameManager.isButtonOption || gameManager.isButtonFirst2Destroy ||
-            gameManager.isButtonChange || gameManager.isButtonBoxVibrate || gameManager.isTime || gameManager.isBoxVibrate || gameManager.isExit || gameManager.isHowToPlayTouch)
+        if (gameManager.isPanelStart == false)
         {
-            return;
-        }
-
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        if (gameManager.FruitsParent.transform.position.y > pos.y)
-        {
-            if (Input.GetMouseButtonDown(0))
+            if (gameManager.isGameOver || isSelect || gameManager.isButtonOption || gameManager.isButtonFirst2Destroy ||
+            gameManager.isButtonChange || gameManager.isButtonBoxVibrate || gameManager.isTime || gameManager.isBoxVibrate || gameManager.isExit || gameManager.isHelp || gameManager.isSetting)
             {
-                line.SetActive(true);
-                // DeactivateGameOverObjects();
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                //Debug.Log(mousePos);
-                // startPos = pos;
+                return;
             }
 
-            if (Input.GetMouseButton(0))
-            {
-                // DeactivateGameOverObjects();
-                endPos = pos;
-                Vector3 diff = endPos - startPos;
-                diff.x = Mathf.Clamp(diff.x, min, max);
-                UpdatePositions(diff.x);
-            }
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (Input.GetMouseButtonUp(0))
+            if (gameManager.FruitsParent.transform.position.y > pos.y)
             {
-                DeactivateGameOverObjects();
-                OnMouseButtonUp();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    line.SetActive(true);
+                    // DeactivateGameOverObjects();
+                    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    //Debug.Log(mousePos);
+                    // startPos = pos;
+                }
+
+                if (Input.GetMouseButton(0))
+                {
+                    // DeactivateGameOverObjects();
+                    endPos = pos;
+                    Vector3 diff = endPos - startPos;
+                    diff.x = Mathf.Clamp(diff.x, min, max);
+                    UpdatePositions(diff.x);
+                }
+
+                if (Input.GetMouseButtonUp(0))
+                {
+                    DeactivateGameOverObjects();
+                    OnMouseButtonUp();
+                }
             }
         }
     }
