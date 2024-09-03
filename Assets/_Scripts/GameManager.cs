@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject GameOverObject1, GameOverObject2, GameOverObject3;
 
-    public GameObject GamePanel, OverPanel, SettingPanel, HelpPanel, ExitPanel;
+    public GameObject GamePanel, OverPanel, SettingPanel, HelpPanel, ExitPanel, HowtoPlayPanel;
 
     public GameObject Box;
 
@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public GameObject TimerPopup;
 
     public GameObject InterNetPopup;
+
+    public GameObject Hand;
 
     public int HighScore;
 
@@ -100,6 +102,8 @@ public class GameManager : MonoBehaviour
 
     public bool isChangeOneTime = false;
 
+    public bool isHowToPlayTouch = false;
+
     public Sprite On, Off;
 
     public Button SoundButton, MusicButton;
@@ -134,28 +138,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] AllFruit;
 
-    private void OnApplicationFocus(bool focus)
-    {
-        //    if (focus)
-        //    {
-        //        if (AdManager.Instance.isAdStop == false && AdManager.Instance.AppOpenAcc == 2 && AdManager.Instance.AdAvailablevalue == 1)
-        //        {
-        //            AdManager.Instance.ShowAppOpenAd();
-        //            Debug.Log("Focus");
-        //        }
-        //    }
-    }
-
-    private void OnApplicationPause(bool pause)
-    {
-        Debug.Log("Game-Pause");
-    }
-
-    private void OnApplicationQuit()
-    {
-        Debug.Log("Quit");
-    }
-
     void Awake()
     {
         Application.targetFrameRate = 60;
@@ -168,23 +150,23 @@ public class GameManager : MonoBehaviour
         HighScoreText.text = HighScore.ToString();
     }
 
+
+    //if (AdManager.Instance.AdSplashvalue == 1 && AdManager.Instance.AppOpenAcc == 2)
+    //       {
+    //           Debug.Log("Show App opwn");
+
+    //           AdManager.Instance.ShowAppOpenAd();
+    //       }
+
+
+
     void Start()
     {
+        //isHowToPlayTouch = true;
+
         isChangeOneTime = true;
 
         AdManager.Instance.isShow = false;
-
-        if (PlayerPrefs.GetInt("Ad") == 0)
-        {
-            if (AdManager.Instance.AdSplashvalue == 1 && AdManager.Instance.AppOpenAcc == 2)
-            {
-                AdManager.Instance.ShowAppOpenAd();
-            }
-        }
-        else if (PlayerPrefs.GetInt("Ad") == 1)
-        {
-            Debug.Log("Not Ad");
-        }
 
         timerIsRunning = true;
 
@@ -328,6 +310,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public void HowToPlayPanelBtnClick()
+    {
+        HowtoPlayPanel.SetActive(false);
+        isHowToPlayTouch = false;
+    }
+
+    //public IEnumerator ChangesBool()
+    //{
+    //}
+
+
     void SetupSound()
     {
         var soundManager = SoundManager.Instance;
@@ -437,7 +431,6 @@ public class GameManager : MonoBehaviour
 
     public void RestartBtnClick()
     {
-        PlayerPrefs.SetInt("Ad", 1);
         OverPanel.SetActive(false);
         ScoreValue = 0;
         ScoreText.text = "0";
@@ -525,7 +518,7 @@ public class GameManager : MonoBehaviour
 
     public void ShareButtonClick()
     {
-        shareText.Share("FruitMelonDrop" + "\n" + "Let me Recommend you this application" + "\n" + "https://play.google.com/store/games?hl=en-IN");
+        shareText.Share("Fruit Merge World" + "\n" + "Let me Recommend you this application" + "\n" + "https://play.google.com/store/games?hl=en-IN");
     }
 
     public void BomButtonClick()
@@ -558,6 +551,11 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(NotFoundTimeChanges());
             isButtonOption = false;
+            isChangeOneTime = true;
+            VibrateBtn.GetComponent<Button>().interactable = true;
+            First2Destroybtn.GetComponent<Button>().interactable = true;
+            BomBtn.GetComponent<Button>().interactable = true;
+            ChangeBtn.GetComponent<Button>().interactable = true;
             Debug.Log("isButtonOption" + isButtonOption);
         }
         else
@@ -586,7 +584,7 @@ public class GameManager : MonoBehaviour
         isButtonFirst2Destroy = false;
         isButtonChange = false;
         isButtonOption = false;
-
+        isChangeOneTime = true;
         VibrateBtn.GetComponent<Button>().interactable = true;
         First2Destroybtn.GetComponent<Button>().interactable = true;
         BomBtn.GetComponent<Button>().interactable = true;
@@ -623,6 +621,11 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(NotFoundTimeChanges());
             isButtonChange = false;
+            isChangeOneTime = true;
+            VibrateBtn.GetComponent<Button>().interactable = true;
+            First2Destroybtn.GetComponent<Button>().interactable = true;
+            BomBtn.GetComponent<Button>().interactable = true;
+            ChangeBtn.GetComponent<Button>().interactable = true;
             Debug.Log("isButtonChange" + isButtonChange);
         }
         else
@@ -666,8 +669,13 @@ public class GameManager : MonoBehaviour
 
         if (image.Count == 0)
         {
-            StartCoroutine(NotFoundTimeChanges());
+            isBoxVibrate = false;
             isButtonBoxVibrate = false;
+            VibrateBtn.GetComponent<Button>().interactable = true;
+            First2Destroybtn.GetComponent<Button>().interactable = true;
+            BomBtn.GetComponent<Button>().interactable = true;
+            ChangeBtn.GetComponent<Button>().interactable = true;
+            StartCoroutine(NotFoundTimeChanges());
         }
         else
         {
@@ -763,7 +771,7 @@ public class GameManager : MonoBehaviour
 
     public void First2DestroyButtonCLick()
     {
-
+        isButtonFirst2Destroy = true;
         isoff = false;
         if (AdManager.Instance.isRewardShow)
         {
@@ -786,12 +794,15 @@ public class GameManager : MonoBehaviour
         ChangeBtn.GetComponent<Button>().interactable = false;
 
         yield return new WaitForSeconds(0.4f);
-        isButtonFirst2Destroy = true;
         Debug.Log("isButtonFirst2Destroy" + isButtonFirst2Destroy);
         if (image.Count == 0)
         {
             StartCoroutine(NotFoundTimeChanges());
             isButtonFirst2Destroy = false;
+            VibrateBtn.GetComponent<Button>().interactable = true;
+            First2Destroybtn.GetComponent<Button>().interactable = true;
+            BomBtn.GetComponent<Button>().interactable = true;
+            ChangeBtn.GetComponent<Button>().interactable = true;
             Debug.Log("isButtonFirst2Destroy" + isButtonFirst2Destroy);
         }
         else

@@ -56,7 +56,8 @@ public class FruitTouch : MonoBehaviour
         DeactivateAllChildObjects();
 
         gameManager.isButtonOption = false;
-       // gameManager.isBom = false;
+        // gameManager.isBom = false;
+        GameManager.instance.isChangeOneTime = true;
 
         gameManager.VibrateBtn.GetComponent<Button>().interactable = true;
         gameManager.First2Destroybtn.GetComponent<Button>().interactable = true;
@@ -120,6 +121,7 @@ public class FruitTouch : MonoBehaviour
                 gameManager.First2Destroybtn.GetComponent<Button>().interactable = true;
                 gameManager.BomBtn.GetComponent<Button>().interactable = true;
                 gameManager.ChangeBtn.GetComponent<Button>().interactable = true;
+                GameManager.instance.isChangeOneTime = true;
                 break;
         }
         Profiler.EndSample();
@@ -195,7 +197,7 @@ public class FruitTouch : MonoBehaviour
     IEnumerator ChangeBoolforChnages()
     {
         yield return new WaitForSeconds(0.2f);
-        GameManager.instance.isChangeOneTime = false;
+        GameManager.instance.isChangeOneTime = true;
         Debug.Log("Click With Bool false" + GameManager.instance.isChangeOneTime);
     }
 }

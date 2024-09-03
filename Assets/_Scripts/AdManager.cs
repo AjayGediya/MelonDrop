@@ -99,7 +99,7 @@ public class AdManager : MonoBehaviour
                 LoadRewardedAd();
             }
 
-            //AppStateEventNotifier.AppStateChanged += OnAppStateChanged;
+            AppStateEventNotifier.AppStateChanged += OnAppStateChanged;
         });
     }
 

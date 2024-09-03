@@ -43,7 +43,7 @@ public class Movement : MonoBehaviour
     private void HandleTouchInput()
     {
         if (gameManager.isGameOver || isSelect || gameManager.isButtonOption || gameManager.isButtonFirst2Destroy ||
-            gameManager.isButtonChange || gameManager.isButtonBoxVibrate || gameManager.isTime || gameManager.isBoxVibrate || gameManager.isExit)
+            gameManager.isButtonChange || gameManager.isButtonBoxVibrate || gameManager.isTime || gameManager.isBoxVibrate || gameManager.isExit || gameManager.isHowToPlayTouch)
         {
             return;
         }

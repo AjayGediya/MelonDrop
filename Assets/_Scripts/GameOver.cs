@@ -27,11 +27,6 @@ public class GameOver : MonoBehaviour
     {
         if (GameManager.instance.GameOverObject1.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject2.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject3.GetComponent<GameOver>().istouch == true)
         {
-            if (AdManager.Instance.isShow == false)
-            {
-                AdManager.Instance.ShowInterstitialAd();
-            }
-
             //Debug.Log("GameOver");
             GameManager.instance.isGameOver = true;
             GameManager.instance.OverPanel.SetActive(true);
