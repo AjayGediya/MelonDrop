@@ -68,7 +68,7 @@ public class AdManager : MonoBehaviour
     public List<string> All_Ads_id = new List<string>();
     public List<string> All_Ads_AccType = new List<string>();
 
-    private void Awake()
+    private void Awake()                                                                             
     {
         Instance = this;
     }
@@ -76,7 +76,9 @@ public class AdManager : MonoBehaviour
     public void Start()
     {
         canappopenshow = true;
-        StartCoroutine(GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2"));
+       // StartCoroutine(GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2")); //test url
+
+        StartCoroutine(GetRequest("https://appkiduniya.in/NextLevelDevs/MoreApp/Api/App/getAppAdChange?app_id=1")); //Live url
     }
 
 
