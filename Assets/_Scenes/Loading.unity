@@ -500,7 +500,9 @@ MonoBehaviour:
   RewardId: 
   AppOpenId: 
   isRewardShow: 0
+  canappopenshow: 0
   isRewardLoad: 0
+  isinterstitialLoad: 0
   isShow: 0
   isAdStop: 0
   Number: 0

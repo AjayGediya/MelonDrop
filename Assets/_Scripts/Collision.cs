@@ -110,6 +110,8 @@ public class Collision : MonoBehaviour
         GameManager.instance.ScoreValue += scoreValue;
 
         TextCreate(scoreValue,newcollision);
+
+        gameObject.GetComponent<Movement>().enabled = false;
     }
 
     public void HandleFinalFruit(Collision2D newcollision, ParticleSystem particleEffect, int scoreValue)
@@ -137,7 +139,8 @@ public class Collision : MonoBehaviour
         GameManager.instance.First2Destroybtn.GetComponent<Button>().interactable = true;
         GameManager.instance.BomBtn.GetComponent<Button>().interactable = true;
         GameManager.instance.ChangeBtn.GetComponent<Button>().interactable = true;
-
+        GameManager.instance.Helpbtn.GetComponent<Button>().interactable = true;
+        GameManager.instance.SettingBtn.GetComponent<Button>().interactable = true;
         GameManager.instance.isFruit = false;
     }
 

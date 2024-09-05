@@ -63,7 +63,8 @@ public class FruitTouch : MonoBehaviour
         gameManager.First2Destroybtn.GetComponent<Button>().interactable = true;
         gameManager.BomBtn.GetComponent<Button>().interactable = true;
         gameManager.ChangeBtn.GetComponent<Button>().interactable = true;
-
+        gameManager.Helpbtn.GetComponent<Button>().interactable = true;
+        gameManager.SettingBtn.GetComponent<Button>().interactable = true;
         gameManager.timerIsRunning = true;
     }
 
@@ -123,6 +124,8 @@ public class FruitTouch : MonoBehaviour
                 gameManager.First2Destroybtn.GetComponent<Button>().interactable = true;
                 gameManager.BomBtn.GetComponent<Button>().interactable = true;
                 gameManager.ChangeBtn.GetComponent<Button>().interactable = true;
+                gameManager.Helpbtn.GetComponent<Button>().interactable = true;
+                gameManager.SettingBtn.GetComponent<Button>().interactable = true;
                 GameManager.instance.isChangeOneTime = true;
                 gameManager.timerIsRunning = true;
                 break;
@@ -193,6 +196,8 @@ public class FruitTouch : MonoBehaviour
         gameManager.First2Destroybtn.GetComponent<Button>().interactable = true;
         gameManager.BomBtn.GetComponent<Button>().interactable = true;
         gameManager.ChangeBtn.GetComponent<Button>().interactable = true;
+        gameManager.Helpbtn.GetComponent<Button>().interactable = true;
+        gameManager.SettingBtn.GetComponent<Button>().interactable = true;
         gameManager.timerIsRunning = true;
 
         StartCoroutine(ChangeBoolforChnages());

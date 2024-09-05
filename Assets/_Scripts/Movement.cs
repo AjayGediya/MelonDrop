@@ -45,7 +45,7 @@ public class Movement : MonoBehaviour
         if (gameManager.isPanelStart == false)
         {
             if (gameManager.isGameOver || isSelect || gameManager.isButtonOption || gameManager.isButtonFirst2Destroy ||
-            gameManager.isButtonChange || gameManager.isButtonBoxVibrate || gameManager.isTime || gameManager.isBoxVibrate || gameManager.isExit || gameManager.isHelp || gameManager.isSetting)
+            gameManager.isButtonChange || gameManager.isButtonBoxVibrate || gameManager.isTime || gameManager.isBoxVibrate || gameManager.isExit || gameManager.isHelp || gameManager.isSetting || gameManager.isInternet || gameManager.isUpdate)
             {
                 return;
             }
@@ -104,6 +104,7 @@ public class Movement : MonoBehaviour
         }
         gameManager.image.Add(gameObject);
         isSelect = true;
+        gameObject.GetComponent<Movement>().enabled = false;
         line.SetActive(false);
         rb.freezeRotation = false;
         rb.angularVelocity = Random.Range(-360, 360);

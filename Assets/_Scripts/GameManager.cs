@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -110,11 +111,15 @@ public class GameManager : MonoBehaviour
 
     public bool isSetting = false;
 
+    public bool isInternet = false;
+
+    public bool isUpdate = false;
+
     public Sprite On, Off;
 
     public Button SoundButton, MusicButton;
 
-    public Button BomBtn, ChangeBtn, VibrateBtn, First2Destroybtn;
+    public Button BomBtn, ChangeBtn, VibrateBtn, First2Destroybtn, Helpbtn, SettingBtn;
 
     public Image NextImage;
 
@@ -143,6 +148,8 @@ public class GameManager : MonoBehaviour
     GameObject Fruit;
 
     public GameObject[] AllFruit;
+
+    public int verionCode;  ///VERSION CODE CHAGE HERE  api ma change kre tyare aama same number vdharvo
 
     void Awake()
     {
@@ -175,7 +182,14 @@ public class GameManager : MonoBehaviour
 
         AdManager.Instance.isShow = false;
 
-        timerIsRunning = true;
+        if (UpdatePopUp.activeInHierarchy)
+        {
+            timerIsRunning = false;
+        }
+        else
+        {
+            timerIsRunning = true;
+        }
 
         if (AdManager.Instance.BannerAcc == 2 && AdManager.Instance.AdAvailablevalue == 1)
         {
@@ -217,41 +231,84 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("FirstOpen", 1);
             Debug.Log("Update" + PlayerPrefs.GetInt("Update"));
         }
+    }
 
-        //Debug.Log(PlayerPrefs.GetInt("Update", 1) + " " + AdManager.Instance.Number);
-        if (PlayerPrefs.GetInt("Update", 1) < AdManager.Instance.Number)
+    public void ShowUpdateDialog()
+    {
+        Debug.Log(verionCode + " +++ " + AdManager.Instance.Number);
+        if (verionCode < AdManager.Instance.Number)
         {
-            //Debug.Log("update dialog");
-            //PlayerPrefs.SetInt("Update", AdManager.Instance.Number);
+            PlayerPrefs.SetInt("Update", AdManager.Instance.Number);
             GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 120);
             UpdatePopUp.SetActive(true);
+            isUpdate = true;
+            VibrateBtn.GetComponent<Button>().interactable = false;
+            First2Destroybtn.GetComponent<Button>().interactable = false;
+            BomBtn.GetComponent<Button>().interactable = false;
+            ChangeBtn.GetComponent<Button>().interactable = false;
+            Helpbtn.GetComponent<Button>().interactable = false;
+            SettingBtn.GetComponent<Button>().interactable = false;
         }
+    }
+
+    private void OnValidate()
+    {
+#if UNITY_EDITOR
+        verionCode = PlayerSettings.Android.bundleVersionCode;
+        EditorUtility.SetDirty(this); // Mark the object as dirty to ensure the change is saved
+#endif
     }
 
     void Update()
     {
+        //Debug.Log(verionCode + " Vc");
+
+
+        if (HowtoPlayPopup.activeInHierarchy)
+        {
+            timerIsRunning = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (OverPanel.activeInHierarchy == false)
+            if (HelpPanel.activeInHierarchy == true)
             {
-                if (TimerPopup.activeInHierarchy == false)
+                HelpPanel.SetActive(false);
+                isHelp = false;
+                timerIsRunning = true;
+            }
+            else
+            {
+                if (UpdatePopUp.activeInHierarchy == false)
                 {
-                    if (isLastExit == false)
+                    if (InterNetPopup.activeInHierarchy == false)
                     {
-                        isExit = true;
-                        Debug.Log("Exit Panel Bool " + isLastExit);
+                        if (OverPanel.activeInHierarchy == false)
+                        {
+                            if (TimerPopup.activeInHierarchy == false)
+                            {
+                                timerIsRunning = false;
+                                if (isLastExit == false)
+                                {
+                                    isExit = true;
+                                    Debug.Log("Exit Panel Bool " + isLastExit);
 
-                        ExitPanel.SetActive(true);
-                        timerIsRunning = false;
-                        isLastExit = true;
-                        Debug.Log("Exit Panel Bool " + isLastExit);
-                    }
-                    else if (isLastExit == true)
-                    {
-                        Debug.Log("Setting Panel Bool " + isLastExit);
-                        SettingPanel.SetActive(false);
-                        StartCoroutine(TimeforBack());
-                        Debug.Log("Setting Panel Bool " + isLastExit);
+                                    ExitPanel.SetActive(true);
+                                    isLastExit = true;
+                                    Debug.Log("Exit Panel Bool " + isLastExit);
+                                }
+                                else if (isLastExit == true)
+                                {
+                                    if (ExitPanel.activeInHierarchy == false)
+                                    {
+                                        Debug.Log("Setting Panel Bool " + isLastExit);
+                                        SettingPanel.SetActive(false);
+                                        StartCoroutine(TimeforBack());
+                                        Debug.Log("Setting Panel Bool " + isLastExit);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -262,6 +319,8 @@ public class GameManager : MonoBehaviour
             if (isNet == false)
             {
                 isNet = true;
+                timerIsRunning = false;
+                isInternet = true;
                 InterNetPopup.SetActive(true);
                 AdManager.Instance.DestroyAd();
             }
@@ -274,6 +333,9 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(AdManager.Instance.GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2"));
                 StartCoroutine(AdBanner());
                 isNet = false; // Reset the flag after loading ads
+                timeRemaining = 120f;
+                timerIsRunning = true;
+                Debug.Log("timeRemaining net on " + timeRemaining);
             }
         }
 
@@ -292,18 +354,22 @@ public class GameManager : MonoBehaviour
                     timeRemaining -= Time.deltaTime;
                     UpdateTimerDisplay(timeRemaining);
 
-                    if (timeRemaining <= 5f && !fiveSecondWarningGiven)
+                    if (AdManager.Instance.isinterstitialLoad == true)
                     {
-                        TimerPopup.SetActive(true);
-                        VibrateBtn.GetComponent<Button>().interactable = false;
-                        First2Destroybtn.GetComponent<Button>().interactable = false;
-                        BomBtn.GetComponent<Button>().interactable = false;
-                        ChangeBtn.GetComponent<Button>().interactable = false;
-                        //Debug.Log("5 seconds remaining!");
-                        Second5 = string.Format("{00}", seconds);
-                        TimerTxt.text = Second5;
+                        if (timeRemaining <= 5f && !fiveSecondWarningGiven)
+                        {
+                            TimerPopup.SetActive(true);
+                            VibrateBtn.GetComponent<Button>().interactable = false;
+                            First2Destroybtn.GetComponent<Button>().interactable = false;
+                            BomBtn.GetComponent<Button>().interactable = false;
+                            ChangeBtn.GetComponent<Button>().interactable = false;
+                            Helpbtn.GetComponent<Button>().interactable = false;
+                            SettingBtn.GetComponent<Button>().interactable = false;
+                            //Debug.Log("5 seconds remaining!");
+                            Second5 = string.Format("{00}", seconds);
+                            TimerTxt.text = Second5;
+                        }
                     }
-
                 }
                 else
                 {
@@ -337,6 +403,7 @@ public class GameManager : MonoBehaviour
     {
         HowtoPlayPopup.SetActive(false);
         PlayerPrefs.SetInt("HowToPlay", 1);
+        timerIsRunning = true;
         StartCoroutine(ChangesBool());
     }
 
@@ -429,6 +496,8 @@ public class GameManager : MonoBehaviour
     {
         InterNetPopup.SetActive(false);
         isNet = true;
+        isInternet = false;
+        timerIsRunning = true;
     }
 
     IEnumerator ChangeBoolForTimer()
@@ -442,6 +511,8 @@ public class GameManager : MonoBehaviour
         First2Destroybtn.GetComponent<Button>().interactable = true;
         BomBtn.GetComponent<Button>().interactable = true;
         ChangeBtn.GetComponent<Button>().interactable = true;
+        Helpbtn.GetComponent<Button>().interactable = true;
+        SettingBtn.GetComponent<Button>().interactable = true;
     }
 
     void UpdateTimerDisplay(float timeToDisplay)
@@ -478,17 +549,33 @@ public class GameManager : MonoBehaviour
 
     public void UpdatebtnClick()
     {
-        Application.OpenURL("https://play.google.com/store/games?utm_source=apac_med&hl=en-IN&utm_medium=hasem&utm_content=Jul3124&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1707570-med-hasem-py-Evergreen-Jul3124-Text_Search_BKWS-BKWS%7CONSEM_kwid_43700080171622144_creativeid_694609712106_device_c&gad_source=1&gclid=Cj0KCQjw5ea1BhC6ARIsAEOG5py_18eCYdEuOd6ctEyvsqWeFQ8qb16Nzrdxhqc_LyjfaRreVnxUUvIaApI4EALw_wcB&gclsrc=aw.ds");
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.fruit.merge.world.games.drop.puzzle.game");
         PlayerPrefs.SetInt("Update", AdManager.Instance.Number);
         UpdatePopUp.SetActive(false);
+        isUpdate = false;
+        timerIsRunning = true;
         GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
 
+        VibrateBtn.GetComponent<Button>().interactable = true;
+        First2Destroybtn.GetComponent<Button>().interactable = true;
+        BomBtn.GetComponent<Button>().interactable = true;
+        ChangeBtn.GetComponent<Button>().interactable = true;
+        Helpbtn.GetComponent<Button>().interactable = true;
+        SettingBtn.GetComponent<Button>().interactable = true;
     }
 
     public void NotNowBtnClick()
     {
         UpdatePopUp.SetActive(false);
+        isUpdate = false;
+        timerIsRunning = true;
         GamePanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+        VibrateBtn.GetComponent<Button>().interactable = true;
+        First2Destroybtn.GetComponent<Button>().interactable = true;
+        BomBtn.GetComponent<Button>().interactable = true;
+        ChangeBtn.GetComponent<Button>().interactable = true;
+        Helpbtn.GetComponent<Button>().interactable = true;
+        SettingBtn.GetComponent<Button>().interactable = true;
     }
 
     public void SettingBtnClick()
@@ -555,7 +642,7 @@ public class GameManager : MonoBehaviour
 
     public void ShareButtonClick()
     {
-        shareText.Share("Fruit Merge World" + "\n" + "\n" + "Let me Recommend you this application" + "\n" + "\n" + "https://play.google.com/store/games?hl=en-IN");
+        shareText.Share("Fruit Merge World" + "\n" + "\n" + "Let me Recommend you this application" + "\n" + "\n" + "https://play.google.com/store/apps/details?id=com.fruit.merge.world.games.drop.puzzle.game");
     }
 
     public void BomButtonClick()
@@ -571,6 +658,8 @@ public class GameManager : MonoBehaviour
             First2Destroybtn.GetComponent<Button>().interactable = true;
             BomBtn.GetComponent<Button>().interactable = true;
             ChangeBtn.GetComponent<Button>().interactable = true;
+            Helpbtn.GetComponent<Button>().interactable = true;
+            SettingBtn.GetComponent<Button>().interactable = true;
             Debug.Log("isButtonOption" + isButtonOption);
             timerIsRunning = true;
         }
@@ -597,6 +686,8 @@ public class GameManager : MonoBehaviour
         First2Destroybtn.GetComponent<Button>().interactable = false;
         BomBtn.GetComponent<Button>().interactable = false;
         ChangeBtn.GetComponent<Button>().interactable = false;
+        Helpbtn.GetComponent<Button>().interactable = false;
+        SettingBtn.GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(0.4f);
         isButtonOption = true;
         Debug.Log("isButtonOption" + isButtonOption);
@@ -629,6 +720,8 @@ public class GameManager : MonoBehaviour
         First2Destroybtn.GetComponent<Button>().interactable = true;
         BomBtn.GetComponent<Button>().interactable = true;
         ChangeBtn.GetComponent<Button>().interactable = true;
+        Helpbtn.GetComponent<Button>().interactable = true;
+        SettingBtn.GetComponent<Button>().interactable = true;
         timerIsRunning = true;
     }
 
@@ -646,6 +739,8 @@ public class GameManager : MonoBehaviour
             First2Destroybtn.GetComponent<Button>().interactable = true;
             BomBtn.GetComponent<Button>().interactable = true;
             ChangeBtn.GetComponent<Button>().interactable = true;
+            Helpbtn.GetComponent<Button>().interactable = true;
+            SettingBtn.GetComponent<Button>().interactable = true;
             Debug.Log("isButtonChange" + isButtonChange);
             timerIsRunning = true;
         }
@@ -672,6 +767,8 @@ public class GameManager : MonoBehaviour
         First2Destroybtn.GetComponent<Button>().interactable = false;
         BomBtn.GetComponent<Button>().interactable = false;
         ChangeBtn.GetComponent<Button>().interactable = false;
+        Helpbtn.GetComponent<Button>().interactable = false;
+        SettingBtn.GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(0.4f);
         isButtonChange = true;
         Debug.Log("isButtonChange" + isButtonChange);
@@ -698,6 +795,8 @@ public class GameManager : MonoBehaviour
                 First2Destroybtn.GetComponent<Button>().interactable = true;
                 BomBtn.GetComponent<Button>().interactable = true;
                 ChangeBtn.GetComponent<Button>().interactable = true;
+                Helpbtn.GetComponent<Button>().interactable = true;
+                SettingBtn.GetComponent<Button>().interactable = true;
                 timerIsRunning = true;
                 StartCoroutine(NotFoundTimeChanges());
             }
@@ -725,6 +824,8 @@ public class GameManager : MonoBehaviour
         First2Destroybtn.GetComponent<Button>().interactable = false;
         BomBtn.GetComponent<Button>().interactable = false;
         ChangeBtn.GetComponent<Button>().interactable = false;
+        Helpbtn.GetComponent<Button>().interactable = false;
+        SettingBtn.GetComponent<Button>().interactable = false;
 
         yield return new WaitForSeconds(0.4f);
 
@@ -791,6 +892,8 @@ public class GameManager : MonoBehaviour
         First2Destroybtn.GetComponent<Button>().interactable = true;
         BomBtn.GetComponent<Button>().interactable = true;
         ChangeBtn.GetComponent<Button>().interactable = true;
+        Helpbtn.GetComponent<Button>().interactable = true;
+        SettingBtn.GetComponent<Button>().interactable = true;
     }
 
     public void MoveDown()
@@ -832,6 +935,8 @@ public class GameManager : MonoBehaviour
             First2Destroybtn.GetComponent<Button>().interactable = true;
             BomBtn.GetComponent<Button>().interactable = true;
             ChangeBtn.GetComponent<Button>().interactable = true;
+            Helpbtn.GetComponent<Button>().interactable = true;
+            SettingBtn.GetComponent<Button>().interactable = true;
             timerIsRunning = true;
             Debug.Log("isButtonFirst2Destroy" + isButtonFirst2Destroy);
         }
@@ -857,6 +962,8 @@ public class GameManager : MonoBehaviour
         First2Destroybtn.GetComponent<Button>().interactable = false;
         BomBtn.GetComponent<Button>().interactable = false;
         ChangeBtn.GetComponent<Button>().interactable = false;
+        Helpbtn.GetComponent<Button>().interactable = false;
+        SettingBtn.GetComponent<Button>().interactable = false;
 
         yield return new WaitForSeconds(0.4f);
         Debug.Log("isButtonFirst2Destroy" + isButtonFirst2Destroy);
@@ -924,6 +1031,8 @@ public class GameManager : MonoBehaviour
             First2Destroybtn.GetComponent<Button>().interactable = true;
             BomBtn.GetComponent<Button>().interactable = true;
             ChangeBtn.GetComponent<Button>().interactable = true;
+            Helpbtn.GetComponent<Button>().interactable = true;
+            SettingBtn.GetComponent<Button>().interactable = true;
             timerIsRunning = true;
         }
     }

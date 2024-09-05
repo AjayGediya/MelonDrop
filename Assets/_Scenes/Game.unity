@@ -5074,7 +5074,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NotNow
+  m_text: Not Now
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d27dc25b3a41447e3b34c6b7b6fae430, type: 2}
   m_sharedMaterial: {fileID: 5976554551909946675, guid: d27dc25b3a41447e3b34c6b7b6fae430, type: 2}
@@ -6319,7 +6319,7 @@ Transform:
   m_GameObject: {fileID: 615689106}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5000002, z: 0}
+  m_LocalPosition: {x: 0, y: 1.51, z: 0}
   m_LocalScale: {x: 1.3, y: 0.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13895,7 +13895,7 @@ Transform:
   m_GameObject: {fileID: 1354493433}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 1.5000002, z: 0}
+  m_LocalPosition: {x: 1.5, y: 1.51, z: 0}
   m_LocalScale: {x: 1.3, y: 0.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19061,6 +19061,8 @@ MonoBehaviour:
   isHowToPlayTouch: 0
   isPanelStart: 0
   isSetting: 0
+  isInternet: 0
+  isUpdate: 0
   On: {fileID: 21300000, guid: b41ba33458b244676bf872b4160b180b, type: 3}
   Off: {fileID: 21300000, guid: 7bc39d5b46f2446238ea33a9b099358d, type: 3}
   SoundButton: {fileID: 1420589108}
@@ -19069,6 +19071,8 @@ MonoBehaviour:
   ChangeBtn: {fileID: 1527750113}
   VibrateBtn: {fileID: 1613382717}
   First2Destroybtn: {fileID: 891603348}
+  Helpbtn: {fileID: 387192099}
+  SettingBtn: {fileID: 107499212}
   NextImage: {fileID: 751564586}
   VibrateToggle: {fileID: 1564713654}
   main: {fileID: 519420031}
@@ -19091,6 +19095,7 @@ MonoBehaviour:
   - {fileID: 951254881040765731, guid: b29e2d344067145ada7a2e97b0f0aab4, type: 3}
   - {fileID: 5943037233239597364, guid: ef6b5f8e57af14436b2f227d3416002b, type: 3}
   - {fileID: 595996968317794923, guid: 422e4203b16a146199ee33b993028441, type: 3}
+  verionCode: 5
 --- !u!1 &1875087297
 GameObject:
   m_ObjectHideFlags: 0
@@ -19194,7 +19199,7 @@ Transform:
   m_GameObject: {fileID: 1876273574}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 1.5, z: 0}
+  m_LocalPosition: {x: -1.5, y: 1.51, z: 0}
   m_LocalScale: {x: 1.3, y: 0.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

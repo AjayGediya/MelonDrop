@@ -22,6 +22,6 @@ public class SHow : MonoBehaviour
 
             AdManager.Instance.ShowAppOpenAd();
         }
-
+        GameManager.instance.ShowUpdateDialog();
     }
 }
