@@ -61,6 +61,9 @@ public class AdManager : MonoBehaviour
 
     private bool isShowingAd = false;
 
+    [HideInInspector]
+    public string UrlName = "https://appkiduniya.in/NextLevelDevs/MoreApp/Api/App/getAppAdChange?app_id=1"; //Live Url
+
     public static AdManager Instance;
 
 
@@ -68,7 +71,7 @@ public class AdManager : MonoBehaviour
     public List<string> All_Ads_id = new List<string>();
     public List<string> All_Ads_AccType = new List<string>();
 
-    private void Awake()                                                                             
+    private void Awake()
     {
         Instance = this;
     }
@@ -76,9 +79,10 @@ public class AdManager : MonoBehaviour
     public void Start()
     {
         canappopenshow = true;
-       // StartCoroutine(GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2")); //test url
 
-        StartCoroutine(GetRequest("https://appkiduniya.in/NextLevelDevs/MoreApp/Api/App/getAppAdChange?app_id=1")); //Live url
+        //StartCoroutine(GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2")); //test url
+
+        StartCoroutine(GetRequest(UrlName)); //Live url
     }
 
 
@@ -89,7 +93,7 @@ public class AdManager : MonoBehaviour
             Debug.Log("AppOpenLoad" + AppOpenAcc + ":::" + AdAvailablevalue);
             if (AppOpenAcc == 2 && AdAvailablevalue == 1)
             {
-               
+
                 LoadAppOpenAd();
             }
 
@@ -157,7 +161,7 @@ public class AdManager : MonoBehaviour
                     InterStitleId = FindIdByKey("interstitial_ad");
                     AppOpenId = FindIdByKey("app_open_ad");
                     BannerId = FindIdByKey("banner_ad");
-                    RewardId = FindIdByKey("reward_ad");  
+                    RewardId = FindIdByKey("reward_ad");
 
                     Number = int.Parse(root.data.app_version_code.ToString());
                     AdAvailablevalue = int.Parse(root.data.is_advertise_available.ToString());
@@ -183,7 +187,7 @@ public class AdManager : MonoBehaviour
     {
         for (int i = 0; i < All_Ads_Key.Count; i++)
         {
-            if(key == All_Ads_Key[i])
+            if (key == All_Ads_Key[i])
             {
                 return All_Ads_id[i];
             }

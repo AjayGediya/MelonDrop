@@ -330,7 +330,7 @@ public class GameManager : MonoBehaviour
             if (isNet)
             {
                 // Load ads only when the internet is reconnected
-                StartCoroutine(AdManager.Instance.GetRequest("https://dev.appkiduniya.in/DigitalMineNetwork/MoreApp/Api/App/getAppAdChange?app_id=2"));
+                StartCoroutine(AdManager.Instance.GetRequest(AdManager.Instance.UrlName));
                 StartCoroutine(AdBanner());
                 isNet = false; // Reset the flag after loading ads
                 timeRemaining = 120f;
@@ -642,7 +642,7 @@ public class GameManager : MonoBehaviour
 
     public void ShareButtonClick()
     {
-        shareText.Share("Fruit Merge World" + "\n" + "\n" + "Let me Recommend you this application" + "\n" + "\n" + "https://play.google.com/store/apps/details?id=com.fruit.merge.world.games.drop.puzzle.game");
+        shareText.Share("Fruit Merge Game" + "\n" + "\n" + "Let me Recommend you this application" + "\n" + "\n" + "https://play.google.com/store/apps/details?id=com.fruit.merge.world.games.drop.puzzle.game");
     }
 
     public void BomButtonClick()
