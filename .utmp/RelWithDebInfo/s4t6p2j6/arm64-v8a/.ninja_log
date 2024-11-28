@@ -1,0 +1,5 @@
+# ninja log v5
+123	200	1732612770703848069	/Users/mac/MelonDrop/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/s4t6p2j6/obj/arm64-v8a/libswappywrapper.so	25504a5dfc32382
+0	123	1732612770628425529	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	465718e9daa0cb1
+0	314	1732613131359724177	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	465718e9daa0cb1
+314	501	1732613131542305186	/Users/mac/MelonDrop/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/s4t6p2j6/obj/arm64-v8a/libswappywrapper.so	25504a5dfc32382

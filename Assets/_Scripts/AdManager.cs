@@ -124,9 +124,6 @@ public class AdManager : MonoBehaviour
         AppStateEventNotifier.AppStateChanged -= OnAppStateChanged;
     }
 
-
-
-
     public IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
