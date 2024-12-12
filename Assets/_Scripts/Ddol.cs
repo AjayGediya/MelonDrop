@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Ddol : MonoBehaviour
 {
-    public bool isDon = false;
+    public bool isDontDestroy = false;
 
     public void Awake()
     {
-        if (isDon == false)
+        if (isDontDestroy == false)
         {
-            isDon = true;
+            isDontDestroy = true;
             DontDestroyOnLoad(this.gameObject);
         }
         else

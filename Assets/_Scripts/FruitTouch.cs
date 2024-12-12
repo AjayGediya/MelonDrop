@@ -1,213 +1,189 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Profiling;
 
 public class FruitTouch : MonoBehaviour
 {
-    [SerializeField] private Sprite blueberry, apricot, apple, cloudberry, grapefruit, guava, lucuma, passionfruit, watermelon;
+    [SerializeField] private Sprite blueBerry, apricotFruit, appleFruit, cloudBerry, grapeFruit, guavaFruit, lucumaFruit, passionFruit, watermelonFruit;
 
-    [SerializeField] private ParticleSystem particle;
+    [SerializeField] private ParticleSystem particleSystem;
 
-    public string Fruit;
+    public string fruit;
 
-    private GameManager gameManager;
+    private GameManager gameManagerInstance;
 
     private void Start()
     {
-        gameManager = GameManager.instance;
+        gameManagerInstance = GameManager.instance;
     }
 
     private void OnMouseDown()
     {
-        if (GameManager.instance.isChangeOneTime == false)
+        if (gameManagerInstance.isChangeOneTimeCheck == false)
         {
-            GameManager.instance.isChangeOneTime = true;
-            Debug.Log("Click With Bool " + GameManager.instance.isChangeOneTime);
+            gameManagerInstance.isChangeOneTimeCheck = true;
 
-            if (gameManager.isButtonOption && !gameManager.isButtonChange && !gameManager.isButtonFirst2Destroy && !gameManager.isButtonBoxVibrate)
+            if (gameManagerInstance.isBomOption && !gameManagerInstance.isButtonReplce && !gameManagerInstance.isButtonFirst2ObjectDestroy && !gameManagerInstance.isBoxVibrateCheck)
             {
-                HandleBomAction();
+                HandleBomActionEffect();
             }
-            else if (gameManager.isButtonChange && !gameManager.isButtonFirst2Destroy && !gameManager.isButtonBoxVibrate && !gameManager.isButtonOption)
+            else if (gameManagerInstance.isButtonReplce && !gameManagerInstance.isButtonFirst2ObjectDestroy && !gameManagerInstance.isBoxVibrateCheck && !gameManagerInstance.isBomOption)
             {
-                HandleChangeAction();
+                HandleChangeActionEffect();
             }
         }
         else
         {
-            Debug.Log("NotClick With Bool " + GameManager.instance.isChangeOneTime);
+            Debug.Log("NotClick With Bool " + gameManagerInstance.isChangeOneTimeCheck);
         }
     }
 
-    private void HandleBomAction()
+    private void HandleBomActionEffect()
     {
         Debug.Log("Bom");
         Debug.Log(gameObject.name);
 
-        InstantiateAndAttachParticle();
+        InstantiateParticle();
 
-        Profiler.BeginSample("DestroyFruit");
         Destroy(gameObject, 0.5f);
-        Profiler.EndSample();
 
-        gameManager.image.Remove(gameObject);
+        gameManagerInstance.imageFruit.Remove(gameObject);
 
-        DeactivateAllChildObjects();
+        DeactivateFruitAllChildObjects();
 
-        gameManager.isButtonOption = false;
-        // gameManager.isBom = false;
-        GameManager.instance.isChangeOneTime = true;
+        gameManagerInstance.isChangeOneTimeCheck = true;
 
-        gameManager.VibrateBtn.GetComponent<Button>().interactable = true;
-        gameManager.First2Destroybtn.GetComponent<Button>().interactable = true;
-        gameManager.BomBtn.GetComponent<Button>().interactable = true;
-        gameManager.ChangeBtn.GetComponent<Button>().interactable = true;
-        gameManager.Helpbtn.GetComponent<Button>().interactable = true;
-        gameManager.SettingBtn.GetComponent<Button>().interactable = true;
-        gameManager.timerIsRunning = true;
+        gameManagerInstance.AllBtnTrue();
+
+        StartCoroutine(ChangeTimeforBomAply());
     }
 
-    private void HandleChangeAction()
+    public IEnumerator ChangeTimeforBomAply()
     {
-        //Debug.Log("Change");
-        Fruit = gameObject.name;
-        //Debug.Log(Fruit + "FruitsChange");
+        yield return new WaitForSeconds(0.2f);
+        gameManagerInstance.isBomOption = false;
+        gameManagerInstance.isTimerRunning = true;
+    }
 
-        Profiler.BeginSample("FruitChange");
-        switch (Fruit)
+    private void HandleChangeActionEffect()
+    {
+        fruit = gameObject.name;
+
+        switch (fruit)
         {
             case "Strawberry(Clone)":
-                FruitChange(apricot, "Apricot", new Vector3(0.15f, 0.15f, 0.15f), 0.27f, new Vector2(0, -0.03f));//done
+                FruitReplce(apricotFruit, "Apricot", new Vector3(0.15f, 0.15f, 0.15f), 0.27f, new Vector2(0, -0.03f));//done
                 Debug.Log("apricot");
                 break;
             case "Apricot(Clone)":
-                FruitChange(blueberry, "Blueberry", new Vector3(0.14f, 0.14f, 0.14f), 0.3f, new Vector2(-0.03f, -0.04f));//done
+                FruitReplce(blueBerry, "Blueberry", new Vector3(0.14f, 0.14f, 0.14f), 0.3f, new Vector2(-0.03f, -0.04f));//done
                 Debug.Log("blueberry");
                 break;
             case "Blueberry(Clone)":
-                FruitChange(guava, "Guava", new Vector3(0.2f, 0.2f, 0.2f), 0.34f, new Vector2(0, -0.01f));//done
+                FruitReplce(guavaFruit, "Guava", new Vector3(0.2f, 0.2f, 0.2f), 0.34f, new Vector2(0, -0.01f));//done
                 Debug.Log("guava");
                 break;
             case "Guava(Clone)":
-                FruitChange(apple, "Apple", new Vector3(0.2f, 0.2f, 0.2f), 0.34f, new Vector2(0, -0.08f));//done
+                FruitReplce(appleFruit, "Apple", new Vector3(0.2f, 0.2f, 0.2f), 0.34f, new Vector2(0, -0.08f));//done
                 Debug.Log("apple");
                 break;
             case "Apple(Clone)":
-                FruitChange(grapefruit, "Grapefruit", new Vector3(0.3f, 0.3f, 0.3f), 0.5f, new Vector2(0, 0));//done
+                FruitReplce(grapeFruit, "Grapefruit", new Vector3(0.3f, 0.3f, 0.3f), 0.5f, new Vector2(0, 0));//done
                 Debug.Log("grapefruit");
                 break;
             case "Grapefruit(Clone)":
-                FruitChange(passionfruit, "Passionfruit", new Vector3(0.35f, 0.35f, 0.35f), 0.57f, new Vector2(0, -0.06f));//done
+                FruitReplce(passionFruit, "Passionfruit", new Vector3(0.35f, 0.35f, 0.35f), 0.57f, new Vector2(0, -0.06f));//done
                 Debug.Log("passionfruit");
                 break;
             case "Passionfruit(Clone)":
-                FruitChange(lucuma, "Lucuma", new Vector3(0.35f, 0.35f, 0.35f), 0.72f, new Vector2(0, 0));//done
+                FruitReplce(lucumaFruit, "Lucuma", new Vector3(0.35f, 0.35f, 0.35f), 0.72f, new Vector2(0, 0));//done
                 Debug.Log("lucuma");
                 break;
             case "Lucuma(Clone)":
-                FruitChange(cloudberry, "Cloudberry", new Vector3(0.55f, 0.55f, 0.55f), 0.95f, new Vector2(-0.04f, -0.15f));//done
+                FruitReplce(cloudBerry, "Cloudberry", new Vector3(0.55f, 0.55f, 0.55f), 0.95f, new Vector2(-0.04f, -0.15f));//done
                 Debug.Log("cloudberry");
                 break;
             case "Cloudberry(Clone)":
-                FruitChange(watermelon, "Watermelon", new Vector3(0.7f, 0.7f, 0.7f), 1.18f, new Vector2(0, -0.05f));
+                FruitReplce(watermelonFruit, "Watermelon", new Vector3(0.7f, 0.7f, 0.7f), 1.18f, new Vector2(0, -0.05f));
                 Debug.Log("watermelon");
                 break;
             case "Watermelon(Clone)":
-                gameManager.image.Remove(gameObject);
+                gameManagerInstance.imageFruit.Remove(gameObject);
                 Destroy(gameObject);
-                gameManager.isBoxVibrate = false;
-                gameManager.isButtonFirst2Destroy = false;
-                gameManager.isButtonChange = false;
-                gameManager.isButtonOption = false;
-                gameManager.VibrateBtn.GetComponent<Button>().interactable = true;
-                gameManager.First2Destroybtn.GetComponent<Button>().interactable = true;
-                gameManager.BomBtn.GetComponent<Button>().interactable = true;
-                gameManager.ChangeBtn.GetComponent<Button>().interactable = true;
-                gameManager.Helpbtn.GetComponent<Button>().interactable = true;
-                gameManager.SettingBtn.GetComponent<Button>().interactable = true;
-                GameManager.instance.isChangeOneTime = true;
-                gameManager.timerIsRunning = true;
+                gameManagerInstance.isBoxVibrateCheck = false;
+                gameManagerInstance.isButtonFirst2ObjectDestroy = false;
+                gameManagerInstance.isButtonReplce = false;
+                gameManagerInstance.isBomOption = false;
+                gameManagerInstance.AllBtnTrue();
+                gameManagerInstance.isChangeOneTimeCheck = true;
+                gameManagerInstance.isTimerRunning = true;
                 break;
         }
-        Profiler.EndSample();
 
-        DeactivateAllChildObjects();
+        DeactivateFruitAllChildObjects();
 
-        StartCoroutine(ChangeBool());
+        StartCoroutine(ChangeButtonBool());
     }
 
-    public IEnumerator ChangeBool()
+    public IEnumerator ChangeButtonBool()
     {
         yield return new WaitForSeconds(0.2f);
-        gameManager.isButtonChange = false;
+        gameManagerInstance.isButtonReplce = false;
     }
 
-    private void InstantiateAndAttachParticle()
+    private void InstantiateParticle()
     {
-        ParticleSystem particleSystem = Instantiate(particle);
-        particleSystem.transform.position = transform.position;
-        particleSystem.transform.SetParent(transform);
+        ParticleSystem particle_System = Instantiate(particleSystem);
+        particle_System.transform.position = transform.position;
+        particle_System.transform.SetParent(transform);
     }
 
-    private void DeactivateAllChildObjects()
+    private void DeactivateFruitAllChildObjects()
     {
-        foreach (var item in gameManager.image)
+        foreach (var item in gameManagerInstance.imageFruit)
         {
             item.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
-    private void FruitChange(Sprite newSprite, string newName, Vector3 newScale, float newRadius, Vector2 newOffset)
+    private void FruitReplce(Sprite newFruitSprite, string newFruitName, Vector3 fruitScale, float fruitRadius, Vector2 fruitOffset)
     {
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = newSprite;
-        Debug.Log("Sprite Change");
+        var fruitspriteRenderer = GetComponent<SpriteRenderer>();
+        fruitspriteRenderer.sprite = newFruitSprite;
 
         gameObject.GetComponent<CircleCollider2D>().enabled = false;
-        var oldCollider = GetComponent<Collider2D>();
-        Destroy(oldCollider);
-        Debug.Log("old collider distroy");
+        var fruitoldCollider = GetComponent<Collider2D>();
+        Destroy(fruitoldCollider);
 
-        var newCollider = gameObject.AddComponent<CircleCollider2D>();
-        newCollider.radius = newRadius;
-        newCollider.offset = newOffset;
-        Debug.Log("new collider ad");
+        var newFruitCollider = gameObject.AddComponent<CircleCollider2D>();
+        newFruitCollider.radius = fruitRadius;
+        newFruitCollider.offset = fruitOffset;
 
-        gameObject.name = $"{newName}(Clone)";
-        gameObject.tag = newName;
-        Debug.Log("name And Tag Change");
+        gameObject.name = $"{newFruitName}(Clone)";
+        gameObject.tag = newFruitName;
 
-        var childTransform = transform.GetChild(0).transform;
-        childTransform.localScale = newScale;
-        Debug.Log("Child No Scle Bdle");
+        var fruitchildTransform = transform.GetChild(0).transform;
+        fruitchildTransform.localScale = fruitScale;
 
-        gameObject.GetComponent<Collision>().Apricot = GameManager.instance.AllFruit[1];
-        gameObject.GetComponent<Collision>().Blueberry = GameManager.instance.AllFruit[2];
-        gameObject.GetComponent<Collision>().Guava = GameManager.instance.AllFruit[3];
-        gameObject.GetComponent<Collision>().Apple = GameManager.instance.AllFruit[4];
-        gameObject.GetComponent<Collision>().Grapefruit = GameManager.instance.AllFruit[5];
-        gameObject.GetComponent<Collision>().Passionfruit = GameManager.instance.AllFruit[6];
-        gameObject.GetComponent<Collision>().Lucuma = GameManager.instance.AllFruit[7];
-        gameObject.GetComponent<Collision>().Cloudberry = GameManager.instance.AllFruit[8];
-        gameObject.GetComponent<Collision>().Watermelon = GameManager.instance.AllFruit[9];
+        gameObject.GetComponent<Collision>().apricot = gameManagerInstance.allFruit[1];
+        gameObject.GetComponent<Collision>().blueberry = gameManagerInstance.allFruit[2];
+        gameObject.GetComponent<Collision>().guava = gameManagerInstance.allFruit[3];
+        gameObject.GetComponent<Collision>().apple = gameManagerInstance.allFruit[4];
+        gameObject.GetComponent<Collision>().grapefruit = gameManagerInstance.allFruit[5];
+        gameObject.GetComponent<Collision>().passionfruit = gameManagerInstance.allFruit[6];
+        gameObject.GetComponent<Collision>().lucuma = gameManagerInstance.allFruit[7];
+        gameObject.GetComponent<Collision>().cloudberry = gameManagerInstance.allFruit[8];
+        gameObject.GetComponent<Collision>().watermelon = gameManagerInstance.allFruit[9];
 
-        gameManager.VibrateBtn.GetComponent<Button>().interactable = true;
-        gameManager.First2Destroybtn.GetComponent<Button>().interactable = true;
-        gameManager.BomBtn.GetComponent<Button>().interactable = true;
-        gameManager.ChangeBtn.GetComponent<Button>().interactable = true;
-        gameManager.Helpbtn.GetComponent<Button>().interactable = true;
-        gameManager.SettingBtn.GetComponent<Button>().interactable = true;
-        gameManager.timerIsRunning = true;
+        gameManagerInstance.AllBtnTrue();
+        gameManagerInstance.isTimerRunning = true;
 
-        StartCoroutine(ChangeBoolforChnages());
+        StartCoroutine(ChangeBoolforFruitChnages());
     }
 
-    IEnumerator ChangeBoolforChnages()
+    IEnumerator ChangeBoolforFruitChnages()
     {
         yield return new WaitForSeconds(0.2f);
-        GameManager.instance.isChangeOneTime = true;
-        Debug.Log("Click With Bool false" + GameManager.instance.isChangeOneTime);
+        GameManager.instance.isChangeOneTimeCheck = true;
     }
 }
 

@@ -8,20 +8,13 @@ public class SHow : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null) { Destroy(gameObject); return; } // stops dups running
-        DontDestroyOnLoad(gameObject); // keep me forever
-        Instance = this; // set the reference to it
+        if (Instance != null) { Destroy(gameObject); return; } 
+        DontDestroyOnLoad(gameObject); 
+        Instance = this; 
     }
 
     private void Start()
     {
-
-        if (AdManager.Instance.AdSplashvalue == 1 && AdManager.Instance.AppOpenAcc == 2)
-        {
-            Debug.Log("Show App opwn");
-
-            AdManager.Instance.ShowAppOpenAd();
-        }
-        GameManager.instance.ShowUpdateDialog();
+        GameManager.instance.OpenUpdateDialog();
     }
 }

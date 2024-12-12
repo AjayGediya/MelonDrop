@@ -2,55 +2,51 @@ using UnityEngine;
 
 public class GameOver : MonoBehaviour
 {
-    public bool istouch = false;
+    public bool isTouch = false;
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        Movement movement = collision.gameObject.GetComponent<Movement>();
+        Movement movementObject = collision.gameObject.GetComponent<Movement>();
 
-        if (movement != null)
+        if (movementObject != null)
         {
-            istouch = true;
+            isTouch = true;
         }
         else
         {
-            istouch = false;
+            isTouch = false;
         }
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        istouch = false;
+        isTouch = false;
     }
 
     public void Update()
     {
-        if (GameManager.instance.GameOverObject1.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject2.GetComponent<GameOver>().istouch == true && GameManager.instance.GameOverObject3.GetComponent<GameOver>().istouch == true)
+        if (GameManager.instance.gameOverObject1.GetComponent<GameOver>().isTouch == true && GameManager.instance.gameOverObject2.GetComponent<GameOver>().isTouch == true && GameManager.instance.gameOverObject3.GetComponent<GameOver>().isTouch == true)
         {
-            GameManager.instance.timerIsRunning = false;
-            //Debug.Log("GameOver");
-            if (!GameManager.instance.isGameOver)
+            GameManager.instance.isTimerRunning = false;
+            if (!GameManager.instance.isGameOverCheck)
             {
-                Debug.Log("OverPanelUpdate");
-                GameManager.instance.isGameOver = true;
-                GameManager.instance.OverPanel.SetActive(true);
+                GameManager.instance.isGameOverCheck = true;
+                GameManager.instance.overPanel.SetActive(true);
             }
 
 
-            if (GameManager.instance.OverPanel.activeInHierarchy == true)
+            if (GameManager.instance.overPanel.activeInHierarchy == true)
             {
-                GameManager.instance.TimerPopup.SetActive(false);
+                GameManager.instance.timerPopup.SetActive(false);
             }
 
-            GameManager.instance.ScoreValueOver.text = GameManager.instance.ScoreValue.ToString();
-            //Debug.Log("SCOREOVER" + GameManager.instance.ScoreValue.ToString());
-            //Debug.Log("HIGHSCOREOVER" + GameManager.instance.HighScore.ToString());
+            GameManager.instance.scoreValueOver.text = GameManager.instance.scoreValue.ToString();
 
-            if (GameManager.instance.ScoreValue > GameManager.instance.HighScore)
+            if (GameManager.instance.scoreValue > GameManager.instance.highScore)
             {
-                GameManager.instance.HighScore = GameManager.instance.ScoreValue;
-                GameManager.instance.HighScoreText.text = GameManager.instance.HighScore.ToString();
-                PlayerPrefs.SetInt("HighScore", GameManager.instance.HighScore);
+                GameManager.instance.highScore = GameManager.instance.scoreValue;
+                GameManager.instance.highScoreText.text = GameManager.instance.highScore.ToString();
+                PlayerPrefs.SetInt("HighScore", GameManager.instance.highScore);
             }
         }
     }

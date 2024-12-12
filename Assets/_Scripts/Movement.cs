@@ -1,18 +1,17 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private Vector3 startPos, endPos;
+    [SerializeField] private Vector3 startFruitPos, endFruitPos;
 
-    [SerializeField] private Vector3 screenSize;
+    [SerializeField] private Vector3 screenTouchSize;
 
-    [SerializeField] private GameObject line;
+    [SerializeField] private GameObject lineObject;
 
-    [SerializeField] private float min = 0, max = 0;
+    [SerializeField] private float minValue = 0, maxValue = 0;
 
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D rigidbody2D;
 
     public bool isSelect = false;
 
@@ -28,107 +27,102 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-        line = GameObject.Find("Line");
-        rb = GetComponent<Rigidbody2D>();
-        screenSize = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        lineObject = GameObject.Find("Line");
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        screenTouchSize = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
     }
 
     private void Update()
     {
-        Profiler.BeginSample("TouchInput");
-        HandleTouchInput();
-        Profiler.EndSample();
+        HandleClickInput();
     }
 
-    private void HandleTouchInput()
+    private void HandleClickInput()
     {
-        if (gameManager.isPanelStart == false)
+        if (gameManager.isPanelStartCheck == false)
         {
-            if (gameManager.isGameOver || isSelect || gameManager.isButtonOption || gameManager.isButtonFirst2Destroy ||
-            gameManager.isButtonChange || gameManager.isButtonBoxVibrate || gameManager.isTime || gameManager.isBoxVibrate || gameManager.isExit || gameManager.isHelp || gameManager.isSetting || gameManager.isInternet || gameManager.isUpdate)
+            if (gameManager.isGameOverCheck || isSelect || gameManager.isBomOption || gameManager.isButtonFirst2ObjectDestroy ||
+            gameManager.isButtonReplce || gameManager.isBoxVibrateCheck || gameManager.isTimeCount || gameManager.isBoxVibrateCheck || gameManager.isExitCheck || gameManager.isHelpOption || gameManager.isSettingCheck || gameManager.isInternetCheck || gameManager.isUpdateCheck)
             {
                 return;
             }
 
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (gameManager.FruitsParent.transform.position.y > pos.y)
+            if (gameManager.fruitsParent.transform.position.y > pos.y)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    line.SetActive(true);
-                    // DeactivateGameOverObjects();
-                    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    //Debug.Log(mousePos);
-                    // startPos = pos;
+                    lineObject.SetActive(true);
+                    Vector3 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 }
 
                 if (Input.GetMouseButton(0))
                 {
-                    // DeactivateGameOverObjects();
-                    endPos = pos;
-                    Vector3 diff = endPos - startPos;
-                    diff.x = Mathf.Clamp(diff.x, min, max);
-                    UpdatePositions(diff.x);
+                    endFruitPos = pos;
+                    Vector3 differance = endFruitPos - startFruitPos;
+                    differance.x = Mathf.Clamp(differance.x, minValue, maxValue);
+                    UpdatePositionsCheck(differance.x);
                 }
 
                 if (Input.GetMouseButtonUp(0))
                 {
-                    DeactivateGameOverObjects();
-                    OnMouseButtonUp();
+                    DeactivateGameOver();
+                    MouseButtonUp();
                 }
             }
         }
     }
 
-    private void DeactivateGameOverObjects()
+    private void DeactivateGameOver()
     {
-        gameManager.GameOverObject1.SetActive(false);
-        gameManager.GameOverObject2.SetActive(false);
-        gameManager.GameOverObject3.SetActive(false);
+        gameManager.gameOverObject1.SetActive(false);
+        gameManager.gameOverObject2.SetActive(false);
+        gameManager.gameOverObject3.SetActive(false);
     }
 
-    private void UpdatePositions(float clampedX)
+    private void UpdatePositionsCheck(float clampedXpos)
     {
-        transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
-        line.transform.position = new Vector3(clampedX, line.transform.position.y, line.transform.position.z);
+        transform.position = new Vector3(clampedXpos, transform.position.y, transform.position.z);
+        lineObject.transform.position = new Vector3(clampedXpos, lineObject.transform.position.y, lineObject.transform.position.z);
     }
 
-    private void OnMouseButtonUp()
+   
+    private void MouseButtonUp()
     {
         GetComponent<Collider2D>().enabled = true;
-        rb.bodyType = RigidbodyType2D.Dynamic;
+        rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
         if (SoundManager.Instance != null)
         {
-            SoundManager.Instance.FruitSoundPlay();
+            SoundManager.Instance.SFruitSoundPlay();
         }
-        gameManager.image.Add(gameObject);
+        gameManager.imageFruit.Add(gameObject);
         isSelect = true;
         gameObject.GetComponent<Movement>().enabled = false;
-        line.SetActive(false);
-        rb.freezeRotation = false;
-        rb.angularVelocity = Random.Range(-360, 360);
+        lineObject.SetActive(false);
+        rigidbody2D.freezeRotation = false;
+        rigidbody2D.angularVelocity = Random.Range(-360, 360);
 
-        StartCoroutine(ChangeOver());
-        StartCoroutine(ValueChange());
+        StartCoroutine(ChangeGameOver());
+        StartCoroutine(FruitChange());
     }
 
-    private IEnumerator ChangeOver()
+    private IEnumerator ChangeGameOver()
     {
         yield return new WaitForSeconds(0.7f);
-        gameManager.GameOverObject1.SetActive(true);
-        gameManager.GameOverObject2.SetActive(true);
-        gameManager.GameOverObject3.SetActive(true);
+        gameManager.gameOverObject1.SetActive(true);
+        gameManager.gameOverObject2.SetActive(true);
+        gameManager.gameOverObject3.SetActive(true);
     }
 
-    private IEnumerator ValueChange()
+    private IEnumerator FruitChange()
     {
         yield return new WaitForSeconds(0.8f);
-        line.SetActive(true);
-        line.transform.position = Vector3.zero;
+        lineObject.SetActive(true);
+        lineObject.transform.position = Vector3.zero;
 
-        gameManager.AfterNextImageCall();
-        gameManager.nextImage();
+        gameManager.AfterNextImage();
+        gameManager.NextFruitImageCall();
     }
 }
 

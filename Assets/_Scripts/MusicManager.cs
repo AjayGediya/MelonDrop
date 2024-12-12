@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    public AudioSource MusicAudio;
+    public AudioSource musicAudio;
 
-    public bool isMusic = false;
+    public bool isMusicPlay = false;
 
     public static MusicManager instnace;
 
@@ -15,7 +15,7 @@ public class MusicManager : MonoBehaviour
 
     public void Start()
     {
-        MusicAudio = GetComponent<AudioSource>();
+        musicAudio = GetComponent<AudioSource>();
 
         if (PlayerPrefs.HasKey("Music") == false)
         {
@@ -23,7 +23,7 @@ public class MusicManager : MonoBehaviour
         }
         else
         {
-            MusicAudio.volume = PlayerPrefs.GetInt("Music");
+            musicAudio.volume = PlayerPrefs.GetInt("Music");
         }
     }
 }

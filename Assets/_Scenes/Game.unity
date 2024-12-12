@@ -255,98 +255,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692158}
   m_CullTransparentMesh: 1
---- !u!1 &15417509
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 15417510}
-  - component: {fileID: 15417512}
-  - component: {fileID: 15417511}
-  - component: {fileID: 15417513}
-  m_Layer: 5
-  m_Name: Hand
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &15417510
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15417509}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 277451560}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 32, y: -90}
-  m_SizeDelta: {x: 200, y: 200}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &15417511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15417509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a644dbc719dd346369c267cc0eb090c8, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 1
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &15417512
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15417509}
-  m_CullTransparentMesh: 1
---- !u!114 &15417513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15417509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b75cb99acf654bf5ae931e7822a1b53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hand: {fileID: 15417509}
-  leftPosition: -1.5
-  rightPosition: 1.5
-  duration: 1
 --- !u!1 &17287357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,7 +1247,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SettingBtnClick
+        m_MethodName: SettingButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2809,7 +2717,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OkBtnClick
+        m_MethodName: OkButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3038,82 +2946,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270998779}
-  m_CullTransparentMesh: 1
---- !u!1 &277451559
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 277451560}
-  - component: {fileID: 277451562}
-  - component: {fileID: 277451561}
-  m_Layer: 5
-  m_Name: Line
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &277451560
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277451559}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 15417510}
-  m_Father: {fileID: 842955114}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -300}
-  m_SizeDelta: {x: -200, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &277451561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277451559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a7ca4735e4da5460ab7bad348a7d7153, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 1
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &277451562
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277451559}
   m_CullTransparentMesh: 1
 --- !u!1 &284411584
 GameObject:
@@ -3919,7 +3751,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: HelpBtnClick
+        m_MethodName: HelpButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5934,7 +5766,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: PrivacypolicyBtnClick
+        m_MethodName: PrivacypolicyButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6190,7 +6022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &614634463
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6296,7 +6128,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: HowToPlayPanelBtnClick
+        m_MethodName: HowToPlayPanelButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6470,7 +6302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90dc40fe04b7445cf9fe37f4bb93fef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  istouch: 0
+  isTouch: 0
 --- !u!1 &618986852
 GameObject:
   m_ObjectHideFlags: 0
@@ -6556,7 +6388,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: RestartBtnClick
+        m_MethodName: RestartButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8941,7 +8773,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -8971,140 +8803,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 840937143}
   m_CullTransparentMesh: 1
---- !u!1 &842955113
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 842955114}
-  - component: {fileID: 842955116}
-  - component: {fileID: 842955115}
-  - component: {fileID: 842955117}
-  m_Layer: 5
-  m_Name: HowToPlayPanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &842955114
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842955113}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1268822827}
-  - {fileID: 277451560}
-  m_Father: {fileID: 893525829}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &842955115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842955113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 10889cb5059764392bacdb330f203a35, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &842955116
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842955113}
-  m_CullTransparentMesh: 1
---- !u!114 &842955117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842955113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 842955115}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1844923004}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: HowToPlayPanelBtnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &844962686
 GameObject:
   m_ObjectHideFlags: 0
@@ -9341,7 +9039,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: HelpBackBtnClick
+        m_MethodName: HelpBackButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9551,7 +9249,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: First2DestroyButtonCLick
+        m_MethodName: First2DestroyButtonObjectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9698,7 +9396,6 @@ RectTransform:
   - {fileID: 1124743961}
   - {fileID: 403655555}
   - {fileID: 1758107030}
-  - {fileID: 842955114}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -10524,10 +10221,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b75cb99acf654bf5ae931e7822a1b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hand: {fileID: 959686851}
-  leftPosition: -1.5
-  rightPosition: 1.5
-  duration: 1
+  hand: {fileID: 959686851}
+  leftSidePosition: -1.5
+  rightSidePosition: 1.5
+  durationTime: 1
 --- !u!1 &967267145
 GameObject:
   m_ObjectHideFlags: 0
@@ -11036,7 +10733,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: BackBtnClick
+        m_MethodName: BackButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11413,7 +11110,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ExitYesBtnClick
+        m_MethodName: ExitYesButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12804,7 +12501,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: NotNowBtnClick
+        m_MethodName: NotNowButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13183,142 +12880,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f4c31455c1245ff85c49d5159202bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1268822826
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1268822827}
-  - component: {fileID: 1268822829}
-  - component: {fileID: 1268822828}
-  m_Layer: 5
-  m_Name: Text (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1268822827
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1268822826}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 842955114}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 150}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1268822828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1268822826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: "Drag your finger left & right \nto move and drop the fruit"
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d27dc25b3a41447e3b34c6b7b6fae430, type: 2}
-  m_sharedMaterial: {fileID: 5976554551909946675, guid: d27dc25b3a41447e3b34c6b7b6fae430, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1268822829
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1268822826}
-  m_CullTransparentMesh: 1
 --- !u!1 &1271187732
 GameObject:
   m_ObjectHideFlags: 0
@@ -14085,7 +13646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90dc40fe04b7445cf9fe37f4bb93fef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  istouch: 0
+  isTouch: 0
 --- !u!1 &1373167768
 GameObject:
   m_ObjectHideFlags: 0
@@ -14192,7 +13753,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -14381,7 +13942,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: MusicBtnClick
+        m_MethodName: MusicButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14513,7 +14074,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SoundBtnClick
+        m_MethodName: SoundButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15828,7 +15389,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ChangeButtonClick
+        m_MethodName: ChangeButtonObjectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16212,7 +15773,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ShareButtonClick
+        m_MethodName: ShareButtonObjectClickd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16346,7 +15907,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: VibrateBtnClick
+        m_MethodName: VibrateButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16926,7 +16487,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: BoxVibrateButtonClick
+        m_MethodName: BoxVibrateButtonObjectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17669,7 +17230,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -18124,7 +17685,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -19115,81 +18676,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bf04d136eac04d199c9e4d7b8e52b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fruits: []
-  NextImages: []
-  FruitsParent: {fileID: 353975865}
-  ParentObj: {fileID: 1694011183}
-  GameOverObject1: {fileID: 1876273574}
-  GameOverObject2: {fileID: 615689106}
-  GameOverObject3: {fileID: 1354493433}
-  GamePanel: {fileID: 1661134610}
-  OverPanel: {fileID: 1199895991}
-  SettingPanel: {fileID: 1124743960}
-  HelpPanel: {fileID: 403655554}
-  ExitPanel: {fileID: 1758107029}
-  Box: {fileID: 532286919}
-  ColliderObject: {fileID: 1823947298}
-  NotAd: {fileID: 96217356}
-  NotFound: {fileID: 713658642}
-  UpdatePopUp: {fileID: 2037387953}
-  TimerPopup: {fileID: 92950852}
-  InterNetPopup: {fileID: 1900108989}
-  HowtoPlayPopup: {fileID: 614634462}
-  HighScore: 0
-  ScoreValue: 0
-  rotateSPeed: 0.5
-  wobbleDuration: 0.1
-  wobbleAngle: 5
-  distance: 1.5
-  duration: 0.5
-  Timer: 
-  timeRemaining: 120
-  Second5: 
-  timerIsRunning: 0
-  isTime: 0
-  isAppOpenChange: 0
-  isoff: 0
-  isGameOver: 0
-  isButtonOption: 0
-  isButtonChange: 0
-  isButtonBoxVibrate: 0
-  isButtonFirst2Destroy: 0
-  isHelp: 0
-  isFruit: 0
-  isNet: 0
-  isBoxVibrate: 0
-  isSettingPaneloff: 0
-  isExitPanel: 0
-  isLastExit: 0
-  isExit: 0
-  isChangeOneTime: 0
-  isHowToPlayTouch: 0
-  isPanelStart: 0
-  isSetting: 0
-  isInternet: 0
-  isUpdate: 0
-  On: {fileID: 21300000, guid: b41ba33458b244676bf872b4160b180b, type: 3}
-  Off: {fileID: 21300000, guid: 7bc39d5b46f2446238ea33a9b099358d, type: 3}
-  SoundButton: {fileID: 1420589108}
-  MusicButton: {fileID: 1406672534}
-  BomBtn: {fileID: 1938565999}
-  ChangeBtn: {fileID: 1527750113}
-  VibrateBtn: {fileID: 1613382717}
-  First2Destroybtn: {fileID: 891603348}
-  Helpbtn: {fileID: 387192099}
-  SettingBtn: {fileID: 107499212}
-  NextImage: {fileID: 751564586}
-  VibrateToggle: {fileID: 1564713654}
-  main: {fileID: 519420031}
-  particle: {fileID: 8621348971908687633, guid: 5bc9a0bf98f67d240a936bf476ba2082, type: 3}
-  shareText: {fileID: 782194361}
-  TimerTxt: {fileID: 840937145}
-  ScoreText: {fileID: 1797741508}
-  HighScoreText: {fileID: 551144792}
-  ScoreValueOver: {fileID: 1684605016}
-  First2Object: []
-  image: []
-  AllFruit:
+  fruits: []
+  allFruit:
   - {fileID: 4155560417349415141, guid: 6a2dd4c4d014a40c590af0d1fc25d130, type: 3}
   - {fileID: 7866922226529600755, guid: b9ead4a25697146f784db5054bbe0e97, type: 3}
   - {fileID: 8914833692498324177, guid: 8facf65f396eb4796b7ce61ec391aa97, type: 3}
@@ -19200,7 +18688,80 @@ MonoBehaviour:
   - {fileID: 951254881040765731, guid: b29e2d344067145ada7a2e97b0f0aab4, type: 3}
   - {fileID: 5943037233239597364, guid: ef6b5f8e57af14436b2f227d3416002b, type: 3}
   - {fileID: 595996968317794923, guid: 422e4203b16a146199ee33b993028441, type: 3}
+  nextImages: []
+  fruitsParent: {fileID: 353975865}
+  parentObj: {fileID: 1694011183}
+  gameOverObject1: {fileID: 1876273574}
+  gameOverObject2: {fileID: 615689106}
+  gameOverObject3: {fileID: 1354493433}
+  gamePanel: {fileID: 1661134610}
+  overPanel: {fileID: 1199895991}
+  settingPanel: {fileID: 1124743960}
+  helpPanel: {fileID: 403655554}
+  exitPanel: {fileID: 1758107029}
+  box: {fileID: 532286919}
+  colliderObject: {fileID: 1823947298}
+  notAd: {fileID: 96217356}
+  notFound: {fileID: 713658642}
+  updatePopUp: {fileID: 2037387953}
+  timerPopup: {fileID: 92950852}
+  interNetPopup: {fileID: 1900108989}
+  howtoPlayPopup: {fileID: 614634462}
+  highScore: 0
+  scoreValue: 0
+  rotateSPeed: 0.5
+  wobbleBoxDuration: 0.1
+  wobbleBoxAngle: 5
+  distanceBox: 1.5
+  durationBox: 0.5
+  timeCountRemaining: 120
   verionCode: 2
+  second5: 
+  timer: 
+  isTimerRunning: 0
+  isTimeCount: 0
+  isAppOpenAdChange: 0
+  isOff: 0
+  isGameOverCheck: 0
+  isBomOption: 0
+  isButtonReplce: 0
+  isButtonBoxVibrateOption: 0
+  isButtonFirst2ObjectDestroy: 0
+  isHelpOption: 0
+  isFruitObject: 0
+  isNetCheck: 0
+  isBoxVibrateCheck: 0
+  isSettingPanelOff: 0
+  isExitPanelCheck: 0
+  isLastExitCheck: 0
+  isExitCheck: 0
+  isChangeOneTimeCheck: 0
+  isHowToPlayTouchCheck: 0
+  isPanelStartCheck: 0
+  isSettingCheck: 0
+  isInternetCheck: 0
+  isUpdateCheck: 0
+  nextImage: {fileID: 751564586}
+  on: {fileID: 21300000, guid: b41ba33458b244676bf872b4160b180b, type: 3}
+  off: {fileID: 21300000, guid: 7bc39d5b46f2446238ea33a9b099358d, type: 3}
+  soundButton: {fileID: 1420589108}
+  musicButton: {fileID: 1406672534}
+  bomButton: {fileID: 1938565999}
+  changeButton: {fileID: 1527750113}
+  boxVibrateButton: {fileID: 1613382717}
+  first2Destroybutton: {fileID: 891603348}
+  helpbutton: {fileID: 387192099}
+  settingButton: {fileID: 107499212}
+  vibrateToggle: {fileID: 1564713654}
+  mainCamera: {fileID: 519420031}
+  particleEffect: {fileID: 8621348971908687633, guid: 5bc9a0bf98f67d240a936bf476ba2082, type: 3}
+  shareTextObject: {fileID: 782194361}
+  timerTxt: {fileID: 840937145}
+  scoreText: {fileID: 1797741508}
+  highScoreText: {fileID: 551144792}
+  scoreValueOver: {fileID: 1684605016}
+  first2Object: []
+  imageFruit: []
 --- !u!1 &1875087297
 GameObject:
   m_ObjectHideFlags: 0
@@ -19423,7 +18984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90dc40fe04b7445cf9fe37f4bb93fef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  istouch: 0
+  isTouch: 0
 --- !u!1 &1877680961
 GameObject:
   m_ObjectHideFlags: 0
@@ -20038,7 +19599,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: BomButtonClick
+        m_MethodName: BomButtonObjectClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20248,7 +19809,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: UpdatebtnClick
+        m_MethodName: UpdatebuttonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20910,7 +20471,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1844923004}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ExitNoBtnClick
+        m_MethodName: ExitNoButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

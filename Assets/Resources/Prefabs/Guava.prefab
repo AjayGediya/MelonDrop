@@ -55,6 +55,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -98,6 +101,7 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1518485219781618337}
   m_Enabled: 0
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -121,9 +125,9 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.01}
-  serializedVersion: 2
   m_Radius: 0.34
 --- !u!114 &3970035603840737097
 MonoBehaviour:
@@ -137,13 +141,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1dd3563dbb14c6e8d6b1223b26d292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: 0, y: 0, z: 0}
-  endPos: {x: 0, y: 0, z: 0}
-  screenSize: {x: 0, y: 0, z: 0}
-  line: {fileID: 0}
-  min: -2
-  max: 2
-  rb: {fileID: 0}
+  startFruitPos: {x: 0, y: 0, z: 0}
+  endFruitPos: {x: 0, y: 0, z: 0}
+  screenTouchSize: {x: 0, y: 0, z: 0}
+  lineObject: {fileID: 0}
+  minValue: -2
+  maxValue: 2
+  rigidbody2D: {fileID: 0}
   isSelect: 0
 --- !u!114 &731813279218256198
 MonoBehaviour:
@@ -157,27 +161,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a41b2bda90b4a7e8b0afa0ef1ff675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blueberry: {fileID: 8914833692498324177, guid: 8facf65f396eb4796b7ce61ec391aa97, type: 3}
-  Apricot: {fileID: 7866922226529600755, guid: b9ead4a25697146f784db5054bbe0e97, type: 3}
-  Apple: {fileID: 6634242656226313370, guid: 07f33ffe5b5424da582530b89e6002b4, type: 3}
-  Cloudberry: {fileID: 5943037233239597364, guid: ef6b5f8e57af14436b2f227d3416002b, type: 3}
-  Grapefruit: {fileID: 1901530173985945236, guid: 8ecb5a8301ede4fd0a13db0fa6a70426, type: 3}
-  Guava: {fileID: 1518485219781618337}
-  Lucuma: {fileID: 951254881040765731, guid: b29e2d344067145ada7a2e97b0f0aab4, type: 3}
-  Passionfruit: {fileID: 7511106016331050490, guid: ec3b08b3409c5486d80cc29470f9ea03, type: 3}
-  Watermelon: {fileID: 595996968317794923, guid: 422e4203b16a146199ee33b993028441, type: 3}
-  Blue: {fileID: 2206872486147430419, guid: 5c710373c673442f38849630c8785b47, type: 3}
-  GreenLitedark: {fileID: 8548080542773341448, guid: 154b7d88ff9884d58ae2f947f131a90c, type: 3}
-  GreenLite: {fileID: 2499925451438917099, guid: 00efc2910e98a4eb2ad31405c0076725, type: 3}
-  GreenDark: {fileID: 3864013764698572500, guid: 7f7d2e4f7fd594ead8fe0526ee6f5ded, type: 3}
-  Purple: {fileID: 981676262752908607, guid: a012d15249c1141d39a06dfbcac5fd33, type: 3}
-  OrangeDark: {fileID: 7536928986203210824, guid: c92db5a3ed54a4296ae2dab4446d5dd0, type: 3}
-  OrangeLite: {fileID: 2762039219587636927, guid: b9090532441ea4cdebee3f606710a568, type: 3}
-  Red: {fileID: 3948381882101766628, guid: 5c640b078f6904c9489114600b63760e, type: 3}
-  DarkYellow: {fileID: 1694975042461689241, guid: b5c72058b56f940e88aeffff3fe678f7, type: 3}
-  ParticalParent: {fileID: 0}
-  TextParent: {fileID: 0}
-  textNumber: {fileID: 3198658975816447325, guid: 546c1ac270cef424fb11924a7718967e, type: 3}
+  blueberry: {fileID: 8914833692498324177, guid: 8facf65f396eb4796b7ce61ec391aa97, type: 3}
+  apricot: {fileID: 7866922226529600755, guid: b9ead4a25697146f784db5054bbe0e97, type: 3}
+  apple: {fileID: 6634242656226313370, guid: 07f33ffe5b5424da582530b89e6002b4, type: 3}
+  cloudberry: {fileID: 5943037233239597364, guid: ef6b5f8e57af14436b2f227d3416002b, type: 3}
+  grapefruit: {fileID: 1901530173985945236, guid: 8ecb5a8301ede4fd0a13db0fa6a70426, type: 3}
+  guava: {fileID: 1518485219781618337}
+  lucuma: {fileID: 951254881040765731, guid: b29e2d344067145ada7a2e97b0f0aab4, type: 3}
+  passionfruit: {fileID: 7511106016331050490, guid: ec3b08b3409c5486d80cc29470f9ea03, type: 3}
+  watermelon: {fileID: 595996968317794923, guid: 422e4203b16a146199ee33b993028441, type: 3}
+  blue: {fileID: 2206872486147430419, guid: 5c710373c673442f38849630c8785b47, type: 3}
+  greenLitedark: {fileID: 8548080542773341448, guid: 154b7d88ff9884d58ae2f947f131a90c, type: 3}
+  greenLite: {fileID: 2499925451438917099, guid: 00efc2910e98a4eb2ad31405c0076725, type: 3}
+  greenDark: {fileID: 3864013764698572500, guid: 7f7d2e4f7fd594ead8fe0526ee6f5ded, type: 3}
+  purple: {fileID: 981676262752908607, guid: a012d15249c1141d39a06dfbcac5fd33, type: 3}
+  orangeDark: {fileID: 7536928986203210824, guid: c92db5a3ed54a4296ae2dab4446d5dd0, type: 3}
+  orangeLite: {fileID: 2762039219587636927, guid: b9090532441ea4cdebee3f606710a568, type: 3}
+  red: {fileID: 3948381882101766628, guid: 5c640b078f6904c9489114600b63760e, type: 3}
+  darkYellow: {fileID: 1694975042461689241, guid: b5c72058b56f940e88aeffff3fe678f7, type: 3}
+  particalParent: {fileID: 0}
+  textParent: {fileID: 0}
+  textCount: {fileID: 3198658975816447325, guid: 546c1ac270cef424fb11924a7718967e, type: 3}
 --- !u!114 &2443588790818435757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,19 +194,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e9492b581774f01aa405659c8b6f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueberry: {fileID: 21300000, guid: 5f94b319c8a3140a4945399d18944f27, type: 3}
-  apricot: {fileID: 21300000, guid: 2a0e29cbdf8d64c77990df04b5673b6f, type: 3}
-  apple: {fileID: 21300000, guid: 7b7c106ac67fd40c788d42e010104df2, type: 3}
-  cloudberry: {fileID: 21300000, guid: 648cd289f4ff749789736ead0cae8194, type: 3}
-  grapefruit: {fileID: 21300000, guid: eb4623b741c8043ff9abc27e491080e3, type: 3}
-  guava: {fileID: 21300000, guid: b5c0bb90691d94a788f221fb91f10c5f, type: 3}
-  lucuma: {fileID: 21300000, guid: 7695a44d2ee034bbeabe8669bf0a1b3e, type: 3}
-  passionfruit: {fileID: 21300000, guid: 3284eaa41ff5b42de9f4e025072c40d5, type: 3}
-  watermelon: {fileID: 21300000, guid: 632ce1130cb524a5682b2fff67dcadc8, type: 3}
-  particle: {fileID: 725748389856807712, guid: 4bda94453d2ca7444a0fff05b2d425f5, type: 3}
+  blueBerry: {fileID: 21300000, guid: 5f94b319c8a3140a4945399d18944f27, type: 3}
+  apricotFruit: {fileID: 21300000, guid: 2a0e29cbdf8d64c77990df04b5673b6f, type: 3}
+  appleFruit: {fileID: 21300000, guid: 7b7c106ac67fd40c788d42e010104df2, type: 3}
+  cloudBerry: {fileID: 21300000, guid: 648cd289f4ff749789736ead0cae8194, type: 3}
+  grapeFruit: {fileID: 21300000, guid: eb4623b741c8043ff9abc27e491080e3, type: 3}
+  guavaFruit: {fileID: 21300000, guid: b5c0bb90691d94a788f221fb91f10c5f, type: 3}
+  lucumaFruit: {fileID: 21300000, guid: 7695a44d2ee034bbeabe8669bf0a1b3e, type: 3}
+  passionFruit: {fileID: 21300000, guid: 3284eaa41ff5b42de9f4e025072c40d5, type: 3}
+  watermelonFruit: {fileID: 21300000, guid: 632ce1130cb524a5682b2fff67dcadc8, type: 3}
+  particleSystem: {fileID: 725748389856807712, guid: 4bda94453d2ca7444a0fff05b2d425f5, type: 3}
+  fruit: 
 --- !u!50 &5236319496028633468
 Rigidbody2D:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -213,8 +218,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: d40e9ad130fe646b9a43bdbd80e49e18, type: 2}
   m_IncludeLayers:
@@ -276,6 +281,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

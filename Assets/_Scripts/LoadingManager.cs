@@ -6,15 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class LoadingManager : MonoBehaviour
 {
-    [SerializeField] private Slider loadingSlider;
+    public Slider loadingSlider;
 
-    [SerializeField] private TextMeshProUGUI loadTxt;
+    public TextMeshProUGUI loadTxt;
 
-    private float maxLoadingValue = 20f;
-
-    private int nextSceneIndex = 1;
-
-    private bool isLoading = false;
+    public bool isLoading = false;
 
     public void Awake()
     {
@@ -26,9 +22,9 @@ public class LoadingManager : MonoBehaviour
         if (!isLoading)
         {
             loadingSlider.value += Time.deltaTime;
-            loadTxt.text = $"Loading... {Mathf.Clamp((int)(loadingSlider.value * 5), 0, 100)}%";
+            loadTxt.text = $"Loading..." + ((int)(loadingSlider.value * 20)) + "%";
 
-            if (loadingSlider.value >= maxLoadingValue)
+            if (loadingSlider.value >= loadingSlider.maxValue)
             {
                 isLoading = true;
                 LoadNextScene();
@@ -38,7 +34,6 @@ public class LoadingManager : MonoBehaviour
 
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(nextSceneIndex);
-        //Debug.Log("Scene changed");
+        SceneManager.LoadScene(1);
     }
 }

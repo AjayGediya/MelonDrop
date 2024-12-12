@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource SoundAudio;
+    public AudioSource soundAudio;
 
-    public AudioClip FruitMergeClip;
+    public AudioClip fruitMergeClip;
 
-    public AudioClip FruitClip;
+    public AudioClip fruitClip;
 
-    public bool isSound = false;
+    public AudioClip buttonClip;
+
+    public bool isSoundPlay = false;
 
     public static SoundManager Instance;
 
@@ -19,7 +21,7 @@ public class SoundManager : MonoBehaviour
 
     public void Start()
     {
-        SoundAudio = GetComponent<AudioSource>();
+        soundAudio = GetComponent<AudioSource>();
 
         if (PlayerPrefs.HasKey("Sound") == false)
         {
@@ -27,17 +29,22 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            SoundAudio.volume = PlayerPrefs.GetInt("Sound");
+            soundAudio.volume = PlayerPrefs.GetInt("Sound");
         }
     }
 
-    public void SoundFruitMergePlay()
+    public void SFruitMergePlay()
     {
-        SoundAudio.PlayOneShot(FruitMergeClip);
+        soundAudio.PlayOneShot(fruitMergeClip);
     }
 
-    public void FruitSoundPlay()
+    public void SFruitSoundPlay()
     {
-        SoundAudio.PlayOneShot(FruitClip);
+        soundAudio.PlayOneShot(fruitClip);
+    }
+
+    public void SButtonSoundClip()
+    {
+        soundAudio.PlayOneShot(buttonClip);
     }
 }

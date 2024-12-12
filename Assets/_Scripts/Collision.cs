@@ -1,214 +1,204 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
 public class Collision : MonoBehaviour
 {
-    public GameObject Blueberry, Apricot, Apple, Cloudberry, Grapefruit, Guava, Lucuma, Passionfruit, Watermelon;
+    public GameObject blueberry, apricot, apple, cloudberry, grapefruit, guava, lucuma, passionfruit, watermelon;
 
-    public ParticleSystem Blue, GreenLitedark, GreenLite, GreenDark, Purple, OrangeDark, OrangeLite, Red, DarkYellow;
+    public ParticleSystem blue, greenLitedark, greenLite, greenDark, purple, orangeDark, orangeLite, red, darkYellow;
 
-    public Transform ParticalParent;
+    public Transform particalParent;
 
-    public Transform TextParent;
+    public Transform textParent;
 
-    public TextMeshPro textNumber;
+    public TextMeshPro textCount;
 
-    private TextMeshPro newtext;
+    private TextMeshPro newText;
 
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer _SpriteRenderer;
 
-    private Collider2D Collide2D;
+    private Collider2D collide2D;
 
     public void Start()
     {
-        ParticalParent = GameObject.Find("ParticalObject").transform;
+        particalParent = GameObject.Find("ParticalObject").transform;
 
-        TextParent = GameObject.Find("TextObjects").transform;
+        textParent = GameObject.Find("TextObjects").transform;
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _SpriteRenderer = GetComponent<SpriteRenderer>();
 
-        Collide2D = GetComponent<Collider2D>();
+        collide2D = GetComponent<Collider2D>();
 
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        HandleCollision(collision);
+        HandleMergeCollision(collision);
     }
 
     public void OnCollisionStay2D(Collision2D collision)
     {
-        HandleCollision(collision);
+        HandleMergeCollision(collision);
     }
 
-    public void HandleCollision(Collision2D collision)
+    public void HandleMergeCollision(Collision2D collision)
     {
-        if (!GameManager.instance.isGameOver && !GameManager.instance.isFruit)
+        if (!GameManager.instance.isGameOverCheck && !GameManager.instance.isFruitObject)
         {
-            ChekFruits(collision);
+            ChekFruitsMergeCollide(collision);
         }
     }
 
-    public void ChekFruits(Collision2D newcollision)
+    public void ChekFruitsMergeCollide(Collision2D newCollision)
     {
-        string currentTag = gameObject.tag;
+        string currentFruitTag = gameObject.tag;
 
-        string collisionTag = newcollision.gameObject.tag;
+        string collisionFruitTag = newCollision.gameObject.tag;
 
-        if (currentTag == collisionTag)
+        if (currentFruitTag == collisionFruitTag)
         {
-            GameManager.instance.isFruit = true;
+            GameManager.instance.isFruitObject = true;
 
-            switch (currentTag)
+            switch (currentFruitTag)
             {
                 case "Strawberry":
-                    PerformFruitAction("Strawberry + Apricot", OrangeLite, Apricot, 1, newcollision);
+                    FruitAction("Strawberry + Apricot", orangeLite, apricot, 1, newCollision);
                     break;
                 case "Apricot":
-                    PerformFruitAction("Apricot + Blueberry", Blue, Blueberry, 2, newcollision);
+                    FruitAction("Apricot + Blueberry", blue, blueberry, 2, newCollision);
                     break;
                 case "Blueberry":
-                    PerformFruitAction("Blueberry + Guava", GreenLite, Guava, 5, newcollision);
+                    FruitAction("Blueberry + Guava", greenLite, guava, 5, newCollision);
                     break;
                 case "Guava":
-                    PerformFruitAction("Guava + Apple", Red, Apple, 10, newcollision);
+                    FruitAction("Guava + Apple", red, apple, 10, newCollision);
                     break;
                 case "Apple":
-                    PerformFruitAction("Apple + Grapefruit", OrangeDark, Grapefruit, 15, newcollision);
+                    FruitAction("Apple + Grapefruit", orangeDark, grapefruit, 15, newCollision);
                     break;
                 case "Grapefruit":
-                    PerformFruitAction("Grapefruit + Passionfruit", Purple, Passionfruit, 20, newcollision);
+                    FruitAction("Grapefruit + Passionfruit", purple, passionfruit, 20, newCollision);
                     break;
                 case "Passionfruit":
-                    PerformFruitAction("Passionfruit + Lucuma", GreenDark, Lucuma, 25, newcollision);
+                    FruitAction("Passionfruit + Lucuma", greenDark, lucuma, 25, newCollision);
                     break;
                 case "Lucuma":
-                    PerformFruitAction("Lucuma + Cloudberry", DarkYellow, Cloudberry, 35, newcollision);
+                    FruitAction("Lucuma + Cloudberry", darkYellow, cloudberry, 35, newCollision);
                     break;
                 case "Cloudberry":
-                    PerformFruitAction("Cloudberry + Watermelon", GreenLitedark, Watermelon, 40, newcollision);
+                    FruitAction("Cloudberry + Watermelon", greenLitedark, watermelon, 40, newCollision);
                     break;
                 case "Watermelon":
-                    HandleFinalFruit(newcollision, GreenLitedark, 50);
+                    FinalFruit(newCollision, greenLitedark, 50);
                     break;
             }
         }
-        GameManager.instance.ScoreText.text = GameManager.instance.ScoreValue.ToString();
+        GameManager.instance.scoreText.text = GameManager.instance.scoreValue.ToString();
     }
 
-    public void PerformFruitAction(string logMessage, ParticleSystem particleEffect, GameObject nextFruit, int scoreValue, Collision2D newcollision)
+    public void FruitAction(string message, ParticleSystem particlesEffect, GameObject nextCollideFruit, int score, Collision2D newCollision)
     {
-        ParticalesEffect(particleEffect, newcollision);
+        ParticalesEffectCreate(particlesEffect, newCollision);
 
-        FruitChanges(nextFruit, newcollision);
+        FruitObjectChanges(nextCollideFruit, newCollision);
 
-        DestroyObject(newcollision);
+        DestroyFruitObject(newCollision);
 
-        GameManager.instance.ScoreValue += scoreValue;
+        GameManager.instance.scoreValue += score;
 
-        TextCreate(scoreValue,newcollision);
+        TextObjectCreate(score, newCollision);
 
         gameObject.GetComponent<Movement>().enabled = false;
     }
 
-    public void HandleFinalFruit(Collision2D newcollision, ParticleSystem particleEffect, int scoreValue)
+    public void FinalFruit(Collision2D newCollision, ParticleSystem particlesEffect, int score)
     {
-        ParticalesEffect(particleEffect, newcollision);
+        ParticalesEffectCreate(particlesEffect, newCollision);
 
-        GameManager.instance.ScoreValue += scoreValue;
+        GameManager.instance.scoreValue += score;
 
-        TextCreate(scoreValue,newcollision);
+        TextObjectCreate(score, newCollision);
 
-        GameManager.instance.image.Remove(gameObject);
+        GameManager.instance.imageFruit.Remove(gameObject);
 
-        GameManager.instance.image.Remove(newcollision.gameObject);
+        GameManager.instance.imageFruit.Remove(newCollision.gameObject);
 
         Destroy(gameObject);
 
-        Destroy(newcollision.gameObject);
+        Destroy(newCollision.gameObject);
 
-        GameManager.instance.isBoxVibrate = false;
-        GameManager.instance.isButtonFirst2Destroy = false;
-        GameManager.instance.isButtonChange = false;
-        GameManager.instance.isButtonOption = false;
+        GameManager.instance.isBoxVibrateCheck = false;
+        GameManager.instance.isButtonFirst2ObjectDestroy = false;
+        GameManager.instance.isButtonReplce = false;
+        GameManager.instance.isBomOption = false;
+        GameManager.instance.isFruitObject = false;
 
-        GameManager.instance.VibrateBtn.GetComponent<Button>().interactable = true;
-        GameManager.instance.First2Destroybtn.GetComponent<Button>().interactable = true;
-        GameManager.instance.BomBtn.GetComponent<Button>().interactable = true;
-        GameManager.instance.ChangeBtn.GetComponent<Button>().interactable = true;
-        GameManager.instance.Helpbtn.GetComponent<Button>().interactable = true;
-        GameManager.instance.SettingBtn.GetComponent<Button>().interactable = true;
-        GameManager.instance.isFruit = false;
+        GameManager.instance.AllBtnTrue();
     }
 
-    public void TextCreate(int value, Collision2D collision2DNew)
+    public void TextObjectCreate(int values, Collision2D collision2D)
     {
-        newtext = Instantiate(textNumber, TextParent);
+        newText = Instantiate(textCount, textParent);
 
-        newtext.text = "+" + value;
+        newText.text = "+" + values;
 
-        newtext.transform.position = collision2DNew.transform.position;
+        newText.transform.position = collision2D.transform.position;
 
-        StartCoroutine(TextColorChange());
+        StartCoroutine(TextObjectColorChange());
     }
 
-    public IEnumerator TextColorChange()
+    public IEnumerator TextObjectColorChange()
     {
         yield return new WaitForSeconds(0.5f);
 
-        newtext.DOFade(0, 1);
+        newText.DOFade(0, 1);
     }
 
-    public void ParticalesEffect(ParticleSystem newparticle, Collision2D newcollision)
+    public void ParticalesEffectCreate(ParticleSystem newParticle, Collision2D newCollision)
     {
-        ParticleSystem particleSystem = Instantiate(newparticle, ParticalParent);
+        ParticleSystem particle_system = Instantiate(newParticle, particalParent);
 
-        particleSystem.transform.position = newcollision.transform.position;
+        particle_system.transform.position = newCollision.transform.position;
     }
 
-    public void DestroyObject(Collision2D newcollision)
+    public void DestroyFruitObject(Collision2D newCollision)
     {
-        StartCoroutine(GameManager.instance.IsFruit());
+        StartCoroutine(GameManager.instance.IsFruitCheckBool());
 
-       // Debug.Log("GameObject Sprite And Collider False");
+        _SpriteRenderer.enabled = false;
 
-        spriteRenderer.enabled = false;
-
-        newcollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-
-       // Debug.Log("newCollision Sprite And Collider False");
+        newCollision.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
         gameObject.GetComponent<Collider2D>().enabled = false;
 
-        newcollision.gameObject.GetComponent<Collider2D>().enabled = false;
+        newCollision.gameObject.GetComponent<Collider2D>().enabled = false;
     }
 
-    public void FruitChanges(GameObject fruits, Collision2D collsionnew)
+    public void FruitObjectChanges(GameObject fruitsObject, Collision2D collsionNew)
     {
         if (PlayerPrefs.GetInt("Vibrate", 0) == 0)
         {
             Vibration.Vibrate(50);
         }
 
-        GameObject newFruit = Instantiate(fruits);
+        GameObject newFruitObject = Instantiate(fruitsObject);
 
-        newFruit.transform.position = collsionnew.transform.position;
+        newFruitObject.transform.position = collsionNew.transform.position;
 
-        newFruit.transform.SetParent(GameManager.instance.FruitsParent.transform);
+        newFruitObject.transform.SetParent(GameManager.instance.fruitsParent.transform);
 
-        newFruit.GetComponent<Collider2D>().enabled = true;
+        newFruitObject.GetComponent<Collider2D>().enabled = true;
 
-        newFruit.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        newFruitObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
         if (SoundManager.Instance != null)
         {
-            SoundManager.Instance.SoundFruitMergePlay();
+            SoundManager.Instance.SFruitMergePlay();
         }
 
-        GameManager.instance.image.Add(newFruit);
+        GameManager.instance.imageFruit.Add(newFruitObject);
 
         Movement.Instance.isSelect = true;
     }
